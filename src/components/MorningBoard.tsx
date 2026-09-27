@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import { useState } from "react";
 import type { Page, PageProps } from "../types";
 import { Icon, Face } from "./Icon";
@@ -101,7 +102,7 @@ export function MorningBoard({
               <div className="board-child" key={c.id}>
                 <button
                   className="board-child-presence"
-                  aria-label={`${c.name}: ${state.present.includes(c.id) ? "prezent" : "absent"}`}
+                  aria-label={`${childLabel(c)}: ${state.present.includes(c.id) ? "prezent" : "absent"}`}
                   aria-pressed={state.present.includes(c.id)}
                   onClick={() => {
                     const present = state.present.includes(c.id)
@@ -117,7 +118,7 @@ export function MorningBoard({
                   }}
                 >
                   <Avatar child={c} size={64} />
-                  <span>{c.name}</span>
+                  <span>{childLabel(c)}</span>
                   {state.present.includes(c.id) && (
                     <span className="board-tick" aria-hidden="true">
                       ✓
@@ -127,7 +128,7 @@ export function MorningBoard({
                 {state.present.includes(c.id) && (
                   <button
                     className="board-child-emotion"
-                    aria-label={`Alege emoția pentru ${c.name}`}
+                    aria-label={`Alege emoția pentru ${childLabel(c)}`}
                     onClick={() => {
                       setEmotionChild(c.id);
                     }}

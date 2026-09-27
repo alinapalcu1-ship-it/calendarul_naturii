@@ -112,6 +112,7 @@ export default function TeacherSettings({
                   <input
                     aria-label={`Nume copil ${c.id}`}
                     maxLength={45}
+                    placeholder="Loc disponibil"
                     value={c.name}
                     onChange={(e) => editChild(c.id, { name: e.target.value })}
                   />

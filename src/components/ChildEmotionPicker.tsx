@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import { useEffect, useRef } from "react";
 import { Face } from "./Icon";
 import { emotions } from "../utils/data";
@@ -32,7 +33,7 @@ export function ChildEmotionPicker({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <h2 id="child-emotion-title">Cum se simte {child.name}?</h2>
+      <h2 id="child-emotion-title">Cum se simte {childLabel(child)}?</h2>
       <div className="child-emotion-options">
         {emotions.map((emotion) => (
           <button

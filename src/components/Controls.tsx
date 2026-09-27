@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import type { ReactNode } from "react";
 import { Icon, Face } from "./Icon";
 import { StoryArt } from "./StoryArt";
@@ -64,7 +65,7 @@ export function ChildCard({
       onClick={onClick}
     >
       <Avatar child={child} />
-      <strong>{child.name}</strong>
+      <strong>{childLabel(child)}</strong>
       {status && (
         <span className="child-status">
           {selected ? "✓ Prezent" : "Absent"}
@@ -82,7 +83,7 @@ export function ChildCard({
       <button
         className="child-emotion-button"
         disabled={!selected}
-        aria-label={`Emoția pentru ${child.name}${emotion && selected ? `: ${emotion}` : ""}`}
+        aria-label={`Emoția pentru ${childLabel(child)}${emotion && selected ? `: ${emotion}` : ""}`}
         onClick={() => {
           onEmotion();
         }}

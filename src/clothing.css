@@ -37,6 +37,8 @@
   width: min(100%, 390px);
   aspect-ratio: 1086/1448;
   isolation: isolate;
+  /* Transformed transparent PNG margins must not expand the mobile page. */
+  overflow: clip;
 }
 .mannequin-base,
 .fitted-layer,

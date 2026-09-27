@@ -21,6 +21,48 @@ export type ClothingItem = {
   zIndex: number;
 };
 
+// Coordinates are in the original 1086 × 1448 canvas, not viewport pixels.
+// Paired items scale around each hand/foot, preserving the distance between them.
+type Fit = {
+  scaleX: number; scaleY: number;
+  translateX: number; translateY: number;
+  originX: number; originY: number;
+  pair?: [number, number];
+  inset?: number;
+};
+export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
+  fata: {
+    top: { scaleX: 1.04, scaleY: .82, translateX: 0, translateY: 42, originX: 543, originY: 538 },
+    bottom: { scaleX: 1.08, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
+    outer: { scaleX: 1.03, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 492 },
+    scarf: { scaleX: 1, scaleY: .75, translateX: 0, translateY: 95, originX: 543, originY: 480 },
+    shoes: { scaleX: 1.12, scaleY: 1.03, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 10 },
+    head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
+    gloves: { scaleX: 1.22, scaleY: 1.12, translateX: 0, translateY: 12, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
+    umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
+  },
+  baiat: {
+    top: { scaleX: 1.06, scaleY: .84, translateX: 0, translateY: 32, originX: 543, originY: 530 },
+    bottom: { scaleX: 1.05, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
+    outer: { scaleX: 1.04, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 490 },
+    scarf: { scaleX: 1.05, scaleY: .75, translateX: 0, translateY: 100, originX: 543, originY: 480 },
+    shoes: { scaleX: 1.16, scaleY: 1.04, translateX: 0, translateY: -12, originX: 543, originY: 1436, pair: [387, 699], inset: 14 },
+    head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
+    gloves: { scaleX: 1.25, scaleY: 1.15, translateX: 0, translateY: 18, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
+    umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
+  },
+};
+
+export function clothingFit(item: ClothingItem): Fit {
+  const fit = clothingFits[item.gender][item.slot];
+  if (item.slot === "head" && item.id.endsWith("02"))
+    return { ...fit, scaleX: 1.95, scaleY: 1.12, translateY: 0 };
+  // Skirts and shorts already end at the right height; do not stretch them like trousers.
+  if (item.slot === "bottom" && (item.id.endsWith("04") || (item.gender === "fata" && item.id.endsWith("03"))))
+    return { ...fit, scaleX: 1, scaleY: 1, translateY: item.gender === "baiat" ? 25 : 12 };
+  return fit;
+}
+
 export const clothingGroups = [
   { id: "top", label: "Partea de sus" },
   { id: "bottom", label: "Partea de jos" },

@@ -1,5 +1,5 @@
 import type { State } from "../types";
-import { routines, emotions } from "./data";
+import { routines, emotions, CHILD_SLOT_COUNT } from "./data";
 import { cleanClothing as normalizeOutfit } from "./clothingCatalog";
 
 /** Upgrade the original local data in place, retaining child IDs and photographs. */
@@ -23,12 +23,16 @@ export function migrateState(saved: State): State {
           : [],
     ),
   };
-  const children = [...saved.children];
+  const children = saved.children.map((child) => ({
+    ...child,
+    // Remove only the old generated labels; retain configured child details.
+    name: /^Copil \d+$/i.test(child.name.trim()) ? "" : child.name,
+  }));
   let nextId = Math.max(0, ...children.map((child) => child.id)) + 1;
-  while (children.length < 22) {
+  while (children.length < CHILD_SLOT_COUNT) {
     children.push({
       id: nextId,
-      name: `Copil ${children.length + 1}`,
+      name: "",
       birthday: "",
     });
     nextId += 1;
@@ -43,6 +47,7 @@ export function migrateState(saved: State): State {
   );
   return {
     ...compatible,
+    group: saved.group === "Grupa Mămăruțelor" ? "" : saved.group,
     children,
     outfits,
     clothes: outfits[mannequin],

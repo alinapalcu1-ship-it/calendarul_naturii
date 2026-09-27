@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import { useState, type CSSProperties } from "react";
 import type { PageProps } from "../types";
 import { Icon, Face } from "../components/Icon";
@@ -7,7 +8,7 @@ import { promptAudio } from "../utils/audioPrompts";
 
 export default function SummaryPage({ state }: PageProps) {
   const [done, setDone] = useState(false);
-  const { play } = useAudioPlayer();
+  const { play, error: audioError } = useAudioPlayer();
   const helper = state.children.find(
     (c) => c.id === state.helper && state.present.includes(c.id),
   );
@@ -46,7 +47,7 @@ export default function SummaryPage({ state }: PageProps) {
     {
       icon: "helper",
       text: helper
-        ? `Responsabilul zilei este ${helper.name}.`
+        ? `Responsabilul zilei este ${childLabel(helper)}.`
         : "Încă nu am ales responsabilul zilei.",
     },
     {
@@ -58,6 +59,7 @@ export default function SummaryPage({ state }: PageProps) {
   ];
   return (
     <>
+      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       {done ? (
         <div className="celebration" role="status">
           <div className="celebration-confetti" aria-hidden="true">

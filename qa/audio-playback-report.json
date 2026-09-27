@@ -1,0 +1,401 @@
+{
+  "base": "http://127.0.0.1:5175/calendarul_naturii/",
+  "played": [
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/buna_dimineata_ne_intalnim.mp3",
+      "time": 0.255199,
+      "duration": 5.250563,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ianuarie.mp3",
+      "time": 0.138406,
+      "duration": 0.992625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/februarie.mp3",
+      "time": 0.128076,
+      "duration": 1.567313,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/martie.mp3",
+      "time": 0.138479,
+      "duration": 0.91425,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/aprilie.mp3",
+      "time": 0.127816,
+      "duration": 0.992625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/mai.mp3",
+      "time": 0.137945,
+      "duration": 0.992625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/iunie.mp3",
+      "time": 0.127838,
+      "duration": 0.91425,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/iulie.mp3",
+      "time": 0.137869,
+      "duration": 0.835875,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/august.mp3",
+      "time": 0.127809,
+      "duration": 1.567313,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/septembrie.mp3",
+      "time": 0.137704,
+      "duration": 1.071,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/octombrie.mp3",
+      "time": 0.12815,
+      "duration": 1.645688,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/noiembrie.mp3",
+      "time": 0.138074,
+      "duration": 0.679125,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/decembrie.mp3",
+      "time": 0.12792,
+      "duration": 1.071,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/insorit.mp3",
+      "time": 0.124493,
+      "duration": 0.91425,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/partial_noros.mp3",
+      "time": 0.134586,
+      "duration": 1.567313,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/innorat.mp3",
+      "time": 0.127882,
+      "duration": 1.645688,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ploaie.mp3",
+      "time": 0.138136,
+      "duration": 1.645688,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ninsoare.mp3",
+      "time": 0.127659,
+      "duration": 1.802438,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/vant.mp3",
+      "time": 0.137806,
+      "duration": 0.992625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ceata.mp3",
+      "time": 0.128117,
+      "duration": 0.91425,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/cald.mp3",
+      "time": 0.138181,
+      "duration": 0.91425,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/racoare.mp3",
+      "time": 0.128261,
+      "duration": 1.959125,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/frig.mp3",
+      "time": 0.137953,
+      "duration": 0.992625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/cum_e_afara.mp3",
+      "time": 0.127742,
+      "duration": 1.306063,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
+      "time": 0.124368,
+      "duration": 7.392625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
+      "time": 0.137868,
+      "duration": 7.392625,
+      "muted": false,
+      "volume": 1
+    },
+    {
+      "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
+      "time": 0.134613,
+      "duration": 7.392625,
+      "muted": false,
+      "volume": 1
+    }
+  ],
+  "decoded": [
+    {
+      "file": "audio/aprilie.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.23443573713302612
+    },
+    {
+      "file": "audio/august.mp3",
+      "duration": 1.5673333333333332,
+      "peak": 0.2934761941432953
+    },
+    {
+      "file": "audio/buna_dimineata_ne_intalnim.mp3",
+      "duration": 5.250604166666666,
+      "peak": 0.2894909381866455
+    },
+    {
+      "file": "audio/cald.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.11375714838504791
+    },
+    {
+      "file": "audio/ceata.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.30352407693862915
+    },
+    {
+      "file": "audio/cum_e_afara.mp3",
+      "duration": 1.3061041666666666,
+      "peak": 0.17319437861442566
+    },
+    {
+      "file": "audio/decembrie.mp3",
+      "duration": 1.071,
+      "peak": 0.29495400190353394
+    },
+    {
+      "file": "audio/februarie.mp3",
+      "duration": 1.5673333333333332,
+      "peak": 0.4912492036819458
+    },
+    {
+      "file": "audio/frig.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.20342767238616943
+    },
+    {
+      "file": "audio/ianuarie.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.26173436641693115
+    },
+    {
+      "file": "audio/impreuna_ziua_e_mai.mp3",
+      "duration": 7.392645833333333,
+      "peak": 0.2685345709323883
+    },
+    {
+      "file": "audio/innorat.mp3",
+      "duration": 1.6457083333333333,
+      "peak": 0.3929446339607239
+    },
+    {
+      "file": "audio/insorit.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.23334717750549316
+    },
+    {
+      "file": "audio/iulie.mp3",
+      "duration": 0.8359166666666666,
+      "peak": 0.23232638835906982
+    },
+    {
+      "file": "audio/iunie.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.3086070120334625
+    },
+    {
+      "file": "audio/mai.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.35388264060020447
+    },
+    {
+      "file": "audio/martie.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.39229634404182434
+    },
+    {
+      "file": "audio/ninsoare.mp3",
+      "duration": 1.8024375,
+      "peak": 0.48248833417892456
+    },
+    {
+      "file": "audio/noiembrie.mp3",
+      "duration": 0.6791666666666667,
+      "peak": 0.5019936561584473
+    },
+    {
+      "file": "audio/octombrie.mp3",
+      "duration": 1.6457083333333333,
+      "peak": 0.4283539652824402
+    },
+    {
+      "file": "audio/partial_noros.mp3",
+      "duration": 1.5673333333333332,
+      "peak": 0.17347797751426697
+    },
+    {
+      "file": "audio/ploaie.mp3",
+      "duration": 1.6457083333333333,
+      "peak": 0.3450726270675659
+    },
+    {
+      "file": "audio/racoare.mp3",
+      "duration": 1.9591666666666667,
+      "peak": 0.5945242643356323
+    },
+    {
+      "file": "audio/septembrie.mp3",
+      "duration": 1.071,
+      "peak": 0.1939469873905182
+    },
+    {
+      "file": "audio/vant.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.19787761569023132
+    },
+    {
+      "file": "audio/anotimpuri/anotimp_iarna.mp3",
+      "duration": 0.7575416666666667,
+      "peak": 0.10258251428604126
+    },
+    {
+      "file": "audio/anotimpuri/anotimp_primavara.mp3",
+      "duration": 0.9926458333333333,
+      "peak": 0.2744626998901367
+    },
+    {
+      "file": "audio/anotimpuri/anotimp_toamna.mp3",
+      "duration": 0.7575416666666667,
+      "peak": 0.1247362345457077
+    },
+    {
+      "file": "audio/anotimpuri/anotimp_vara.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.2246055006980896
+    },
+    {
+      "file": "audio/emotii/emotie_linistit.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.13265840709209442
+    },
+    {
+      "file": "audio/emotii/emotie_obosit.mp3",
+      "duration": 1.22775,
+      "peak": 0.4346356987953186
+    },
+    {
+      "file": "audio/emotii/emotie_speriat.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.14470168948173523
+    },
+    {
+      "file": "audio/emotii/emotie_suparat.mp3",
+      "duration": 0.9142708333333334,
+      "peak": 0.13455143570899963
+    },
+    {
+      "file": "audio/emotii/emotie_trist.mp3",
+      "duration": 1.3061041666666666,
+      "peak": 0.6738045811653137
+    },
+    {
+      "file": "audio/emotii/emotie_vesel.mp3",
+      "duration": 0.7575416666666667,
+      "peak": 0.12912902235984802
+    },
+    {
+      "file": "audio/fundal/fundal_calendar.mp3",
+      "duration": 114.79997916666666,
+      "peak": 0.7990162968635559
+    },
+    {
+      "file": "audio/zile/zi_joi.mp3",
+      "duration": 0.5224375,
+      "peak": 0.12413721531629562
+    },
+    {
+      "file": "audio/zile/zi_luni.mp3",
+      "duration": 0.6008125,
+      "peak": 0.11590936779975891
+    },
+    {
+      "file": "audio/zile/zi_marti.mp3",
+      "duration": 0.7575416666666667,
+      "peak": 0.08521373569965363
+    },
+    {
+      "file": "audio/zile/zi_miercuri.mp3",
+      "duration": 0.8359166666666666,
+      "peak": 0.1452648788690567
+    },
+    {
+      "file": "audio/zile/zi_vineri.mp3",
+      "duration": 0.7575416666666667,
+      "peak": 0.14135490357875824
+    }
+  ]
+}

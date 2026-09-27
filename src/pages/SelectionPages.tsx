@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import { ChildEmotionPicker } from "../components/ChildEmotionPicker";
 import { useState } from "react";
 import type { PageProps } from "../types";
@@ -25,10 +26,11 @@ export function CalendarPage({ state, update }: PageProps) {
   const d = parseDate(state.date);
   const [part, setPart] = useState("Ziua");
   const weekday = (d.getDay() + 6) % 7;
-  const { play } = useAudioPlayer();
+  const { play, error: audioError } = useAudioPlayer();
 
   return (
     <>
+      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <div className="date-preview">Astăzi este {dateText(state.date)}.</div>
       <div className="tabs">
         {["Ziua", "Data", "Luna", "Anul"].map((p) => (
@@ -194,13 +196,14 @@ export function SeasonPage({ state, update }: PageProps) {
 }
 
 export function WeatherPage({ state, update }: PageProps) {
-  const { play } = useAudioPlayer();
+  const { play, error: audioError } = useAudioPlayer();
 
   return (
     <>
       <p className="instruction">
         Privește pe fereastră. Alege una sau două imagini.
       </p>
+      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <div className="choices weather">
         {weatherOptions.map((w) => (
           <Choice
@@ -378,7 +381,7 @@ export function HelperPage({ state, update }: PageProps) {
           <Avatar child={helper} size={116} />
           <div>
             <p>Responsabilul zilei este:</p>
-            <h2>{helper.name}</h2>
+            <h2>{childLabel(helper)}</h2>
           </div>
         </div>
       )}

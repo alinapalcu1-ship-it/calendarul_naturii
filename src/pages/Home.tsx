@@ -1,3 +1,4 @@
+import { childLabel } from "../utils/data";
 import type { Page, PageProps } from "../types";
 import { Icon } from "../components/Icon";
 import { SectionArt } from "../components/SectionArt";
@@ -67,12 +68,13 @@ export default function Home({
   update,
   navigate,
 }: PageProps & { navigate: (p: Page) => void }) {
-  const { play } = useAudioPlayer();
+  const { play, error: audioError } = useAudioPlayer();
   const birthday = state.children.filter(
     (c) => c.birthday.slice(5) === state.date.slice(5),
   );
   return (
     <div className="dashboard">
+      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <section className="welcome">
         <div className="sun-art" aria-hidden="true">
           <SectionArt name="weather" size={118} />
@@ -104,7 +106,7 @@ export default function Home({
       </div>
       {birthday.length > 0 && (
         <div className="birthday">
-          La mulți ani, {birthday.map((c) => c.name).join(", ")}!
+          La mulți ani, {birthday.map((c) => childLabel(c)).join(", ")}!
         </div>
       )}
       <div className="home-grid">
