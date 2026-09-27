@@ -14,9 +14,20 @@ import {
 } from "./pages/SelectionPages";
 import ClothingPage from "./pages/ClothingPage";
 import SummaryPage from "./pages/SummaryPage";
+import { StorageRecovery } from "./components/StorageRecovery";
 import TeacherSettings from "./pages/TeacherSettings";
 export default function App() {
-  const { state, update, reset, startNewDay, ready, error } = useLocalStorage();
+  const {
+    state,
+    update,
+    reset,
+    startNewDay,
+    ready,
+    error,
+    saveStatus,
+    retrySave,
+    restore,
+  } = useLocalStorage();
   const [page, setPage] = useState<Page>("home");
   const [fullscreen, setFullscreen] = useState(false);
   const [screenError, setScreenError] = useState("");
@@ -80,6 +91,22 @@ export default function App() {
             {error || screenError}
           </p>
         )}
+        {ready && (
+          <div className="save-status">
+            <span role="status" aria-live="polite">
+              {saveStatus === "saving"
+                ? "Se salvează…"
+                : saveStatus === "saved"
+                  ? "Salvat pe acest dispozitiv"
+                  : "Modificările nu sunt salvate"}
+            </span>
+            {saveStatus === "error" && (
+              <button className="secondary" onClick={retrySave}>
+                Reîncearcă salvarea
+              </button>
+            )}
+          </div>
+        )}
         {page !== "home" && (
           <div className="page-heading">
             <button className="back-button" onClick={() => navigate("home")}>
@@ -98,12 +125,10 @@ export default function App() {
         )}
         {ready ? (
           content
+        ) : error ? (
+          <StorageRecovery onRestore={restore} />
         ) : (
-          <p role="status">
-            {error
-              ? "Reîncarcă pagina după verificarea stocării browserului. Datele salvate sunt păstrate."
-              : "Se încarcă datele grupei…"}
-          </p>
+          <p role="status">Se încarcă datele grupei…</p>
         )}
       </main>
     </>

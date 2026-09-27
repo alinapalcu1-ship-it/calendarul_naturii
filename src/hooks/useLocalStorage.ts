@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { State } from "../types";
-import { initialState } from "../utils/data";
+import { initialState, cleanAttendance } from "../utils/data";
 import { today } from "../utils/dateUtils";
 import { migrateState } from "../utils/migrateState";
 import {
@@ -13,6 +13,10 @@ import {
 // Serialize saves, including slow photo writes, so older edits cannot win.
 let writes = Promise.resolve();
 export function useLocalStorage() {
+  const [saveStatus, setSaveStatus] = useState<"saving" | "saved" | "error">(
+    "saving",
+  );
+  const [attempt, setAttempt] = useState(0);
   const [error, setError] = useState("");
   const [ready, setReady] = useState(false);
   const [state, setState] = useState<State>(initialState);
@@ -36,7 +40,7 @@ export function useLocalStorage() {
           if (loaded.dayKey !== today()) loaded = newDay(loaded);
         }
         if (!cancelled) {
-          setState(loaded);
+          setState(cleanAttendance(loaded));
           setReady(true);
         }
       } catch (e) {
@@ -55,6 +59,7 @@ export function useLocalStorage() {
   useEffect(() => {
     if (!ready) return;
     let current = true;
+    setSaveStatus("saving");
     const protectPendingSave = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = "";
@@ -64,20 +69,25 @@ export function useLocalStorage() {
     writes.then(
       () => {
         window.removeEventListener("beforeunload", protectPendingSave);
-        if (current) setError("");
+        if (current) {
+          setError("");
+          setSaveStatus("saved");
+        }
       },
       () => {
-        if (current)
+        if (current) {
+          setSaveStatus("error");
           setError(
             "Salvarea locală nu a reușit. Exportă configurația înainte să închizi aplicația și verifică spațiul disponibil în browser.",
           );
+        }
       },
     );
     return () => {
       current = false;
       window.removeEventListener("beforeunload", protectPendingSave);
     };
-  }, [state, ready]);
+  }, [state, ready, attempt]);
   useEffect(() => {
     if (!ready) return;
     const tick = () => setState((s) => (s.dayKey === today() ? s : newDay(s)));
@@ -92,7 +102,19 @@ export function useLocalStorage() {
     state,
     ready,
     error,
-    update: (patch: Partial<State>) =>
+    saveStatus,
+    retrySave: () => {
+      setSaveStatus("saving");
+      setAttempt((n) => n + 1);
+    },
+    restore: (restored: State) => {
+      setSaveStatus("saving");
+      setState(cleanAttendance(restored));
+      setError("");
+      setReady(true);
+    },
+    update: (patch: Partial<State>) => {
+      setSaveStatus("saving");
       setState((s) => {
         const mannequin = patch.mannequin ?? s.mannequin;
         const outfits =
@@ -100,9 +122,21 @@ export function useLocalStorage() {
           (patch.clothes
             ? { ...s.outfits, [mannequin]: patch.clothes }
             : s.outfits);
-        return { ...s, ...patch, outfits, clothes: outfits[mannequin] };
-      }),
-    reset: () => setState(initialState()),
-    startNewDay: () => setState(newDay),
+        return cleanAttendance({
+          ...s,
+          ...patch,
+          outfits,
+          clothes: outfits[mannequin],
+        });
+      });
+    },
+    reset: () => {
+      setSaveStatus("saving");
+      setState(initialState());
+    },
+    startNewDay: () => {
+      setSaveStatus("saving");
+      setState(newDay);
+    },
   };
 }

@@ -1,3 +1,4 @@
+import { resizePhoto } from "./photos";
 import type { State } from "../types";
 import { initialState, routines } from "./data";
 import { today } from "./dateUtils";
@@ -192,4 +193,23 @@ export function parseConfiguration(text: string): State {
     activities: [...new Set<string>(value.activities)],
     children,
   };
+}
+
+export async function readConfigurationFile(file: File): Promise<State> {
+  if (file.size > 12 * 1024 * 1024)
+    throw new Error("Fișierul este prea mare (maximum 12 MB).");
+  const imported = parseConfiguration(await file.text());
+  for (const child of imported.children)
+    if (child.photo) {
+      const [header, encoded] = child.photo.split(",");
+      const bytes = Uint8Array.from(atob(encoded), (char) =>
+        char.charCodeAt(0),
+      );
+      child.photo = await resizePhoto(
+        new File([bytes], "fotografie", {
+          type: header.slice(5, header.indexOf(";")),
+        }),
+      );
+    }
+  return imported;
 }

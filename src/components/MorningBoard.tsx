@@ -1,3 +1,4 @@
+import { isConfiguredChild } from "../utils/data";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import { weekdayAudio, emotionAudio } from "../utils/audioPrompts";
 import { childLabel } from "../utils/data";
@@ -98,7 +99,9 @@ export function MorningBoard({
             <div className="board-counts">
               <span>Prezenți: {state.present.length}</span>
               <span>
-                Absenți: {state.children.length - state.present.length}
+                Absenți:{" "}
+                {state.children.filter(isConfiguredChild).length -
+                  state.present.length}
               </span>
             </div>
           </div>
@@ -107,7 +110,12 @@ export function MorningBoard({
               <div className="board-child" key={c.id}>
                 <button
                   className="board-child-presence"
-                  aria-label={`${childLabel(c)}: ${state.present.includes(c.id) ? "prezent" : "absent"}`}
+                  disabled={!isConfiguredChild(c)}
+                  aria-label={
+                    isConfiguredChild(c)
+                      ? `${childLabel(c)}: ${state.present.includes(c.id) ? "prezent" : "absent"}`
+                      : "Loc disponibil"
+                  }
                   aria-pressed={state.present.includes(c.id)}
                   onClick={() => {
                     const present = state.present.includes(c.id)
@@ -149,8 +157,7 @@ export function MorningBoard({
             ))}
           </div>
           <button className="board-all" onClick={() => navigate("attendance")}>
-            Vezi toți cei {state.children.length} copii{" "}
-            <Icon name="next" size={18} />
+            Vezi prezența grupei <Icon name="next" size={18} />
           </button>
         </section>
         <section className="board-panel board-routine">

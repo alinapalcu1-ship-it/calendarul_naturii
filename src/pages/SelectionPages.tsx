@@ -1,3 +1,4 @@
+import { isConfiguredChild } from "../utils/data";
 import { childLabel } from "../utils/data";
 import { ChildEmotionPicker } from "../components/ChildEmotionPicker";
 import { useState } from "react";
@@ -278,7 +279,11 @@ export function AttendancePage({ state, update }: PageProps) {
             Prezenți: <b>{state.present.length}</b>
           </span>
           <span>
-            Absenți: <b>{state.children.length - state.present.length}</b>
+            Absenți:{" "}
+            <b>
+              {state.children.filter(isConfiguredChild).length -
+                state.present.length}
+            </b>
           </span>
         </div>
       </div>
@@ -403,7 +408,9 @@ export function HelperPage({ state, update }: PageProps) {
           </p>
           <div className="children-grid">
             {state.children
-              .filter((c) => state.present.includes(c.id))
+              .filter(
+                (c) => isConfiguredChild(c) && state.present.includes(c.id),
+              )
               .map((c) => (
                 <ChildCard
                   key={c.id}

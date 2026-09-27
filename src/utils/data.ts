@@ -1,7 +1,8 @@
 import type { Child, State } from "../types";
 import { today } from "./dateUtils";
 export const CHILD_SLOT_COUNT = 30;
-export const childLabel = (child: Child) => child.name.trim() || "Loc disponibil";
+export const childLabel = (child: Child) =>
+  child.name.trim() || "Loc disponibil";
 
 export const routines = [
   "Bună dimineața",
@@ -55,3 +56,23 @@ export const emotions = [
   "Obosit",
   "Liniștit",
 ];
+
+// A slot becomes a child when the teacher gives it a name.
+export const isConfiguredChild = (child: Child) => child.name.trim().length > 0;
+export function cleanAttendance(state: State): State {
+  const ids = new Set(
+    state.children.filter(isConfiguredChild).map((c) => c.id),
+  );
+  const present = [...new Set(state.present.filter((id) => ids.has(id)))];
+  return {
+    ...state,
+    present,
+    helper:
+      state.helper !== null && present.includes(state.helper)
+        ? state.helper
+        : null,
+    childEmotions: Object.fromEntries(
+      Object.entries(state.childEmotions).filter(([id]) => ids.has(Number(id))),
+    ),
+  };
+}

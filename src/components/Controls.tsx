@@ -1,4 +1,4 @@
-import { childLabel } from "../utils/data";
+import { childLabel, isConfiguredChild } from "../utils/data";
 import type { ReactNode } from "react";
 import { Icon, Face } from "./Icon";
 import { StoryArt } from "./StoryArt";
@@ -58,15 +58,17 @@ export function ChildCard({
   emotion?: string;
   onEmotion?: () => void;
 }) {
+  const configured = isConfiguredChild(child);
   const card = (
     <button
+      disabled={!configured}
       className={`child-card ${selected ? "selected" : ""}`}
       aria-pressed={selected}
       onClick={onClick}
     >
       <Avatar child={child} />
       <strong>{childLabel(child)}</strong>
-      {status && (
+      {status && configured && (
         <span className="child-status">
           {selected ? "✓ Prezent" : "Absent"}
         </span>
@@ -76,7 +78,7 @@ export function ChildCard({
       )}
     </button>
   );
-  if (!onEmotion) return card;
+  if (!onEmotion || !configured) return card;
   return (
     <div className="attendance-child">
       {card}
@@ -107,4 +109,3 @@ export function Notice({ children }: { children: ReactNode }) {
     </div>
   );
 }
-

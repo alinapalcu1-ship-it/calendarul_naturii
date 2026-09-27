@@ -6,7 +6,7 @@ import { routines } from "../utils/data";
 import { resizePhoto } from "../utils/photos";
 import {
   configurationBackup,
-  parseConfiguration,
+  readConfigurationFile,
 } from "../utils/classroomStorage";
 
 export default function TeacherSettings({
@@ -172,21 +172,7 @@ export default function TeacherSettings({
                 setNotice("");
                 setBusy(-1);
                 try {
-                  if (file.size > 12 * 1024 * 1024)
-                    throw new Error("Fișierul este prea mare (maximum 12 MB).");
-                  const imported = parseConfiguration(await file.text());
-                  for (const child of imported.children)
-                    if (child.photo) {
-                      const [header, encoded] = child.photo.split(",");
-                      const bytes = Uint8Array.from(atob(encoded), (char) =>
-                        char.charCodeAt(0),
-                      );
-                      child.photo = await resizePhoto(
-                        new File([bytes], "fotografie", {
-                          type: header.slice(5, header.indexOf(";")),
-                        }),
-                      );
-                    }
+                  const imported = await readConfigurationFile(file);
                   setPendingImport(imported);
                   setConfirm("import");
                 } catch (err) {
