@@ -41,7 +41,7 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     top: { scaleX: 1.04, scaleY: .82, translateX: 0, translateY: 42, originX: 543, originY: 538 },
     bottom: { scaleX: 1.08, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
     outer: { scaleX: 1.03, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 492 },
-    scarf: { scaleX: 1, scaleY: .75, translateX: 0, translateY: 95, originX: 543, originY: 480 },
+    scarf: { scaleX: .94, scaleY: .69, translateX: 0, translateY: 95, originX: 543, originY: 480 },
     shoes: { scaleX: 1.20, scaleY: 1.06, translateX: 0, translateY: -30, originX: 543, originY: 1436, pair: [399, 687], inset: 0, sides: [{ translateX: -4, translateY: 0, rotate: -2 }, { translateX: 4, translateY: 0, rotate: 2 }] },
     head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
     gloves: { scaleX: 1.32, scaleY: 1.22, translateX: 0, translateY: 0, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
@@ -51,10 +51,10 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     top: { scaleX: 1.06, scaleY: .84, translateX: 0, translateY: 32, originX: 543, originY: 530 },
     bottom: { scaleX: 1.05, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
     outer: { scaleX: 1.04, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 490 },
-    scarf: { scaleX: 1.05, scaleY: .75, translateX: 0, translateY: 100, originX: 543, originY: 480 },
+    
     shoes: { scaleX: 1.22, scaleY: 1.07, translateX: 0, translateY: -0, originX: 543, originY: 1436, pair: [387, 699], inset: 0, sides: [{ translateX: -5, translateY: 0, rotate: -3 }, { translateX: 4, translateY: -1, rotate: 3 }] },
     scarf: { scaleX: 1.02, scaleY: .69, translateX: -2, translateY: 86, originX: 543, originY: 480 },
-    shoes: { scaleX: 1.16, scaleY: 1.04, translateX: 0, translateY: -12, originX: 543, originY: 1436, pair: [387, 699], inset: 14, sides: [{ translateX: -5, translateY: 0, rotate: -3 }, { translateX: 4, translateY: -1, rotate: 3 }] },
+   
     head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
     gloves: { scaleX: 1.34, scaleY: 1.24, translateX: 0, translateY: 0, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },

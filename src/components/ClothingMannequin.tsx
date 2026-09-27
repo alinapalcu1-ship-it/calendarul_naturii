@@ -58,13 +58,13 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
 
   const headAccessories = selected.filter(
     (item) =>
-      item.slot === "accessory" &&
+      item.slot === "head" &&
       /hat|cap|caciul|sapca|palar/i.test(item.id)
   );
 
   const otherAccessories = selected.filter(
     (item) =>
-      item.slot === "accessory" &&
+      item.slot === "umbrella" &&
       !/hat|cap|caciul|sapca|palar/i.test(item.id)
   );
 
