@@ -8,7 +8,7 @@ import { promptAudio } from "../utils/audioPrompts";
 
 export default function SummaryPage({ state }: PageProps) {
   const [done, setDone] = useState(false);
-  const { play, error: audioError } = useAudioPlayer();
+  const { play } = useAudioPlayer();
   const helper = state.children.find(
     (c) => c.id === state.helper && state.present.includes(c.id),
   );
@@ -59,7 +59,6 @@ export default function SummaryPage({ state }: PageProps) {
   ];
   return (
     <>
-      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       {done ? (
         <div className="celebration" role="status">
           <div className="celebration-confetti" aria-hidden="true">

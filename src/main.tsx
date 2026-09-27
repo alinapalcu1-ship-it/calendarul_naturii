@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import { AudioProvider } from "./components/AudioProvider";
 import "./styles.css";
 import "./refinements.css";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <AudioProvider><App /></AudioProvider>
   </React.StrictMode>,
 );
 import "./clothing.css";

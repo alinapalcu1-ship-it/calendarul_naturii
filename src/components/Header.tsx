@@ -1,3 +1,4 @@
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
 import { Icon } from "./Icon";
 import type { Page } from "../types";
 export function Header({
@@ -11,6 +12,7 @@ export function Header({
   fullscreen: boolean;
   toggleFullscreen: () => void;
 }) {
+  const { musicOn, toggleMusic } = useAudioPlayer();
   return (
     <header className="header">
       <button
@@ -26,6 +28,9 @@ export function Header({
         </span>
       </button>
       <div className="header-actions">
+        <button className="settings-button" aria-label={musicOn ? "Oprește muzica" : "Pornește muzica"} aria-pressed={musicOn} onClick={toggleMusic}>
+          <span aria-hidden="true">♫</span> Muzică: {musicOn ? "pornită" : "oprită"}
+        </button>
         {page !== "home" && (
           <button
             className="icon-button"

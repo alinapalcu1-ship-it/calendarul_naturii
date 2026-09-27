@@ -1,3 +1,5 @@
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
+import { emotionAudio } from "../utils/audioPrompts";
 import { childLabel } from "../utils/data";
 import { useEffect, useRef } from "react";
 import { Face } from "./Icon";
@@ -15,6 +17,7 @@ export function ChildEmotionPicker({
   onSelect: (emotion: string) => void;
   onClose: () => void;
 }) {
+  const { play } = useAudioPlayer();
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -41,6 +44,7 @@ export function ChildEmotionPicker({
             aria-pressed={emotion === value}
             onClick={() => {
               onSelect(emotion);
+              play(emotionAudio[emotion]);
             }}
           >
             <Face emotion={emotion} size={76} />

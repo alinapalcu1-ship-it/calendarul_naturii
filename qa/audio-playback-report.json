@@ -3,189 +3,189 @@
   "played": [
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/buna_dimineata_ne_intalnim.mp3",
-      "time": 0.255199,
+      "time": 0.326992,
       "duration": 5.250563,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ianuarie.mp3",
-      "time": 0.138406,
+      "time": 0.133581,
       "duration": 0.992625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/februarie.mp3",
-      "time": 0.128076,
+      "time": 0.127194,
       "duration": 1.567313,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/martie.mp3",
-      "time": 0.138479,
+      "time": 0.136829,
       "duration": 0.91425,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/aprilie.mp3",
-      "time": 0.127816,
+      "time": 0.126957,
       "duration": 0.992625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/mai.mp3",
-      "time": 0.137945,
+      "time": 0.137876,
       "duration": 0.992625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/iunie.mp3",
-      "time": 0.127838,
+      "time": 0.127135,
       "duration": 0.91425,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/iulie.mp3",
-      "time": 0.137869,
+      "time": 0.137207,
       "duration": 0.835875,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/august.mp3",
-      "time": 0.127809,
+      "time": 0.127458,
       "duration": 1.567313,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/septembrie.mp3",
-      "time": 0.137704,
+      "time": 0.136742,
       "duration": 1.071,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/octombrie.mp3",
-      "time": 0.12815,
+      "time": 0.126919,
       "duration": 1.645688,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/noiembrie.mp3",
-      "time": 0.138074,
+      "time": 0.131925,
       "duration": 0.679125,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/decembrie.mp3",
-      "time": 0.12792,
+      "time": 0.137699,
       "duration": 1.071,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/insorit.mp3",
-      "time": 0.124493,
+      "time": 0.127178,
       "duration": 0.91425,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/partial_noros.mp3",
-      "time": 0.134586,
+      "time": 0.136754,
       "duration": 1.567313,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/innorat.mp3",
-      "time": 0.127882,
+      "time": 0.127624,
       "duration": 1.645688,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ploaie.mp3",
-      "time": 0.138136,
+      "time": 0.137319,
       "duration": 1.645688,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ninsoare.mp3",
-      "time": 0.127659,
+      "time": 0.127032,
       "duration": 1.802438,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/vant.mp3",
-      "time": 0.137806,
+      "time": 0.136603,
       "duration": 0.992625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/ceata.mp3",
-      "time": 0.128117,
+      "time": 0.126795,
       "duration": 0.91425,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/cald.mp3",
-      "time": 0.138181,
+      "time": 0.137138,
       "duration": 0.91425,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/racoare.mp3",
-      "time": 0.128261,
+      "time": 0.126879,
       "duration": 1.959125,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/frig.mp3",
-      "time": 0.137953,
+      "time": 0.137133,
       "duration": 0.992625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/cum_e_afara.mp3",
-      "time": 0.127742,
+      "time": 0.126984,
       "duration": 1.306063,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
-      "time": 0.124368,
+      "time": 0.140609,
       "duration": 7.392625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
-      "time": 0.137868,
+      "time": 0.133262,
       "duration": 7.392625,
       "muted": false,
       "volume": 1
     },
     {
       "url": "http://127.0.0.1:5175/calendarul_naturii/audio/impreuna_ziua_e_mai.mp3",
-      "time": 0.134613,
+      "time": 0.130339,
       "duration": 7.392625,
       "muted": false,
       "volume": 1

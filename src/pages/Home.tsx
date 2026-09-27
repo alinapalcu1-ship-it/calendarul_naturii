@@ -68,13 +68,12 @@ export default function Home({
   update,
   navigate,
 }: PageProps & { navigate: (p: Page) => void }) {
-  const { play, error: audioError } = useAudioPlayer();
+  const { play } = useAudioPlayer();
   const birthday = state.children.filter(
     (c) => c.birthday.slice(5) === state.date.slice(5),
   );
   return (
     <div className="dashboard">
-      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <section className="welcome">
         <div className="sun-art" aria-hidden="true">
           <SectionArt name="weather" size={118} />

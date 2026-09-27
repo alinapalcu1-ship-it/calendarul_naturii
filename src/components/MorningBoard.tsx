@@ -1,3 +1,5 @@
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
+import { weekdayAudio, emotionAudio } from "../utils/audioPrompts";
 import { childLabel } from "../utils/data";
 import { useState } from "react";
 import type { Page, PageProps } from "../types";
@@ -14,6 +16,7 @@ export function MorningBoard({
   update,
   navigate,
 }: PageProps & { navigate: (page: Page) => void }) {
+  const { play } = useAudioPlayer();
   const day = parseDate(state.date);
   const weekday = (day.getDay() + 6) % 7;
   const [emotionChild, setEmotionChild] = useState<number | null>(null);
@@ -40,6 +43,7 @@ export function MorningBoard({
                         next.getDate(),
                       ),
                     });
+                    play(weekdayAudio[name]);
                   }}
                 >
                   <StoryArt name={name} size={60} />
@@ -65,6 +69,7 @@ export function MorningBoard({
                     update({
                       emotion: state.emotion === emotion ? "" : emotion,
                     });
+                    play(emotionAudio[emotion]);
                   }}
                 >
                   <Face emotion={emotion} size={52} />

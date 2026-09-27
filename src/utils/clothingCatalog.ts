@@ -29,6 +29,10 @@ type Fit = {
   originX: number; originY: number;
   pair?: [number, number];
   inset?: number;
+  sides?: [
+    { translateX: number; translateY: number; rotate: number },
+    { translateX: number; translateY: number; rotate: number },
+  ];
 };
 export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
   fata: {
@@ -36,9 +40,9 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     bottom: { scaleX: 1.08, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
     outer: { scaleX: 1.03, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 492 },
     scarf: { scaleX: 1, scaleY: .75, translateX: 0, translateY: 95, originX: 543, originY: 480 },
-    shoes: { scaleX: 1.12, scaleY: 1.03, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 10 },
+    shoes: { scaleX: 1.12, scaleY: 1.03, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 10, sides: [{ translateX: -4, translateY: 0, rotate: -2 }, { translateX: 3, translateY: -2, rotate: 2 }] },
     head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
-    gloves: { scaleX: 1.22, scaleY: 1.12, translateX: 0, translateY: 12, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
+    gloves: { scaleX: 1.25, scaleY: 1.14, translateX: 0, translateY: 14, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
   baiat: {
@@ -46,21 +50,37 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     bottom: { scaleX: 1.05, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
     outer: { scaleX: 1.04, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 490 },
     scarf: { scaleX: 1.05, scaleY: .75, translateX: 0, translateY: 100, originX: 543, originY: 480 },
-    shoes: { scaleX: 1.16, scaleY: 1.04, translateX: 0, translateY: -12, originX: 543, originY: 1436, pair: [387, 699], inset: 14 },
+    shoes: { scaleX: 1.16, scaleY: 1.04, translateX: 0, translateY: -12, originX: 543, originY: 1436, pair: [387, 699], inset: 14, sides: [{ translateX: -5, translateY: 0, rotate: -3 }, { translateX: 4, translateY: -1, rotate: 3 }] },
     head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
-    gloves: { scaleX: 1.25, scaleY: 1.15, translateX: 0, translateY: 18, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
+    gloves: { scaleX: 1.28, scaleY: 1.17, translateX: 0, translateY: 20, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
+};
+
+// Hooded tops have narrower sleeves and higher collars than the other tops.
+// Waist/hem corrections account for the different bounds of each source PNG.
+const itemFits: Record<string, Partial<Fit>> = {
+  fata_top_02: { scaleY: .85, translateY: 30 },
+  fata_top_03: { scaleY: .87, translateY: 25 },
+  fata_top_04: { scaleX: 1.22, scaleY: .94, translateY: -10 },
+  baiat_top_03: { scaleX: 1.26, scaleY: .94, translateY: -5 },
+  fata_outer_03: { scaleX: 1.18 },
+  baiat_outer_03: { scaleX: 1.12 },
+  fata_bottom_01: { scaleY: 1.035, translateY: 14 },
+  fata_bottom_02: { scaleY: 1.035, translateY: 12 },
+  fata_bottom_03: { scaleX: 1, scaleY: 1, translateY: 10 },
+  fata_bottom_04: { scaleX: 1, scaleY: 1, translateY: 25 },
+  baiat_bottom_01: { scaleY: 1.10, translateY: -8 },
+  baiat_bottom_02: { scaleY: 1.09, translateY: -2 },
+  baiat_bottom_03: { scaleY: 1.12, translateY: -14 },
+  baiat_bottom_04: { scaleX: 1, scaleY: 1, translateY: 30 },
 };
 
 export function clothingFit(item: ClothingItem): Fit {
   const fit = clothingFits[item.gender][item.slot];
   if (item.slot === "head" && item.id.endsWith("02"))
     return { ...fit, scaleX: 1.95, scaleY: 1.12, translateY: 0 };
-  // Skirts and shorts already end at the right height; do not stretch them like trousers.
-  if (item.slot === "bottom" && (item.id.endsWith("04") || (item.gender === "fata" && item.id.endsWith("03"))))
-    return { ...fit, scaleX: 1, scaleY: 1, translateY: item.gender === "baiat" ? 25 : 12 };
-  return fit;
+  return { ...fit, ...itemFits[item.id] };
 }
 
 export const clothingGroups = [

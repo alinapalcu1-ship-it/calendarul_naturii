@@ -15,6 +15,9 @@ import {
   today,
 } from "../utils/dateUtils";
 import {
+  weekdayAudio,
+  seasonAudio,
+  emotionAudio,
   monthAudio,
   promptAudio,
   temperatureAudio,
@@ -26,11 +29,10 @@ export function CalendarPage({ state, update }: PageProps) {
   const d = parseDate(state.date);
   const [part, setPart] = useState("Ziua");
   const weekday = (d.getDay() + 6) % 7;
-  const { play, error: audioError } = useAudioPlayer();
+  const { play } = useAudioPlayer();
 
   return (
     <>
-      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <div className="date-preview">Astăzi este {dateText(state.date)}.</div>
       <div className="tabs">
         {["Ziua", "Data", "Luna", "Anul"].map((p) => (
@@ -74,6 +76,7 @@ export function CalendarPage({ state, update }: PageProps) {
                       nd.getDate(),
                     ),
                   });
+                  play(weekdayAudio[w]);
                 }}
               >
                 <StoryArt name={w} size={100} />
@@ -163,6 +166,7 @@ export function CalendarPage({ state, update }: PageProps) {
 }
 
 export function SeasonPage({ state, update }: PageProps) {
+  const { play } = useAudioPlayer();
   return (
     <>
       <p className="instruction">
@@ -176,6 +180,7 @@ export function SeasonPage({ state, update }: PageProps) {
               selected={state.season === s}
               onClick={() => {
                 update({ season: s });
+                play(seasonAudio[s]);
               }}
             >
               <div className="season-picture">
@@ -196,14 +201,13 @@ export function SeasonPage({ state, update }: PageProps) {
 }
 
 export function WeatherPage({ state, update }: PageProps) {
-  const { play, error: audioError } = useAudioPlayer();
+  const { play } = useAudioPlayer();
 
   return (
     <>
       <p className="instruction">
         Privește pe fereastră. Alege una sau două imagini.
       </p>
-      {audioError && <p className="audio-notice" role="status">{audioError}</p>}
       <div className="choices weather">
         {weatherOptions.map((w) => (
           <Choice
@@ -339,6 +343,7 @@ export function AttendancePage({ state, update }: PageProps) {
 }
 
 export function EmotionsPage({ state, update }: PageProps) {
+  const { play } = useAudioPlayer();
   return (
     <>
       <p className="instruction">
@@ -352,6 +357,7 @@ export function EmotionsPage({ state, update }: PageProps) {
             selected={state.emotion === e}
             onClick={() => {
               update({ emotion: e });
+              play(emotionAudio[e]);
             }}
           >
             <Face emotion={e} size={112} />

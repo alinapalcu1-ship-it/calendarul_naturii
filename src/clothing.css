@@ -221,3 +221,10 @@
     animation: none;
   }
 }
+
+.fitted-collar-front {
+  position: absolute;
+  inset: 0;
+  z-index: 46;
+  pointer-events: none;
+}

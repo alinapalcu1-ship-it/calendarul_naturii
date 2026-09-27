@@ -36,3 +36,26 @@ export const promptAudio = {
   weatherQuestion: audioUrl("cum_e_afara.mp3"),
   finalMessage: audioUrl("impreuna_ziua_e_mai.mp3"),
 };
+
+export const weekdayAudio: Record<string, string> = {
+  Luni: audioUrl("zile/zi_luni.mp3"),
+  Marți: audioUrl("zile/zi_marti.mp3"),
+  Miercuri: audioUrl("zile/zi_miercuri.mp3"),
+  Joi: audioUrl("zile/zi_joi.mp3"),
+  Vineri: audioUrl("zile/zi_vineri.mp3"),
+};
+export const seasonAudio: Record<string, string> = {
+  Primăvara: audioUrl("anotimpuri/anotimp_primavara.mp3"),
+  Vara: audioUrl("anotimpuri/anotimp_vara.mp3"),
+  Toamna: audioUrl("anotimpuri/anotimp_toamna.mp3"),
+  Iarna: audioUrl("anotimpuri/anotimp_iarna.mp3"),
+};
+export const emotionAudio: Record<string, string> = {
+  Vesel: audioUrl("emotii/emotie_vesel.mp3"),
+  Trist: audioUrl("emotii/emotie_trist.mp3"),
+  Supărat: audioUrl("emotii/emotie_suparat.mp3"),
+  Speriat: audioUrl("emotii/emotie_speriat.mp3"),
+  Obosit: audioUrl("emotii/emotie_obosit.mp3"),
+  Liniștit: audioUrl("emotii/emotie_linistit.mp3"),
+};
+export const backgroundAudio = audioUrl("fundal/fundal_calendar.mp3");
