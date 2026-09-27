@@ -13,6 +13,10 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
     const x = fit.translateX + (adjustment?.translateX ?? 0) +
       (fit.pair ? (side === 0 ? 1 : -1) * (fit.inset ?? 0) : 0);
     const y = fit.translateY + (adjustment?.translateY ?? 0);
+    // Clip only detached pixels beside the glove pair, not the doll's hands.
+    const gloveClip = item.gender === "baiat"
+      ? (side === 0 ? "inset(53% 70.5% 33% 17.8%)" : "inset(53% 17.8% 33% 70.5%)")
+      : (side === 0 ? "inset(53% 69.5% 33% 18%)" : "inset(53% 18% 33% 69.5%)");
     
     
     return (
@@ -28,11 +32,9 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
           zIndex: item.slot === "scarf" && !front ? 44 : item.zIndex,
           transformOrigin: `${originX / 1086 * 100}% ${fit.originY / 1448 * 100}%`,
           transform: `translate(${x / 1086 * 100}%, ${y / 1448 * 100}%) rotate(${adjustment?.rotate ?? 0}deg) scale(${fit.scaleX}, ${fit.scaleY})`,
-          clipPath: fit.pair
-  ? side === 0
-    ? "inset(0 50% 0 0)"
-    : "inset(0 0 0 50%)"
-  : undefined,
+          clipPath: item.slot === "gloves" ? gloveClip : fit.pair
+            ? (side === 0 ? "inset(0 50% 0 0)" : "inset(0 0 0 50%)")
+            : undefined,
         }}
       />
     );
@@ -47,27 +49,6 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
   const scarf = selected.find(item => item.slot === "scarf");
   const winterHat = selected.some(item => item.id.endsWith("_winter-hat"));
   const base = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-base.png`;
-  const foregroundBody = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-foreground-body.png`;
-  const foregroundShoes = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-foreground-shoes.png`;
-  const foregroundHair = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-foreground-hair.png`;
-
-  const bottoms = selected.filter((item) => item.slot === "bottom");
-  const shoes = selected.filter((item) => item.slot === "shoes");
-  const tops = selected.filter((item) => item.slot === "top" || item.slot === "outer");
-  const gloves = selected.filter((item) => item.slot === "gloves");
-
-  const headAccessories = selected.filter(
-    (item) =>
-      item.slot === "head" &&
-      /hat|cap|caciul|sapca|palar/i.test(item.id)
-  );
-
-  const otherAccessories = selected.filter(
-    (item) =>
-      item.slot === "umbrella" &&
-      !/hat|cap|caciul|sapca|palar/i.test(item.id)
-  );
-
   return (
     <div className="fitted-mannequin" role="img" aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}>
       <img className="mannequin-base" src={base} alt="" draggable={false}
@@ -83,54 +64,6 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
           style={{ zIndex: 45, clipPath }} />
       ))}
 
-      {shoes.map((item) => (
-        <Layer key={item.id} item={item} />
-      ))}
-
-      {tops.map((item) => (
-        <Layer key={item.id} item={item} />
-      ))}
-
-      {otherAccessories.map((item) => (
-        <Layer key={item.id} item={item} />
-      ))}
-
-      {/* corpul în față, ca să ascundă marginile și să facă fit natural */}
-      <img
-        className="fitted-foreground"
-        src={foregroundBody}
-        alt=""
-        draggable={false}
-        style={{ zIndex: 45 }}
-      />
-
-      {/* overlay pentru pantofi, ca să intre corect la glezne / degete */}
-      <img
-        className="fitted-foreground"
-        src={foregroundShoes}
-        alt=""
-        draggable={false}
-        style={{ zIndex: 46 }}
-      />
-
-      {/* mănușile trebuie să vină în față */}
-      {gloves.map((item) => (
-        <Layer key={item.id} item={item} />
-      ))}
-
-      {/* accesoriile de cap înainte de păr */}
-      {headAccessories.map((item) => (
-        <Layer key={item.id} item={item} />
-      ))}
-
-      {/* părul în față, ca să arate natural peste căciuli/șepci */}
-      <img
-        className="fitted-foreground"
-        src={foregroundHair}
-        alt=""
-        draggable={false}
-        style={{ zIndex: 60 }}
-      />
       {collar && (
         <div className="fitted-collar-front" aria-hidden="true"
           style={{ clipPath: `inset(${tshirt ? 43 : hooded ? 41 : 40}% 38% 54% 38%)` }}>

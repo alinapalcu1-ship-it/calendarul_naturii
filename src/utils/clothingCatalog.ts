@@ -39,24 +39,24 @@ type Fit = {
 export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
   fata: {
     top: { scaleX: 1.04, scaleY: .82, translateX: 0, translateY: 42, originX: 543, originY: 538 },
-    bottom: { scaleX: 1.08, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
+    bottom: { scaleX: 1.04, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
     outer: { scaleX: 1.03, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 492 },
-    scarf: { scaleX: .94, scaleY: .69, translateX: 0, translateY: 95, originX: 543, originY: 480 },
-    shoes: { scaleX: 1.20, scaleY: 1.06, translateX: 0, translateY: -30, originX: 543, originY: 1436, pair: [399, 687], inset: 0, sides: [{ translateX: -4, translateY: 0, rotate: -2 }, { translateX: 4, translateY: 0, rotate: 2 }] },
+    scarf: { scaleX: .87, scaleY: .65, translateX: 0, translateY: 92, originX: 543, originY: 480 },
+    shoes: { scaleX: .98, scaleY: .98, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 6, sides: [{ translateX: 0, translateY: 0, rotate: -1 }, { translateX: -2, translateY: -1, rotate: 1 }] },
     head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
-    gloves: { scaleX: 1.32, scaleY: 1.22, translateX: 0, translateY: 0, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
+    gloves: { scaleX: .94, scaleY: .80, translateX: 0, translateY: 25, originX: 543, originY: 865, pair: [264, 822], inset: 0, sides: [{ translateX: 0, translateY: 0, rotate: 4 }, { translateX: -4, translateY: 0, rotate: -4 }] },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
   baiat: {
     top: { scaleX: 1.06, scaleY: .84, translateX: 0, translateY: 32, originX: 543, originY: 530 },
-    bottom: { scaleX: 1.05, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
+    bottom: { scaleX: 1.01, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
     outer: { scaleX: 1.04, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 490 },
     
-    shoes: { scaleX: 1.22, scaleY: 1.07, translateX: 0, translateY: -0, originX: 543, originY: 1436, pair: [387, 699], inset: 0, sides: [{ translateX: -5, translateY: 0, rotate: -3 }, { translateX: 4, translateY: -1, rotate: 3 }] },
-    scarf: { scaleX: 1.02, scaleY: .69, translateX: -2, translateY: 86, originX: 543, originY: 480 },
+    shoes: { scaleX: 1.04, scaleY: 1, translateX: 0, translateY: -14, originX: 543, originY: 1436, pair: [387, 699], inset: 8, sides: [{ translateX: 0, translateY: 0, rotate: -1 }, { translateX: 0, translateY: -1, rotate: 1 }] },
+    scarf: { scaleX: .97, scaleY: .67, translateX: -2, translateY: 88, originX: 543, originY: 480 },
    
     head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
-    gloves: { scaleX: 1.34, scaleY: 1.24, translateX: 0, translateY: 0, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
+    gloves: { scaleX: 1, scaleY: .82, translateX: 0, translateY: 25, originX: 543, originY: 875, pair: [254, 833], inset: 0, sides: [{ translateX: -5, translateY: 0, rotate: 5 }, { translateX: 0, translateY: 0, rotate: -5 }] },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
 };
@@ -70,14 +70,21 @@ const itemFits: Record<string, Partial<Fit>> = {
   baiat_top_03: { scaleX: 1.26, scaleY: .94, translateY: -5 },
   fata_outer_03: { scaleX: 1.18 },
   baiat_outer_03: { scaleX: 1.12 },
-  fata_bottom_01: { scaleY: 1.035, translateY: 14 },
-  fata_bottom_02: { scaleY: 1.035, translateY: 12 },
+  fata_bottom_01: { scaleY: 1.045, translateY: 18 },
+  fata_bottom_02: { scaleY: 1.05, translateY: 16 },
   fata_bottom_03: { scaleX: 1, scaleY: 1, translateY: 10 },
   fata_bottom_04: { scaleX: 1, scaleY: 1, translateY: 25 },
-  baiat_bottom_01: { scaleY: 1.10, translateY: -8 },
-  baiat_bottom_02: { scaleY: 1.09, translateY: -2 },
-  baiat_bottom_03: { scaleY: 1.12, translateY: -14 },
+  baiat_bottom_01: { scaleY: 1.09, translateY: -6 },
+  baiat_bottom_02: { scaleX: .99, scaleY: 1.08, translateY: 0 },
+  baiat_bottom_03: { scaleX: 1, scaleY: 1.12, translateY: -12 },
   baiat_bottom_04: { scaleX: 1, scaleY: 1, translateY: 30 },
+  // Low shoes and boots have different ankle openings and sole widths.
+  fata_shoes_02: { scaleX: 1, scaleY: .95, translateY: -43 },
+  fata_shoes_03: { scaleX: .99, scaleY: .98, translateY: -42 },
+  fata_shoes_04: { scaleX: .96, scaleY: .97, translateY: -42 },
+  baiat_shoes_02: { scaleX: 1.02, scaleY: .99, translateY: -14 },
+  baiat_shoes_03: { scaleX: 1, scaleY: .98, translateY: -14 },
+  baiat_shoes_04: { scaleX: .98, scaleY: .97, translateY: -14 },
 };
 
 export function clothingFit(item: ClothingItem): Fit {
@@ -155,7 +162,7 @@ export const clothingItems: ClothingItem[] = [
 
   item("fata", "accessory", "head", 1, "Pălărie de soare", 70),
   item("fata", "accessory", "head", 2, "Șapcă roz", 70),
-  newSprite("fata", "head", "winter-hat", "Căciulă roz-lila cu pompon", { x: 212, y: 0, width: 662, height: 330 }),
+  newSprite("fata", "head", "winter-hat", "Căciulă roz-lila cu pompon", { x: 226, y: 3, width: 634, height: 327 }),
   item("fata", "accessory", "gloves", 3, "Mănuși roz", 75),
   item("fata", "accessory", "umbrella", 4, "Umbrelă roz", 80),
   scarf("fata", "Fular roz"),
@@ -183,7 +190,7 @@ export const clothingItems: ClothingItem[] = [
 
   item("baiat", "accessory", "head", 1, "Pălărie de soare", 70),
   item("baiat", "accessory", "head", 2, "Șapcă albastră", 70),
-  newSprite("baiat", "head", "winter-hat", "Căciulă bleu-verde cu pompon", { x: 259, y: 0, width: 568, height: 328 }),
+  newSprite("baiat", "head", "winter-hat", "Căciulă bleu-verde cu pompon", { x: 265, y: 4, width: 556, height: 324 }),
   item("baiat", "accessory", "gloves", 3, "Mănuși albastre", 75),
   item("baiat", "accessory", "umbrella", 4, "Umbrelă cu dinozaur", 80),
   scarf("baiat", "Fular în carouri"),
