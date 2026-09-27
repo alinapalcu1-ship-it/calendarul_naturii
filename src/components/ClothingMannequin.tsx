@@ -1,9 +1,9 @@
 import { clothingItems, type ClothingGender, type ClothingItem } from "../utils/clothingCatalog";
 
-function Layer({ item }: { item: ClothingItem }) {
+function Layer({ item, className = "" }: { item: ClothingItem; className?: string }) {
   return (
     <img
-      className="fitted-layer"
+      className={`fitted-layer ${className}`.trim()}
       src={item.src}
       alt=""
       draggable={false}
@@ -44,49 +44,25 @@ export function ClothingMannequin({
       role="img"
       aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}
     >
-      {/* Corpul este baza fixă. */}
-      <img
-        className="mannequin-base"
-        src={asset("base")}
-        alt=""
-        draggable={false}
-      />
+      <img className="mannequin-base" src={asset("base")} alt="" draggable={false} />
 
-      {/* Hainele care trebuie să stea pe corp. */}
+      {/* Fiecare PNG este deja aliniat pe același canvas ca manechinul.
+          Nu mascăm corpul peste haine: gulerul, mânecile, pantalonii și
+          încălțămintea rămân naturale și nu mai apar tăieturi artificiale. */}
       {bottoms.map((item) => <Layer key={item.id} item={item} />)}
       {tops.map((item) => <Layer key={item.id} item={item} />)}
       {outer.map((item) => <Layer key={item.id} item={item} />)}
-
-      {/* Gâtul și mâinile revin în față: efect de haină îmbrăcată, nu lipită. */}
-      <img
-        className="fitted-foreground"
-        src={asset("foreground-body")}
-        alt=""
-        draggable={false}
-      />
-
-      {/* Fularul trebuie să rămână în fața gâtului. */}
       {scarves.map((item) => <Layer key={item.id} item={item} />)}
-
-      {/* Încălțămintea acoperă laba piciorului, iar glezna intră în pantof. */}
       {shoes.map((item) => <Layer key={item.id} item={item} />)}
-      <img
-        className="fitted-foreground"
-        src={asset("foreground-shoes")}
-        alt=""
-        draggable={false}
-      />
-
-      {/* Pălăria/șapca: fața rămâne în față, iar părul lateral trece peste margini. */}
       {head.map((item) => <Layer key={item.id} item={item} />)}
-      <img
-        className="fitted-foreground"
-        src={asset("foreground-head")}
-        alt=""
-        draggable={false}
-      />
-
-      {/* Aceste accesorii trebuie să fie complet în față. */}
+      {gloves.length > 0 && (
+        <img
+          className="fitted-layer"
+          src={asset("gloves-underlay")}
+          alt=""
+          draggable={false}
+        />
+      )}
       {gloves.map((item) => <Layer key={item.id} item={item} />)}
       {umbrellas.map((item) => <Layer key={item.id} item={item} />)}
     </div>
