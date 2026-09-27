@@ -19,6 +19,8 @@ export type ClothingItem = {
   src: string;
   thumb: string;
   zIndex: number;
+  // Tight sprites use their own frame; legacy PNGs keep the full doll canvas.
+  frame?: { x: number; y: number; width: number; height: number };
 };
 
 // Coordinates are in the original 1086 × 1448 canvas, not viewport pixels.
@@ -39,20 +41,20 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     top: { scaleX: 1.04, scaleY: .82, translateX: 0, translateY: 42, originX: 543, originY: 538 },
     bottom: { scaleX: 1.08, scaleY: 1.02, translateX: 0, translateY: 12, originX: 543, originY: 820 },
     outer: { scaleX: 1.03, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 492 },
-    scarf: { scaleX: 1, scaleY: .75, translateX: 0, translateY: 95, originX: 543, originY: 480 },
+    scarf: { scaleX: .94, scaleY: .69, translateX: 0, translateY: 82, originX: 543, originY: 480 },
     shoes: { scaleX: 1.12, scaleY: 1.03, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 10, sides: [{ translateX: -4, translateY: 0, rotate: -2 }, { translateX: 3, translateY: -2, rotate: 2 }] },
     head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
-    gloves: { scaleX: 1.25, scaleY: 1.14, translateX: 0, translateY: 14, originX: 543, originY: 865, pair: [264, 822], inset: 0 },
+    gloves: { scaleX: 1.25, scaleY: 1.14, translateX: 0, translateY: 24, originX: 543, originY: 865, pair: [264, 822], inset: 0, sides: [{ translateX: -5, translateY: 0, rotate: 12 }, { translateX: -1, translateY: 0, rotate: -12 }] },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
   baiat: {
     top: { scaleX: 1.06, scaleY: .84, translateX: 0, translateY: 32, originX: 543, originY: 530 },
     bottom: { scaleX: 1.05, scaleY: 1.10, translateX: -2, translateY: -8, originX: 545, originY: 850 },
     outer: { scaleX: 1.04, scaleY: .98, translateX: 0, translateY: 0, originX: 543, originY: 490 },
-    scarf: { scaleX: 1.05, scaleY: .75, translateX: 0, translateY: 100, originX: 543, originY: 480 },
+    scarf: { scaleX: 1.02, scaleY: .69, translateX: -2, translateY: 86, originX: 543, originY: 480 },
     shoes: { scaleX: 1.16, scaleY: 1.04, translateX: 0, translateY: -12, originX: 543, originY: 1436, pair: [387, 699], inset: 14, sides: [{ translateX: -5, translateY: 0, rotate: -3 }, { translateX: 4, translateY: -1, rotate: 3 }] },
     head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
-    gloves: { scaleX: 1.28, scaleY: 1.17, translateX: 0, translateY: 20, originX: 543, originY: 875, pair: [254, 833], inset: 0 },
+    gloves: { scaleX: 1.28, scaleY: 1.17, translateX: 0, translateY: 29, originX: 543, originY: 875, pair: [254, 833], inset: 0, sides: [{ translateX: -4, translateY: 0, rotate: 13 }, { translateX: 2, translateY: 0, rotate: -13 }] },
     umbrella: { scaleX: 1, scaleY: 1, translateX: 0, translateY: 0, originX: 543, originY: 724 },
   },
 };
@@ -116,12 +118,24 @@ function item(
   };
 }
 
+function newSprite(gender: ClothingGender, slot: "top" | "head", file: string, label: string, frame: NonNullable<ClothingItem["frame"]>): ClothingItem {
+  const prefix = gender === "fata" ? "girl" : "boy";
+  const src = `${base}/${prefix}/${prefix}-${file}.png`;
+  return { id: `${gender}_${file}`, label, gender, group: slot === "top" ? "top" : "accessory", slot, src, thumb: src, zIndex: slot === "top" ? 30 : 70, frame };
+}
+
+// Keep the saved scarf IDs and file paths while moving their UI category.
+function scarf(gender: ClothingGender, label: string): ClothingItem {
+  return { ...item(gender, "outer", "scarf", 4, label, 55), group: "accessory" };
+}
+
 export const clothingItems: ClothingItem[] = [
-  // Fetiță — exact 4 opțiuni per categorie.
+  // Fetiță
   item("fata", "top", "top", 1, "Bluză roz cu floricele", 30),
   item("fata", "top", "top", 2, "Bluză crem cu floricele", 30),
   item("fata", "top", "top", 3, "Cardigan mov", 30),
   item("fata", "top", "top", 4, "Hanorac roz", 30),
+  newSprite("fata", "top", "tshirt", "Tricou crem cu curcubeu", { x: 249, y: 546, width: 587, height: 350 }),
 
   item("fata", "bottom", "bottom", 1, "Colanți roz", 20),
   item("fata", "bottom", "bottom", 2, "Colanți mov", 20),
@@ -131,7 +145,6 @@ export const clothingItems: ClothingItem[] = [
   item("fata", "outer", "outer", 1, "Geacă roz", 40),
   item("fata", "outer", "outer", 2, "Geacă mov", 40),
   item("fata", "outer", "outer", 3, "Pelerină galbenă", 40),
-  item("fata", "outer", "scarf", 4, "Fular roz", 55),
 
   item("fata", "shoes", "shoes", 1, "Adidași roz", 60),
   item("fata", "shoes", "shoes", 2, "Pantofi crem", 60),
@@ -140,14 +153,17 @@ export const clothingItems: ClothingItem[] = [
 
   item("fata", "accessory", "head", 1, "Pălărie de soare", 70),
   item("fata", "accessory", "head", 2, "Șapcă roz", 70),
+  newSprite("fata", "head", "winter-hat", "Căciulă roz-lila cu pompon", { x: 212, y: 0, width: 662, height: 330 }),
   item("fata", "accessory", "gloves", 3, "Mănuși roz", 75),
   item("fata", "accessory", "umbrella", 4, "Umbrelă roz", 80),
+  scarf("fata", "Fular roz"),
 
-  // Băiat — exact 4 opțiuni per categorie.
+  // Băiat
   item("baiat", "top", "top", 1, "Pulover cu mașinuță", 30),
   item("baiat", "top", "top", 2, "Pulover cu ursuleț", 30),
   item("baiat", "top", "top", 3, "Hanorac cu dinozaur", 30),
   item("baiat", "top", "top", 4, "Bluză crem-verde", 30),
+  newSprite("baiat", "top", "tshirt", "Tricou crem cu bărcuță", { x: 221, y: 558, width: 644, height: 340 }),
 
   item("baiat", "bottom", "bottom", 1, "Blugi albaștri", 20),
   item("baiat", "bottom", "bottom", 2, "Pantaloni bej", 20),
@@ -157,7 +173,6 @@ export const clothingItems: ClothingItem[] = [
   item("baiat", "outer", "outer", 1, "Geacă albastră", 40),
   item("baiat", "outer", "outer", 2, "Geacă verde", 40),
   item("baiat", "outer", "outer", 3, "Pelerină galbenă", 40),
-  item("baiat", "outer", "scarf", 4, "Fular în carouri", 55),
 
   item("baiat", "shoes", "shoes", 1, "Adidași albaștri", 60),
   item("baiat", "shoes", "shoes", 2, "Adidași verzi", 60),
@@ -166,8 +181,10 @@ export const clothingItems: ClothingItem[] = [
 
   item("baiat", "accessory", "head", 1, "Pălărie de soare", 70),
   item("baiat", "accessory", "head", 2, "Șapcă albastră", 70),
+  newSprite("baiat", "head", "winter-hat", "Căciulă bleu-verde cu pompon", { x: 259, y: 0, width: 568, height: 328 }),
   item("baiat", "accessory", "gloves", 3, "Mănuși albastre", 75),
   item("baiat", "accessory", "umbrella", 4, "Umbrelă cu dinozaur", 80),
+  scarf("baiat", "Fular în carouri"),
 ];
 
 export const findClothing = (id: string) =>
