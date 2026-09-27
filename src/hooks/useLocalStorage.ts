@@ -3,80 +3,95 @@ import type { State } from "../types";
 import { initialState } from "../utils/data";
 import { today } from "../utils/dateUtils";
 import { migrateState } from "../utils/migrateState";
-const KEY = "calendarul-naturii-v1";
+import {
+  hydratePhotos,
+  newDay,
+  persistState,
+  STORAGE_KEY,
+} from "../utils/classroomStorage";
+
+// Serialize saves, including slow photo writes, so older edits cannot win.
+let writes = Promise.resolve();
 export function useLocalStorage() {
   const [error, setError] = useState("");
-  const [state, setState] = useState<State>(() => {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return initialState();
-      const s = JSON.parse(raw) as State;
-      if (
-        s.version !== 1 ||
-        !Array.isArray(s.children) ||
-        !Array.isArray(s.present) ||
-        !Array.isArray(s.weather) ||
-        !Array.isArray(s.clothes) ||
-        !Array.isArray(s.activities) ||
-        !/^\d{4}-\d{2}-\d{2}$/.test(s.date)
-      )
-        return initialState();
-      return {
-        ...initialState(),
-        ...migrateState(s),
-        ...(s.dayKey !== today()
-          ? {
-              dayKey: today(),
-              date: today(),
-              present: [],
-              helper: null,
-              weather: [],
-              temperature: "",
-              emotion: "",
-              clothes: [],
-              outfits: { girl: [], boy: [] },
-              childEmotions: {},
-            }
-          : {}),
-      };
-    } catch {
-      return initialState();
-    }
-  });
+  const [ready, setReady] = useState(false);
+  const [state, setState] = useState<State>(initialState);
   useEffect(() => {
-    try {
-      localStorage.setItem(KEY, JSON.stringify(state));
-      setError("");
-    } catch {
-      setError(
-        "Salvarea nu a reușit. Spațiul browserului poate fi plin sau blocat. Micșorează numărul fotografiilor și încearcă din nou.",
-      );
-    }
-  }, [state]);
-  useEffect(() => {
-    const tick = () =>
-      setState((s) =>
-        s.dayKey === today()
-          ? s
-          : {
-              ...s,
-              dayKey: today(),
-              date: today(),
-              present: [],
-              helper: null,
-              weather: [],
-              temperature: "",
-              emotion: "",
-              clothes: [],
-              outfits: { girl: [], boy: [] },
-              childEmotions: {},
-            },
-      );
-    const id = window.setInterval(tick, 30000);
-    return () => clearInterval(id);
+    let cancelled = false;
+    (async () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        let loaded = initialState();
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (
+            saved.version !== 1 ||
+            !Array.isArray(saved.children) ||
+            !Array.isArray(saved.activities)
+          )
+            throw new Error(
+              "Datele salvate nu pot fi citite. Nu au fost suprascrise.",
+            );
+          loaded = await hydratePhotos(migrateState({ ...loaded, ...saved }));
+          if (loaded.dayKey !== today()) loaded = newDay(loaded);
+        }
+        if (!cancelled) {
+          setState(loaded);
+          setReady(true);
+        }
+      } catch (e) {
+        if (!cancelled)
+          setError(
+            e instanceof Error
+              ? e.message
+              : "Stocarea locală nu este disponibilă. Datele existente nu au fost modificate.",
+          );
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
+  useEffect(() => {
+    if (!ready) return;
+    let current = true;
+    const protectPendingSave = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", protectPendingSave);
+    writes = writes.catch(() => {}).then(() => persistState(state));
+    writes.then(
+      () => {
+        window.removeEventListener("beforeunload", protectPendingSave);
+        if (current) setError("");
+      },
+      () => {
+        if (current)
+          setError(
+            "Salvarea locală nu a reușit. Exportă configurația înainte să închizi aplicația și verifică spațiul disponibil în browser.",
+          );
+      },
+    );
+    return () => {
+      current = false;
+      window.removeEventListener("beforeunload", protectPendingSave);
+    };
+  }, [state, ready]);
+  useEffect(() => {
+    if (!ready) return;
+    const tick = () => setState((s) => (s.dayKey === today() ? s : newDay(s)));
+    const id = window.setInterval(tick, 30000);
+    window.addEventListener("focus", tick);
+    return () => {
+      clearInterval(id);
+      window.removeEventListener("focus", tick);
+    };
+  }, [ready]);
   return {
     state,
+    ready,
+    error,
     update: (patch: Partial<State>) =>
       setState((s) => {
         const mannequin = patch.mannequin ?? s.mannequin;
@@ -88,6 +103,6 @@ export function useLocalStorage() {
         return { ...s, ...patch, outfits, clothes: outfits[mannequin] };
       }),
     reset: () => setState(initialState()),
-    error,
+    startNewDay: () => setState(newDay),
   };
 }

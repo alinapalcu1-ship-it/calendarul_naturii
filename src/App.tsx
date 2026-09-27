@@ -16,7 +16,7 @@ import ClothingPage from "./pages/ClothingPage";
 import SummaryPage from "./pages/SummaryPage";
 import TeacherSettings from "./pages/TeacherSettings";
 export default function App() {
-  const { state, update, reset, error } = useLocalStorage();
+  const { state, update, reset, startNewDay, ready, error } = useLocalStorage();
   const [page, setPage] = useState<Page>("home");
   const [fullscreen, setFullscreen] = useState(false);
   const [screenError, setScreenError] = useState("");
@@ -54,7 +54,7 @@ export default function App() {
     ) : page === "summary" ? (
       <SummaryPage {...props} />
     ) : (
-      <TeacherSettings {...props} reset={reset} />
+      <TeacherSettings {...props} reset={reset} startNewDay={startNewDay} />
     );
   return (
     <>
@@ -96,9 +96,16 @@ export default function App() {
             </div>
           </div>
         )}
-        {content}
+        {ready ? (
+          content
+        ) : (
+          <p role="status">
+            {error
+              ? "Reîncarcă pagina după verificarea stocării browserului. Datele salvate sunt păstrate."
+              : "Se încarcă datele grupei…"}
+          </p>
+        )}
       </main>
     </>
   );
 }
-

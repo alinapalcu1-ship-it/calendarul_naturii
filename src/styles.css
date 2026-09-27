@@ -2576,7 +2576,7 @@ textarea {
 }
 
 .audio-trigger.compact {
-  min-height: 42px;
+  min-height: 44px;
   padding: 8px 14px;
   font-size: 0.92rem;
 }
@@ -2607,4 +2607,25 @@ textarea {
   .section-audio-row .section-label {
     margin-bottom: 0;
   }
+}
+/* Classroom controls: keep the existing palette and layout, enlarge touch targets. */
+button, .upload, a { touch-action: manipulation; }
+button, .upload { -webkit-user-select: none; user-select: none; }
+button { min-height: 44px; }
+.settings-access, .settings-fields { grid-column: 1 / -1; }
+.settings-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 28px; border: 0; padding: 0; margin: 0; min-width: 0; align-items: start; }
+.settings-panel { min-width: 0; overflow-wrap: anywhere; }
+.settings-panel > button { margin: 6px 8px 6px 0; max-width: 100%; white-space: normal; }
+.settings-fields:disabled { opacity: .7; }
+.settings-panel .backup-import { position: relative; padding: 16px; min-height: 48px; background: #e9edde; border-radius: 12px; margin-top: 12px; cursor: pointer; overflow: hidden; }
+.upload:focus-within { outline: 3px solid #6d8152; outline-offset: 3px; }
+.dialog { max-height: calc(100dvh - 32px); overflow-y: auto; }
+.dialog button { max-width: 100%; white-space: normal; }
+@media (max-width: 1100px) { .settings-fields { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  input, textarea, select { font-size: 16px; }
+  .settings-panel { padding: 18px; }
+  .child-fields { grid-template-columns: minmax(0, 1fr); }
+  .child-editor { gap: 10px; align-items: flex-start; }
+  .routine-settings { grid-template-columns: minmax(0, 1fr); }
 }
