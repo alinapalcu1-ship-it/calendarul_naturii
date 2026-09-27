@@ -1,0 +1,574 @@
+[
+  {
+    "id": "fata_top_01",
+    "sourceBox": [
+      12,
+      62,
+      168,
+      197
+    ],
+    "width": 156,
+    "height": 126
+  },
+  {
+    "id": "fata_top_02",
+    "sourceBox": [
+      158,
+      64,
+      273,
+      198
+    ],
+    "width": 108,
+    "height": 123
+  },
+  {
+    "id": "fata_top_03",
+    "sourceBox": [
+      262,
+      68,
+      386,
+      197
+    ],
+    "width": 124,
+    "height": 119
+  },
+  {
+    "id": "fata_top_04",
+    "sourceBox": [
+      373,
+      57,
+      508,
+      202
+    ],
+    "width": 134,
+    "height": 137
+  },
+  {
+    "id": "fata_top_05",
+    "sourceBox": [
+      492,
+      68,
+      622,
+      198
+    ],
+    "width": 123,
+    "height": 120
+  },
+  {
+    "id": "fata_top_06",
+    "sourceBox": [
+      601,
+      68,
+      731,
+      198
+    ],
+    "width": 130,
+    "height": 117
+  },
+  {
+    "id": "baiat_top_01",
+    "sourceBox": [
+      747,
+      64,
+      881,
+      198
+    ],
+    "width": 133,
+    "height": 124
+  },
+  {
+    "id": "baiat_top_02",
+    "sourceBox": [
+      865,
+      64,
+      989,
+      198
+    ],
+    "width": 123,
+    "height": 121
+  },
+  {
+    "id": "baiat_top_03",
+    "sourceBox": [
+      975,
+      56,
+      1114,
+      203
+    ],
+    "width": 137,
+    "height": 137
+  },
+  {
+    "id": "baiat_top_04",
+    "sourceBox": [
+      1096,
+      59,
+      1223,
+      200
+    ],
+    "width": 122,
+    "height": 131
+  },
+  {
+    "id": "baiat_top_05",
+    "sourceBox": [
+      1209,
+      65,
+      1338,
+      198
+    ],
+    "width": 118,
+    "height": 122
+  },
+  {
+    "id": "baiat_top_06",
+    "sourceBox": [
+      1317,
+      63,
+      1436,
+      198
+    ],
+    "width": 119,
+    "height": 123
+  },
+  {
+    "id": "fata_bottom_01",
+    "sourceBox": [
+      53,
+      270,
+      176,
+      466
+    ],
+    "width": 111,
+    "height": 188
+  },
+  {
+    "id": "fata_bottom_02",
+    "sourceBox": [
+      202,
+      270,
+      322,
+      467
+    ],
+    "width": 110,
+    "height": 190
+  },
+  {
+    "id": "fata_bottom_03",
+    "sourceBox": [
+      330,
+      300,
+      541,
+      444
+    ],
+    "width": 208,
+    "height": 139
+  },
+  {
+    "id": "fata_bottom_04",
+    "sourceBox": [
+      527,
+      259,
+      709,
+      466
+    ],
+    "width": 178,
+    "height": 203
+  },
+  {
+    "id": "baiat_bottom_01",
+    "sourceBox": [
+      767,
+      270,
+      912,
+      466
+    ],
+    "width": 136,
+    "height": 186
+  },
+  {
+    "id": "baiat_bottom_02",
+    "sourceBox": [
+      927,
+      272,
+      1080,
+      470
+    ],
+    "width": 148,
+    "height": 189
+  },
+  {
+    "id": "baiat_bottom_03",
+    "sourceBox": [
+      1096,
+      272,
+      1252,
+      471
+    ],
+    "width": 152,
+    "height": 190
+  },
+  {
+    "id": "baiat_bottom_04",
+    "sourceBox": [
+      1258,
+      286,
+      1427,
+      443
+    ],
+    "width": 163,
+    "height": 144
+  },
+  {
+    "id": "fata_shoes_01",
+    "sourceBox": [
+      14,
+      539,
+      135,
+      652
+    ],
+    "width": 117,
+    "height": 107
+  },
+  {
+    "id": "fata_shoes_02",
+    "sourceBox": [
+      117,
+      547,
+      240,
+      660
+    ],
+    "width": 117,
+    "height": 104
+  },
+  {
+    "id": "fata_shoes_03",
+    "sourceBox": [
+      232,
+      539,
+      358,
+      660
+    ],
+    "width": 121,
+    "height": 108
+  },
+  {
+    "id": "fata_shoes_04",
+    "sourceBox": [
+      346,
+      534,
+      480,
+      669
+    ],
+    "width": 128,
+    "height": 128
+  },
+  {
+    "id": "fata_shoes_05",
+    "sourceBox": [
+      474,
+      540,
+      598,
+      657
+    ],
+    "width": 117,
+    "height": 108
+  },
+  {
+    "id": "fata_shoes_06",
+    "sourceBox": [
+      591,
+      539,
+      723,
+      662
+    ],
+    "width": 124,
+    "height": 115
+  },
+  {
+    "id": "baiat_shoes_01",
+    "sourceBox": [
+      747,
+      540,
+      864,
+      655
+    ],
+    "width": 112,
+    "height": 105
+  },
+  {
+    "id": "baiat_shoes_02",
+    "sourceBox": [
+      850,
+      545,
+      973,
+      661
+    ],
+    "width": 117,
+    "height": 107
+  },
+  {
+    "id": "baiat_shoes_03",
+    "sourceBox": [
+      967,
+      535,
+      1090,
+      662
+    ],
+    "width": 118,
+    "height": 118
+  },
+  {
+    "id": "baiat_shoes_04",
+    "sourceBox": [
+      1081,
+      533,
+      1206,
+      670
+    ],
+    "width": 122,
+    "height": 128
+  },
+  {
+    "id": "baiat_shoes_05",
+    "sourceBox": [
+      1198,
+      540,
+      1320,
+      661
+    ],
+    "width": 117,
+    "height": 112
+  },
+  {
+    "id": "baiat_shoes_06",
+    "sourceBox": [
+      1314,
+      539,
+      1436,
+      665
+    ],
+    "width": 117,
+    "height": 113
+  },
+  {
+    "id": "fata_outer_01",
+    "sourceBox": [
+      16,
+      730,
+      167,
+      882
+    ],
+    "width": 147,
+    "height": 145
+  },
+  {
+    "id": "fata_outer_02",
+    "sourceBox": [
+      152,
+      728,
+      306,
+      885
+    ],
+    "width": 154,
+    "height": 144
+  },
+  {
+    "id": "fata_outer_03",
+    "sourceBox": [
+      286,
+      730,
+      433,
+      893
+    ],
+    "width": 145,
+    "height": 158
+  },
+  {
+    "id": "fata_outer_04",
+    "sourceBox": [
+      424,
+      733,
+      529,
+      875
+    ],
+    "width": 101,
+    "height": 133
+  },
+  {
+    "id": "fata_outer_05",
+    "sourceBox": [
+      528,
+      742,
+      637,
+      878
+    ],
+    "width": 102,
+    "height": 122
+  },
+  {
+    "id": "fata_outer_06",
+    "sourceBox": [
+      635,
+      748,
+      727,
+      875
+    ],
+    "width": 89,
+    "height": 112
+  },
+  {
+    "id": "fata_outer_07",
+    "sourceBox": [
+      26,
+      883,
+      201,
+      1040
+    ],
+    "width": 169,
+    "height": 151
+  },
+  {
+    "id": "fata_outer_08",
+    "sourceBox": [
+      195,
+      885,
+      361,
+      1041
+    ],
+    "width": 159,
+    "height": 149
+  },
+  {
+    "id": "fata_outer_09",
+    "sourceBox": [
+      380,
+      902,
+      567,
+      1025
+    ],
+    "width": 184,
+    "height": 115
+  },
+  {
+    "id": "fata_outer_10",
+    "sourceBox": [
+      564,
+      895,
+      711,
+      1021
+    ],
+    "width": 142,
+    "height": 113
+  },
+  {
+    "id": "baiat_outer_01",
+    "sourceBox": [
+      744,
+      725,
+      886,
+      880
+    ],
+    "width": 139,
+    "height": 148
+  },
+  {
+    "id": "baiat_outer_02",
+    "sourceBox": [
+      869,
+      731,
+      1022,
+      886
+    ],
+    "width": 151,
+    "height": 143
+  },
+  {
+    "id": "baiat_outer_03",
+    "sourceBox": [
+      1008,
+      731,
+      1155,
+      894
+    ],
+    "width": 146,
+    "height": 158
+  },
+  {
+    "id": "baiat_outer_04",
+    "sourceBox": [
+      1147,
+      734,
+      1257,
+      879
+    ],
+    "width": 106,
+    "height": 137
+  },
+  {
+    "id": "baiat_outer_05",
+    "sourceBox": [
+      1256,
+      744,
+      1349,
+      889
+    ],
+    "width": 84,
+    "height": 135
+  },
+  {
+    "id": "baiat_outer_06",
+    "sourceBox": [
+      1344,
+      751,
+      1433,
+      863
+    ],
+    "width": 84,
+    "height": 97
+  },
+  {
+    "id": "baiat_outer_07",
+    "sourceBox": [
+      761,
+      882,
+      936,
+      1039
+    ],
+    "width": 169,
+    "height": 147
+  },
+  {
+    "id": "baiat_outer_08",
+    "sourceBox": [
+      923,
+      890,
+      1094,
+      1041
+    ],
+    "width": 164,
+    "height": 145
+  },
+  {
+    "id": "baiat_outer_09",
+    "sourceBox": [
+      1089,
+      899,
+      1252,
+      1029
+    ],
+    "width": 153,
+    "height": 118
+  },
+  {
+    "id": "baiat_outer_10",
+    "sourceBox": [
+      1257,
+      907,
+      1433,
+      1027
+    ],
+    "width": 170,
+    "height": 110
+  }
+]

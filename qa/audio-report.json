@@ -1,0 +1,66 @@
+[
+  {
+    "src": "/audio/fundal/fundal_calendar.mp3",
+    "duration": 114.799979
+  },
+  {
+    "src": "/audio/zile/zi_luni.mp3",
+    "duration": 0.600813
+  },
+  {
+    "src": "/audio/zile/zi_marti.mp3",
+    "duration": 0.7575
+  },
+  {
+    "src": "/audio/zile/zi_miercuri.mp3",
+    "duration": 0.835875
+  },
+  {
+    "src": "/audio/zile/zi_joi.mp3",
+    "duration": 0.522438
+  },
+  {
+    "src": "/audio/zile/zi_vineri.mp3",
+    "duration": 0.7575
+  },
+  {
+    "src": "/audio/emotii/emotie_vesel.mp3",
+    "duration": 0.7575
+  },
+  {
+    "src": "/audio/emotii/emotie_trist.mp3",
+    "duration": 1.306063
+  },
+  {
+    "src": "/audio/emotii/emotie_suparat.mp3",
+    "duration": 0.91425
+  },
+  {
+    "src": "/audio/emotii/emotie_speriat.mp3",
+    "duration": 0.91425
+  },
+  {
+    "src": "/audio/emotii/emotie_obosit.mp3",
+    "duration": 1.22775
+  },
+  {
+    "src": "/audio/emotii/emotie_linistit.mp3",
+    "duration": 0.91425
+  },
+  {
+    "src": "/audio/anotimpuri/anotimp_primavara.mp3",
+    "duration": 0.992625
+  },
+  {
+    "src": "/audio/anotimpuri/anotimp_vara.mp3",
+    "duration": 0.91425
+  },
+  {
+    "src": "/audio/anotimpuri/anotimp_toamna.mp3",
+    "duration": 0.7575
+  },
+  {
+    "src": "/audio/anotimpuri/anotimp_iarna.mp3",
+    "duration": 0.7575
+  }
+]

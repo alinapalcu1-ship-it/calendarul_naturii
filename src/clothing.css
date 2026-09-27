@@ -1,0 +1,221 @@
+.final-dressing {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.5fr);
+  gap: 24px;
+  align-items: start;
+}
+.final-doll-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 50% 95%, #e4dfca 0, transparent 50%),
+    linear-gradient(140deg, #fff8ef, #f1f5e9);
+  border: 1px solid #e8e2d3;
+}
+.final-doll-stage .character-picker {
+  position: static;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+}
+.final-doll-stage .character-picker button {
+  min-height: 60px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.fitted-mannequin {
+  position: relative;
+  width: min(100%, 390px);
+  aspect-ratio: 1086/1448;
+  isolation: isolate;
+}
+.mannequin-base,
+.fitted-layer,
+.fitted-foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+.mannequin-base {
+  z-index: 0;
+}
+.fitted-layer {
+  animation: garment-appear 0.18s ease-out;
+}
+@keyframes garment-appear {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.clothing-reset {
+  min-height: 60px;
+  margin: 6px 0 0;
+}
+.final-wardrobe {
+  min-width: 0;
+}
+.final-categories {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+.final-categories button {
+  min-height: 72px;
+  border: 1px solid #dedfcd;
+  border-radius: 17px;
+  padding: 10px 6px;
+  background: #fffcf5;
+  font-size: clamp(0.8rem, 1vw, 1.05rem);
+  line-height: 1.25;
+}
+.final-categories button.active {
+  background: #e2edd9;
+  border: 2px solid #4e7e58;
+  box-shadow: 0 3px 9px #536e4315;
+}
+.clothing-instruction {
+  margin: 14px 0;
+  color: #526961;
+  font-size: 0.95rem;
+}
+.final-garment-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.final-garment {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 174px;
+  padding: 14px 9px;
+  border: 1px solid #e5ddcc;
+  border-radius: 20px;
+  background: #fffdf8;
+  box-shadow: 0 3px 12px #65503309;
+}
+.final-garment img {
+  width: 100%;
+  height: 112px;
+  object-fit: contain;
+}
+.final-garment > span:not(.clothes-check) {
+  font-size: 1rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.final-garment.selected {
+  border: 2px solid #4d8056;
+  background: #f0f6e9;
+}
+.final-garment .clothes-check {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #4d8056;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.board-dressing .final-dressing {
+  gap: 14px;
+  grid-template-columns: minmax(190px, 0.8fr) minmax(0, 1.3fr);
+}
+.board-dressing .fitted-mannequin {
+  max-width: 235px;
+}
+.board-dressing .final-garment {
+  min-height: 138px;
+  padding: 10px 6px;
+  gap: 6px;
+}
+.board-dressing .final-garment img {
+  height: 85px;
+}
+.board-dressing .final-garment > span:not(.clothes-check) {
+  font-size: 0.82rem;
+}
+.board-dressing .final-garment-grid {
+  gap: 8px;
+}
+.board-dressing .final-categories button {
+  font-size: 0.8rem;
+}
+.board-day-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.music-toggle {
+  min-width: 60px;
+  min-height: 60px;
+  font-size: 1.4rem;
+}
+.audio-notice {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  max-width: min(420px, 90vw);
+  padding: 14px 20px;
+  border: 1px solid #d8cdb6;
+  border-radius: 18px;
+  background: #fff8e8;
+  color: #37534a;
+  z-index: 100;
+  box-shadow: 0 4px 20px #443b2220;
+}
+@media (max-width: 1100px) {
+  .board-dressing .final-dressing {
+    grid-template-columns: 1fr;
+  }
+  .board-dressing .fitted-mannequin {
+    max-width: 265px;
+  }
+}
+@media (max-width: 800px) {
+  .final-dressing {
+    grid-template-columns: 1fr;
+  }
+  .fitted-mannequin {
+    max-width: 300px;
+  }
+  .final-categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .final-garment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .final-garment img {
+    height: 100px;
+  }
+  .final-doll-stage {
+    padding: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fitted-layer {
+    animation: none;
+  }
+}

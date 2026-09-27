@@ -1,0 +1,2610 @@
+:root {
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  color: #394b40;
+  background: #faf8f1;
+  font-synthesis: none;
+  font-weight: 400;
+  font-size: 18px;
+  --ink: #394b40;
+  --green: #536f55;
+  --line: #e5e4d8;
+  --sage: #e7eddf;
+  --yellow: #f6edcf;
+  --blue: #e6eff2;
+  --peach: #f6e7db;
+  --rose: #f1e2df;
+  --lavender: #eae6f0;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+input,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  color: inherit;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  border-radius: 16px;
+  min-height: 64px;
+  transition:
+    background 0.16s,
+    transform 0.16s,
+    box-shadow 0.16s;
+}
+button:active {
+  transform: scale(0.98);
+}
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.upload:focus-within {
+  outline: 3px solid #446c80;
+  outline-offset: 4px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+svg {
+  flex-shrink: 0;
+}
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+h1 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  letter-spacing: -1.5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+h2 {
+  font-weight: 600;
+}
+small {
+  font-size: 0.75rem;
+}
+button strong {
+  font-weight: 600;
+}
+.header {
+  height: 108px;
+  max-width: 1600px;
+  padding: 0 52px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  background: none;
+  border: 0;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  padding: 0;
+}
+.brand small {
+  display: block;
+  margin-top: 7px;
+  color: #777d70;
+  font-size: 0.72rem;
+  letter-spacing: 0.2px;
+}
+.brand-mark {
+  background: #e9eddf;
+  color: #6c8058;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 19px;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.icon-button {
+  width: 64px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border-color: transparent;
+}
+.settings-button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  font-size: 0.78rem;
+  padding: 0 15px;
+  background: transparent;
+}
+.settings-button span {
+  max-width: 150px;
+}
+main {
+  max-width: 1480px;
+  margin: auto;
+  padding: 32px 48px 20px;
+  outline: none;
+}
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 160px;
+}
+.eyebrow {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 2.3px;
+  color: #7f876f;
+  margin-bottom: 14px;
+}
+.welcome h1 {
+  font-size: clamp(2.6rem, 4.5vw, 4rem);
+  margin-bottom: 10px;
+}
+.welcome h1 span {
+  color: #bba35b;
+}
+.subtitle {
+  color: #798071;
+  font-size: 0.92rem;
+  margin-bottom: 12px;
+}
+.sun-art {
+  width: 190px;
+  height: 155px;
+  position: relative;
+  color: #d5ae57;
+  display: grid;
+  place-items: center;
+  margin-right: 35px;
+}
+.sun-art > svg {
+  fill: #f5e5b8;
+  stroke-width: 1;
+}
+.sun-smile {
+  position: absolute;
+  top: 62px;
+  font-size: 31px;
+  color: #947a48;
+}
+.sun-art i,
+.sun-art b {
+  position: absolute;
+  border-radius: 50%;
+  background: #e3e9d8;
+  width: 12px;
+  height: 12px;
+  right: 4px;
+  top: 38px;
+}
+.sun-art b {
+  width: 7px;
+  height: 7px;
+  top: 120px;
+  left: 13px;
+  background: #dfc8b3;
+}
+.morning-strip {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 28px;
+  padding: 17px 23px;
+  min-height: 82px;
+  background: #f0f0e5;
+  border-radius: 16px;
+  gap: 26px;
+}
+.today-chip {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+.morning-message {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-left: 1px solid #d7dbcb;
+  padding-left: 28px;
+  font-size: 0.88rem;
+}
+.morning-message small {
+  display: block;
+  font-size: 0.54rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 5px;
+  color: #77816b;
+}
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 19px;
+}
+.home-card {
+  padding: 24px 25px 21px;
+  text-align: left;
+  min-height: 205px;
+  border: 1px solid #dedfce;
+  box-shadow: 0 4px 0 #4b513c04;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+}
+.sage {
+  background: var(--sage);
+}
+.yellow {
+  background: var(--yellow);
+}
+.blue {
+  background: var(--blue);
+}
+.peach {
+  background: var(--peach);
+}
+.rose {
+  background: var(--rose);
+}
+.lavender {
+  background: var(--lavender);
+}
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex: 1;
+  margin-bottom: 22px;
+}
+.module-icon {
+  color: #73855f;
+}
+.yellow .module-icon {
+  color: #b79a4d;
+}
+.blue .module-icon {
+  color: #7299ac;
+}
+.peach .module-icon {
+  color: #b28b6e;
+}
+.rose .module-icon {
+  color: #aa7b76;
+}
+.lavender .module-icon {
+  color: #9384a6;
+}
+.step-number {
+  font-size: 0.7rem;
+  color: #69725f;
+  background: #ffffff65;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+.home-card strong {
+  font-size: 1.08rem;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
+}
+.card-bottom {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.67rem;
+  color: #6d7769;
+}
+.routine {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  border: 1px solid var(--line);
+  background: #fffdf7;
+  border-radius: 19px;
+  margin-top: 28px;
+  padding: 23px 24px;
+}
+.routine-label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+.routine-items {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  gap: 15px;
+}
+.routine-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.71rem;
+  position: relative;
+}
+.routine-item svg {
+  color: #9b9e7c;
+}
+.routine-dot {
+  padding-left: 14px;
+  color: #c5c7b6;
+}
+footer {
+  display: flex;
+  justify-content: space-between;
+  color: #8b8e7e;
+  font-size: 0.64rem;
+  padding: 25px 4px 5px;
+}
+footer span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.page-heading {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 6px 0 25px;
+}
+.page-heading h1 {
+  font-size: 2.25rem;
+  margin: 0;
+}
+.page-heading .eyebrow {
+  margin-bottom: 8px;
+}
+.back-button {
+  padding: 0 23px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+}
+.instruction {
+  font-size: 1.1rem;
+  color: #697464;
+  margin-bottom: 26px;
+  line-height: 1.6;
+}
+.choices {
+  display: grid;
+  gap: 20px;
+}
+.choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 35px 20px;
+  min-height: 190px;
+  width: 100%;
+  font-size: 1.3rem;
+  border-width: 2px;
+  color: #53674e;
+  box-shadow: 0 4px 8px #30402304;
+}
+.selected,
+.active {
+  border-color: #667e56 !important;
+  background: #e6eedb !important;
+  box-shadow: 0 0 0 2px #667e56 !important;
+}
+.selected {
+  animation: choose 0.22s ease-out;
+}
+.check {
+  position: absolute;
+  right: 13px;
+  top: 13px;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  background: #5c7750;
+  color: white;
+}
+.seasons {
+  grid-template-columns: repeat(4, 1fr);
+}
+.seasons > div {
+  border-radius: 24px;
+}
+.seasons .choice {
+  background: transparent;
+  min-height: 330px;
+}
+.season-picture {
+  position: relative;
+  height: 165px;
+  display: grid;
+  place-items: center;
+  width: 150px;
+}
+.season-picture > svg {
+  z-index: 1;
+  stroke-width: 1.25;
+}
+.ground {
+  position: absolute;
+  width: 130px;
+  height: 18px;
+  border-radius: 50%;
+  bottom: 0;
+  background: #62784818;
+}
+.notice {
+  padding: 24px 30px;
+  border-radius: 18px;
+  text-align: center;
+  background: #eeeee2;
+  margin-top: 30px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+.weather {
+  grid-template-columns: repeat(4, 1fr);
+}
+.weather .choice {
+  min-height: 180px;
+  padding: 25px;
+}
+.weather .choice svg {
+  color: #8e9e85;
+}
+.section-label {
+  font-size: 1.25rem;
+  margin: 28px 0 18px;
+}
+.temperature {
+  display: flex;
+  gap: 18px;
+}
+.temperature button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex: 1;
+  min-height: 83px;
+}
+.emotions {
+  grid-template-columns: repeat(3, 1fr);
+}
+.emotions .choice {
+  min-height: 223px;
+}
+.attendance-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 23px;
+}
+.attendance-bar .instruction {
+  margin: 0;
+}
+.counts {
+  display: flex;
+  gap: 12px;
+  white-space: nowrap;
+}
+.counts span {
+  background: #e9efdf;
+  padding: 16px 22px;
+  border-radius: 15px;
+}
+.counts span + span {
+  background: #eee9df;
+}
+.children-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 17px;
+}
+.child-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 174px;
+  padding: 17px 12px;
+  border: 2px solid var(--line);
+}
+.child-card strong {
+  font-size: 1.1rem;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.child-status {
+  font-size: 0.8rem;
+  color: #647258;
+}
+.avatar {
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.secondary,
+.primary,
+.danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 24px;
+  min-height: 72px;
+  margin-top: 24px;
+}
+.primary {
+  background: #5b7355;
+  border-color: #5b7355;
+  color: #fff;
+}
+.danger {
+  color: #944e46;
+  background: #f8e8e0;
+  border-color: #d7b3a2;
+}
+.helper-highlight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  background: #f5edcf;
+  border-radius: 22px;
+  padding: 25px;
+  margin-bottom: 30px;
+}
+.helper-highlight p {
+  margin-bottom: 10px;
+}
+.helper-highlight h2 {
+  font-size: 2.4rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.helper-star {
+  color: #bda35e;
+}
+.date-preview {
+  font-size: 1.5rem;
+  background: #f3edda;
+  text-align: center;
+  padding: 30px;
+  border-radius: 20px;
+}
+.tabs {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0;
+}
+.tabs button {
+  flex: 1;
+  padding: 14px;
+  min-height: 86px;
+  font-size: 0.9rem;
+}
+.tabs small {
+  display: block;
+  font-size: 1.15rem;
+  margin-top: 8px;
+}
+.date-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+.date-grid button {
+  min-height: 72px;
+  font-size: 1.35rem;
+}
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+.month-grid button {
+  min-height: 85px;
+  font-size: 1.2rem;
+}
+.weekdays {
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+.weekdays .choice {
+  font-size: 1rem;
+  padding: 20px 7px;
+  min-height: 150px;
+}
+.day-number {
+  font-size: 2.4rem;
+  color: #ad9858;
+}
+.year-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  min-height: 220px;
+}
+.year-picker strong {
+  font-size: 4rem;
+}
+.year-picker button {
+  width: 90px;
+  height: 90px;
+}
+.dressing-room {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 35px;
+}
+.character-stage {
+  background: #edf0e4;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.character-stage > svg {
+  width: 100%;
+  height: 440px;
+}
+.character-caption {
+  font-size: 0.85rem;
+  padding: 10px 0 15px;
+  color: #68775c;
+}
+.clothes-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.clothing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 109px;
+  font-size: 0.85rem;
+  position: relative;
+}
+.clothing-item svg {
+  color: #9d9875;
+}
+.clothes-check {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+  color: #54764b;
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 19px;
+}
+.summary-card {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  padding: 30px;
+  background: #eeeede;
+  border-radius: 20px;
+  min-height: 140px;
+}
+.summary-card:nth-child(2n) {
+  background: #f2e7db;
+}
+.summary-card p {
+  margin: 0;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+.summary-card svg {
+  color: #869570;
+}
+.summary-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.celebration {
+  padding: 70px 25px;
+  text-align: center;
+  background: #edf0df;
+  border-radius: 28px;
+}
+.celebration > svg {
+  color: #af9655;
+}
+.celebration h2 {
+  font-size: 2.5rem;
+  margin-top: 25px;
+}
+.settings-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 28px;
+  align-items: start;
+}
+.settings-panel {
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  border-radius: 22px;
+}
+.settings-panel h2 {
+  font-size: 1.25rem;
+  margin-bottom: 24px;
+}
+.settings-panel h2:not(:first-child) {
+  margin-top: 32px;
+}
+.settings-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #c8cebd;
+  background: #fffefb;
+  border-radius: 12px;
+  padding: 16px;
+  color: var(--ink);
+  min-height: 64px;
+}
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.muted {
+  color: #747c6d;
+  font-size: 0.79rem;
+  line-height: 1.7;
+}
+.routine-settings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.routine-settings button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 14px;
+  font-size: 0.8rem;
+}
+.routine-settings button span {
+  margin-left: auto;
+}
+.privacy {
+  border-radius: 16px;
+  background: #edf0e4;
+  padding: 20px;
+  font-size: 0.84rem;
+  line-height: 1.7;
+  margin-top: 30px;
+}
+.privacy svg {
+  float: left;
+  margin: 3px 10px 0 0;
+}
+.child-editor {
+  display: flex;
+  gap: 18px;
+  padding: 22px 0;
+  border-top: 1px solid var(--line);
+  align-items: center;
+}
+.child-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+  min-width: 0;
+}
+.child-fields label {
+  margin: 0;
+}
+.child-fields input {
+  min-width: 0;
+}
+.child-fields .upload {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e9edde;
+  border-radius: 12px;
+  padding: 12px;
+  min-height: 64px;
+  text-align: center;
+  font-size: 0.78rem;
+  overflow: hidden;
+}
+.upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.remove-photo {
+  font-size: 0.75rem;
+  background: transparent;
+}
+.badge {
+  border-radius: 50%;
+  padding: 7px 10px;
+  background: #edf0e3;
+  font-size: 0.8rem;
+  margin-left: 8px;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #303b3366;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.dialog {
+  padding: 35px;
+  max-width: 560px;
+  background: #fffdf6;
+  border-radius: 24px;
+  box-shadow: 0 15px 60px #0003;
+}
+.dialog p {
+  line-height: 1.7;
+}
+.dialog button + button {
+  margin-left: 12px;
+}
+.error {
+  padding: 20px;
+  background: #f7e2d6;
+  border-radius: 15px;
+  color: #873e31;
+  line-height: 1.6;
+}
+.birthday {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: #f5e8c5;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.confirm-inline {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin-top: 20px;
+  background: #f2e7d8;
+  border-radius: 16px;
+}
+.confirm-inline button {
+  padding: 12px 18px;
+}
+@keyframes choose {
+  0% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@media (min-width: 1600px) {
+  main {
+    padding-top: 40px;
+  }
+  .welcome {
+    min-height: 185px;
+  }
+  .home-card {
+    min-height: 235px;
+  }
+  .home-grid {
+    gap: 24px;
+  }
+  .routine {
+    margin-top: 32px;
+    padding: 28px;
+  }
+  .card-bottom {
+    font-size: 0.77rem;
+  }
+  .home-card strong {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 1100px) {
+  .header {
+    padding: 15px 28px;
+    height: auto;
+  }
+  main {
+    padding: 28px;
+  }
+  .home-card {
+    padding: 20px;
+    min-height: 200px;
+  }
+  .card-bottom {
+    font-size: 0.65rem;
+  }
+  .routine {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .routine-items {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .settings-layout {
+    grid-template-columns: 1fr 1.2fr;
+  }
+  .child-fields {
+    grid-template-columns: 1fr;
+  }
+  .clothes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .weekdays {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .attendance-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .choices.seasons {
+    gap: 12px;
+  }
+  .seasons .choice {
+    min-height: 280px;
+  }
+  .season-picture {
+    width: 120px;
+  }
+}
+@media (max-width: 760px) {
+  :root {
+    font-size: 17px;
+  }
+  .header {
+    padding: 12px 18px;
+    gap: 8px;
+  }
+  .brand {
+    font-size: 1rem;
+    gap: 9px;
+  }
+  .brand-mark {
+    width: 45px;
+    height: 45px;
+  }
+  .brand small {
+    font-size: 0.6rem;
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .settings-button {
+    width: 64px;
+    padding: 0;
+    justify-content: center;
+  }
+  .settings-button span {
+    display: none;
+  }
+  .icon-button {
+    width: 56px;
+  }
+  .header-actions .icon-button:first-child:not(:last-child) {
+    width: 50px;
+  }
+  main {
+    padding: 22px 18px;
+  }
+  .welcome {
+    min-height: 135px;
+  }
+  .welcome h1 {
+    font-size: 2.8rem;
+  }
+  .eyebrow {
+    font-size: 0.54rem;
+    letter-spacing: 1.5px;
+  }
+  .subtitle {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+  .sun-art {
+    width: 75px;
+    margin: 0;
+    height: 110px;
+  }
+  .sun-art > svg {
+    width: 75px;
+  }
+  .sun-smile {
+    font-size: 22px;
+    top: 47px;
+  }
+  .sun-art i,
+  .sun-art b {
+    display: none;
+  }
+  .morning-strip {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 15px;
+    padding: 18px;
+  }
+  .morning-message {
+    border-left: 0;
+    border-top: 1px solid #d7dbcb;
+    padding: 15px 0 0;
+    width: 100%;
+  }
+  .today-chip {
+    white-space: normal;
+  }
+  .home-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+  .home-card {
+    padding: 19px 16px;
+    min-height: 194px;
+    border-radius: 18px;
+  }
+  .home-card strong {
+    font-size: 1.05rem;
+  }
+  .card-bottom {
+    line-height: 1.5;
+  }
+  .card-bottom svg {
+    width: 19px;
+  }
+  .card-top {
+    margin-bottom: 18px;
+  }
+  .module-icon svg {
+    width: 43px;
+    height: 43px;
+  }
+  .routine {
+    padding: 20px;
+  }
+  .routine-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .routine-dot {
+    display: none;
+  }
+  footer {
+    line-height: 1.6;
+    font-size: 0.6rem;
+    gap: 20px;
+  }
+  footer span {
+    display: none;
+  }
+  .page-heading {
+    gap: 15px;
+    align-items: flex-start;
+  }
+  .page-heading h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+  }
+  .back-button {
+    font-size: 0.9rem;
+    padding: 0 14px;
+    gap: 6px;
+    min-height: 64px;
+  }
+  .page-heading .eyebrow {
+    font-size: 0.48rem;
+  }
+  .instruction {
+    font-size: 1rem;
+  }
+  .seasons,
+  .weather,
+  .emotions {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .seasons .choice {
+    min-height: 250px;
+  }
+  .choice {
+    font-size: 1.1rem;
+    gap: 15px;
+  }
+  .weather .choice {
+    padding: 25px 10px;
+  }
+  .children-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .child-card {
+    padding: 15px 7px;
+    min-height: 157px;
+  }
+  .child-card strong {
+    font-size: 0.95rem;
+  }
+  .child-card svg,
+  .child-card img {
+    width: 65px;
+    height: 65px;
+  }
+  .counts span {
+    padding: 14px 18px;
+  }
+  .temperature {
+    gap: 10px;
+  }
+  .temperature button {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 5px;
+  }
+  .dressing-room {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .character-stage {
+    position: relative;
+  }
+  .character-stage > svg {
+    height: 300px;
+  }
+  .clothes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+  .summary-card {
+    padding: 24px;
+    min-height: 112px;
+  }
+  .summary-actions {
+    flex-direction: column;
+    gap: 0;
+  }
+  .settings-layout {
+    grid-template-columns: 1fr;
+  }
+  .settings-panel {
+    padding: 22px;
+  }
+  .child-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+  .date-preview {
+    font-size: 1.2rem;
+    padding: 22px;
+  }
+  .tabs {
+    gap: 10px;
+  }
+  .tabs button {
+    padding: 12px 4px;
+  }
+  .tabs small {
+    font-size: 0.9rem;
+  }
+  .date-grid {
+    gap: 8px;
+  }
+  .date-grid button {
+    min-height: 64px;
+    font-size: 1.1rem;
+    border-radius: 11px;
+  }
+  .month-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .weekdays {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .helper-highlight {
+    gap: 15px;
+    padding: 23px;
+  }
+  .helper-highlight h2 {
+    font-size: 1.8rem;
+  }
+  .helper-star {
+    display: none;
+  }
+  .helper-highlight img,
+  .helper-highlight svg {
+    width: 85px;
+    height: 85px;
+  }
+  .notice {
+    padding: 22px;
+    font-size: 1rem;
+  }
+  .dialog button {
+    width: 100%;
+    margin: 12px 0 0 !important;
+  }
+}
+@media (max-width: 390px) {
+  .brand-mark {
+    display: none;
+  }
+  .header {
+    padding: 10px;
+  }
+  .header-actions .icon-button {
+    width: 45px;
+  }
+  .settings-button {
+    width: 50px;
+  }
+  .children-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .child-fields {
+    grid-template-columns: 1fr;
+  }
+  .date-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 1600px) {
+  main {
+    padding-top: 30px;
+  }
+  .welcome {
+    min-height: 155px;
+  }
+  .home-card {
+    min-height: 214px;
+  }
+  .routine {
+    margin-top: 25px;
+    padding: 24px;
+  }
+  .morning-strip {
+    margin-bottom: 24px;
+  }
+  footer {
+    padding-top: 20px;
+  }
+}
+/* Picture-book illustrations are bundled locally; navigation keeps clear symbols. */
+.storybook-art {
+  display: inline-block;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  mix-blend-mode: multiply;
+  border-radius: 12px;
+  pointer-events: none;
+}
+.storybook-face {
+  border-radius: 50%;
+}
+.home-card {
+  position: relative;
+  padding: 14px 24px 18px;
+  min-height: 238px;
+  background-image: linear-gradient(160deg, #fff9 0%, #fff0 80%);
+}
+.card-top {
+  width: 100%;
+  flex: 0;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+  height: 138px;
+}
+.module-icon {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.module-icon .storybook-art {
+  width: 140px !important;
+  height: 140px !important;
+}
+.step-number {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+.home-card strong {
+  margin-bottom: 8px;
+}
+.sun-art .storybook-art {
+  width: 154px !important;
+  height: 154px !important;
+}
+.season-picture {
+  width: 100%;
+  height: 220px;
+}
+.season-picture .storybook-art {
+  width: 220px !important;
+  height: 220px !important;
+}
+.season-picture .ground {
+  display: none;
+}
+.seasons .choice {
+  min-height: 330px;
+  padding: 22px 12px;
+}
+.weather .choice {
+  min-height: 211px;
+  gap: 12px;
+  padding: 17px;
+}
+.weather .choice > .storybook-art {
+  width: 130px !important;
+  height: 130px !important;
+}
+.emotions .choice {
+  padding: 18px;
+  gap: 10px;
+  min-height: 226px;
+}
+.emotions .storybook-face {
+  width: 155px !important;
+  height: 155px !important;
+  border-radius: 20px;
+}
+.clothing-item {
+  gap: 5px;
+  padding: 8px;
+  min-height: 119px;
+}
+.clothing-item .storybook-art {
+  width: 76px !important;
+  height: 76px !important;
+}
+.routine-item > .storybook-art {
+  width: 38px !important;
+  height: 38px !important;
+}
+.summary-card > .storybook-art {
+  width: 84px !important;
+  height: 84px !important;
+}
+@media (min-width: 1101px) {
+  .welcome {
+    min-height: 132px;
+  }
+  .welcome h1 {
+    font-size: 3.35rem;
+  }
+  .home-grid {
+    gap: 18px;
+  }
+  .morning-strip {
+    margin-bottom: 20px;
+    margin-top: 5px;
+  }
+  .routine {
+    margin-top: 20px;
+    padding: 18px 24px;
+  }
+  main {
+    padding-top: 22px;
+  }
+  footer {
+    padding-top: 18px;
+  }
+}
+@media (max-width: 1100px) {
+  .home-card {
+    padding: 12px 16px 17px;
+  }
+  .card-top {
+    height: 118px;
+  }
+  .module-icon .storybook-art {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .season-picture {
+    height: 170px;
+  }
+  .season-picture .storybook-art {
+    width: 165px !important;
+    height: 165px !important;
+  }
+}
+@media (max-width: 760px) {
+  .home-card {
+    min-height: 245px;
+    padding: 12px 14px 17px;
+  }
+  .card-top {
+    height: 115px;
+    margin-bottom: 12px;
+  }
+  .module-icon .storybook-art {
+    width: 116px !important;
+    height: 116px !important;
+  }
+  .step-number {
+    right: 8px;
+    top: 8px;
+    font-size: 0.6rem;
+    width: 23px;
+    height: 23px;
+  }
+  .sun-art .storybook-art {
+    width: 88px !important;
+    height: 88px !important;
+  }
+  .season-picture {
+    height: 140px;
+  }
+  .season-picture .storybook-art {
+    width: 140px !important;
+    height: 140px !important;
+  }
+  .weather .choice > .storybook-art {
+    width: 110px !important;
+    height: 110px !important;
+  }
+  .emotions .storybook-face {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  .emotions .choice {
+    min-height: 193px;
+  }
+  .child-card .storybook-face {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  .summary-card > .storybook-art {
+    width: 65px !important;
+    height: 65px !important;
+  }
+  .clothing-item .storybook-art {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  .seasons .choice {
+    min-height: 235px;
+  }
+}
+.storybook-art {
+  clip-path: inset(2% round 12px);
+}
+.module-icon .storybook-world {
+  clip-path: inset(4% 4% 5% 4% round 12px);
+}
+.storybook-art[data-illustration="helper"] {
+  clip-path: inset(1% 3% 5% 19% round 12px);
+  transform: translateX(-6%);
+}
+.storybook-doll-face {
+  width: 138px;
+  height: 143px;
+  overflow: hidden;
+  border-radius: 48% 48% 43% 43%;
+  mix-blend-mode: multiply;
+}
+.storybook-doll-face .storybook-face {
+  width: 172px !important;
+  height: 172px !important;
+  transform: translate(-17px, -2px);
+  border-radius: 0;
+}
+@media (min-width: 1101px) {
+  .season-picture .storybook-art {
+    width: min(220px, 17vw) !important;
+    height: min(220px, 17vw) !important;
+  }
+}
+.character-stage > svg {
+  mix-blend-mode: multiply;
+}
+.storybook-doll-face {
+  height: 123px;
+  border-radius: 45% 45% 40% 40%;
+}
+/* Premium updates scoped to calendar, dressing, attendance and daily routine. */
+.weekdays .choice {
+  min-height: 194px;
+  font-size: 1.13rem;
+  font-weight: 600;
+  gap: 15px;
+  padding: 18px 8px;
+}
+.weekdays .storybook-art {
+  width: 100px !important;
+  height: 100px !important;
+}
+.month-grid button {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  padding: 12px 22px;
+  min-height: 110px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  position: relative;
+  box-shadow: 0 4px 14px #544a3505;
+}
+.month-check {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 1rem;
+}
+.month-grid .storybook-art {
+  width: 78px !important;
+  height: 78px !important;
+}
+.child-placeholder {
+  border-radius: 50%;
+  background-color: #f5f4e8;
+}
+.children-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 13px;
+}
+.child-card {
+  min-height: 141px;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 0 3px 10px #414d3b06;
+  gap: 6px;
+}
+.child-card .avatar,
+.child-card .child-placeholder {
+  width: 62px !important;
+  height: 62px !important;
+}
+.child-card strong {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+.child-card .child-status {
+  font-size: 0.75rem;
+}
+.emotions .choice {
+  background: linear-gradient(150deg, #fffdf8, #f7f3e9);
+  box-shadow: 0 5px 18px #6c593009;
+}
+.emotions .choice.selected .storybook-art {
+  animation: emotion-welcome 0.3s ease-out;
+}
+.emotions .storybook-face {
+  border-radius: 20px;
+  mix-blend-mode: normal;
+}
+@keyframes emotion-welcome {
+  0% {
+    transform: translateY(4px) scale(0.94);
+  }
+  65% {
+    transform: translateY(-3px) scale(1.025);
+  }
+  100% {
+    transform: none;
+  }
+}
+.premium-dressing {
+  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.5fr);
+  gap: 26px;
+  align-items: start;
+}
+.premium-dressing .character-stage {
+  padding: 16px 18px 8px;
+  background: radial-gradient(ellipse at 50% 40%, #fffdf5 0%, #edf1e4 72%);
+  border: 1px solid #dfe5d7;
+  border-radius: 28px;
+}
+.character-picker {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 390px;
+}
+.character-picker button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  flex: 1;
+  min-height: 72px;
+  padding: 5px 10px;
+  font-size: 1.1rem;
+}
+.character-picker .storybook-art {
+  mix-blend-mode: normal;
+}
+.premium-dressing .character-stage > .dress-character {
+  width: 100%;
+  height: 444px;
+  mix-blend-mode: normal;
+  overflow: visible;
+}
+.premium-dressing .character-caption {
+  min-height: 35px;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+.wardrobe-zones {
+  display: grid;
+  gap: 12px;
+}
+.wardrobe-zone {
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  align-items: center;
+  gap: 14px;
+  background: #fffdf7;
+  border: 1px solid #e6e4d8;
+  border-radius: 22px;
+  padding: 10px 13px;
+}
+.wardrobe-zone h2 {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 600;
+}
+.zone-items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.wardrobe-zone .clothing-item {
+  min-height: 83px;
+  padding: 4px 5px 7px;
+  gap: 2px;
+  border-radius: 14px;
+  background: #faf7ee;
+  font-size: 0.82rem;
+}
+.wardrobe-zone .clothing-item .storybook-art {
+  width: 57px !important;
+  height: 57px !important;
+  mix-blend-mode: normal;
+}
+.dress-layer {
+  animation: dress-appear 0.22s ease-out;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes dress-appear {
+  from {
+    opacity: 0.3;
+    transform: translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 1100px) {
+  .children-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .premium-dressing {
+    grid-template-columns: minmax(270px, 0.8fr) minmax(0, 1.3fr);
+    gap: 18px;
+  }
+  .wardrobe-zone {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 9px;
+  }
+  .wardrobe-zone h2 {
+    font-size: 0.78rem;
+  }
+  .premium-dressing .character-stage {
+    padding: 12px 10px;
+  }
+  .character-picker button {
+    gap: 4px;
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+  .character-picker .storybook-art {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  .month-grid button {
+    padding: 12px;
+    gap: 10px;
+    flex-direction: column;
+  }
+}
+@media (max-width: 760px) {
+  .children-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .child-card {
+    min-height: 143px;
+  }
+  .child-card strong {
+    font-size: 0.9rem;
+  }
+  .premium-dressing {
+    grid-template-columns: 1fr;
+  }
+  .premium-dressing .character-stage > .dress-character {
+    height: 360px;
+  }
+  .character-picker {
+    max-width: 340px;
+  }
+  .character-picker .storybook-art {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .character-picker button {
+    font-size: 1rem;
+  }
+  .wardrobe-zone {
+    grid-template-columns: 85px 1fr;
+    padding: 10px;
+    gap: 7px;
+  }
+  .wardrobe-zone h2 {
+    font-size: 0.8rem;
+  }
+  .zone-items {
+    gap: 7px;
+  }
+  .wardrobe-zone .clothing-item {
+    font-size: 0.72rem;
+    min-height: 88px;
+  }
+  .wardrobe-zone .clothing-item .storybook-art {
+    width: 51px !important;
+    height: 51px !important;
+  }
+  .month-grid button {
+    font-size: 1.1rem;
+    min-height: 130px;
+    gap: 7px;
+  }
+  .weekdays .choice {
+    min-height: 190px;
+  }
+  .routine-item {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+}
+@media (max-width: 390px) {
+  .children-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .wardrobe-zone {
+    grid-template-columns: 1fr;
+  }
+  .wardrobe-zone h2 {
+    font-size: 0.9rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dress-layer,
+  .emotions .choice.selected .storybook-art {
+    animation: none;
+  }
+}
+/* Expanded wardrobe: all categories remain visible, only the garment panel changes. */
+.wardrobe-categories {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.wardrobe-categories button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 8px;
+  min-height: 72px;
+  font-size: 0.83rem;
+  position: relative;
+  line-height: 1.3;
+  background: #fffdf6;
+}
+.wardrobe-categories .garment-art {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+.category-check {
+  position: absolute;
+  top: 3px;
+  right: 6px;
+  font-size: 0.65rem;
+}
+.garment-options {
+  border: 1px solid #e5e5d8;
+  border-radius: 24px;
+  padding: 18px;
+  background: linear-gradient(145deg, #fffdf9, #f4f4e9);
+}
+.garment-options h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.15rem;
+  margin-bottom: 14px;
+}
+.garment-options h2 small {
+  font-size: 0.73rem;
+  font-weight: 400;
+  color: #73806c;
+}
+.garment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.garment-grid .clothing-item {
+  min-height: 137px;
+  gap: 5px;
+  padding: 8px;
+  font-size: 0.94rem;
+  line-height: 1.3;
+  box-shadow: 0 4px 12px #6d5c3e06;
+}
+.garment-art {
+  flex-shrink: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.garment-grid .garment-art {
+  width: 91px;
+  height: 91px;
+}
+.expanded-dressing .character-stage {
+  position: sticky;
+  top: 16px;
+}
+.summary-actions .primary {
+  min-width: min(100%, 340px);
+}
+@media (max-width: 1100px) {
+  .wardrobe-categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .wardrobe-categories button {
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.74rem;
+    padding: 5px;
+  }
+  .garment-options {
+    padding: 12px;
+  }
+  .garment-grid {
+    gap: 8px;
+  }
+  .garment-grid .clothing-item {
+    font-size: 0.81rem;
+  }
+  .garment-grid .garment-art {
+    width: 74px;
+    height: 74px;
+  }
+}
+@media (max-width: 760px) {
+  .expanded-dressing .character-stage {
+    position: static;
+  }
+  .wardrobe-categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 4px;
+  }
+  .wardrobe-categories button {
+    min-height: 80px;
+    font-size: 0.82rem;
+  }
+  .garment-options h2 {
+    font-size: 1.05rem;
+  }
+  .garment-grid .clothing-item {
+    min-height: 135px;
+    font-size: 0.82rem;
+  }
+  .garment-grid .garment-art {
+    width: 75px;
+    height: 75px;
+  }
+}
+/* Unified premium artwork for the eight homepage sections. */
+.section-art {
+  display: inline-block;
+  flex-shrink: 0;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+  pointer-events: none;
+  clip-path: inset(1.5% round 14px);
+}
+@media (max-width: 1100px) {
+  .module-icon .section-art {
+    width: 120px !important;
+    height: 120px !important;
+  }
+}
+@media (max-width: 760px) {
+  .module-icon .section-art {
+    width: 116px !important;
+    height: 116px !important;
+  }
+}
+
+/* Refined storybook seasons and simple, countable weekday tokens. */
+.season-art {
+  display: inline-block;
+  object-fit: contain;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+.module-icon .season-art {
+  width: 140px;
+  height: 140px;
+}
+.seasons .season-picture {
+  width: 100%;
+  height: 280px;
+  background: none;
+}
+.seasons .season-picture .season-art {
+  width: 100%;
+  height: 100%;
+}
+.seasons .season-picture .ground {
+  display: none;
+}
+.seasons .choice {
+  padding: 22px 16px 28px;
+  min-height: 375px;
+  gap: 12px;
+}
+.weekdays .weekday-stars {
+  width: 120px !important;
+  height: 120px !important;
+  mix-blend-mode: normal;
+  clip-path: none;
+  overflow: visible;
+}
+.weekdays .choice {
+  gap: 24px;
+}
+
+/* A central doll and one clearly visible wardrobe shelf. */
+.dressing-room.doll-studio {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.doll-studio .character-stage {
+  position: relative;
+  top: auto;
+  min-height: 0;
+  height: 364px;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e5e8d8;
+  border-radius: 32px;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    #fffcf2 0%,
+    #f4f4e8 45%,
+    #e7efde 100%
+  );
+}
+.doll-studio .character-stage::before {
+  content: "";
+  position: absolute;
+  width: 370px;
+  height: 320px;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fffdf4b0;
+  border-radius: 48% 48% 24% 24%;
+  border: 1px solid #fff9;
+}
+.doll-studio .character-stage > .dress-character {
+  position: relative;
+  display: block;
+  width: 280px;
+  height: 360px;
+  max-height: none;
+  margin: 0 auto;
+}
+.doll-studio .character-picker {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: 170px;
+  display: grid;
+  z-index: 1;
+  gap: 10px;
+}
+.doll-studio .character-picker button {
+  min-height: 72px;
+  width: 100%;
+  font-size: 1.05rem;
+  background: #fffdf5;
+}
+.doll-studio .character-picker button.active {
+  background: #e2edcf;
+}
+.doll-studio .character-caption {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  max-width: 220px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  color: #566849;
+  background: #ffffffb8;
+}
+.doll-studio .wardrobe-categories {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.doll-studio .wardrobe-categories button {
+  min-height: 76px;
+  padding: 6px;
+  font-size: 0.81rem;
+  background: #fffdf8;
+  flex-direction: row;
+}
+.doll-studio .wardrobe-categories button.active {
+  background: #e8efdc;
+  border-color: #6d855b;
+  box-shadow: inset 0 0 0 1px #6d855b;
+}
+.doll-studio .garment-options {
+  padding: 12px;
+  background: #f5f0e5;
+  border-color: #e9e1d2;
+}
+.doll-studio .garment-options h2 {
+  display: none;
+}
+.doll-studio .garment-grid {
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+  gap: 10px;
+}
+.doll-studio .garment-grid .clothing-item {
+  min-height: 162px;
+  padding: 10px 6px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #fffefa, #faf7ef);
+  font-size: 0.84rem;
+  box-shadow: 0 3px 8px #6e594409;
+}
+.doll-studio .garment-grid .clothing-item.selected {
+  background: #edf3df;
+  border-color: #678552;
+  box-shadow:
+    inset 0 0 0 2px #678552,
+    0 5px 12px #6e594410;
+}
+.doll-studio .garment-grid .garment-art {
+  width: 102px;
+  height: 108px;
+  padding: 7px;
+}
+.garment-art .dress-layer {
+  animation: none;
+}
+.doll-studio + .secondary {
+  margin-top: 14px;
+}
+
+/* A joyful, warm ending, with a quiet single entrance animation. */
+.celebration {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 22px auto;
+  padding: 50px 24px;
+  min-height: 565px;
+  max-width: 1100px;
+  border: 1px solid #ecd6ae;
+  border-radius: 40px;
+  background: radial-gradient(
+    ellipse at 50% 24%,
+    #fff9dc 0%,
+    #faebba 45%,
+    #f1d8b9 100%
+  );
+  box-shadow: 0 18px 48px #8b694312;
+}
+.celebration h2 {
+  position: relative;
+  color: #47684d;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin: 12px 0;
+}
+.celebration > p {
+  position: relative;
+  color: #5e6546;
+}
+.celebration .celebration-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #916a3b;
+}
+.celebration .primary {
+  position: relative;
+  margin-top: 24px;
+  background: #587b52;
+}
+.celebration-sun {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 230px;
+  height: 215px;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+  background: #fff9da9c;
+}
+.celebration-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.celebration-confetti i {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 12px;
+  height: 22px;
+  border-radius: 5px;
+  background: var(--tone);
+  color: var(--tone);
+  transform: rotate(var(--turn));
+  opacity: 0.72;
+  animation: confetti-arrive 0.55s ease-out both;
+}
+.celebration-confetti i:nth-child(3n + 1) {
+  width: auto;
+  height: auto;
+  background: none;
+  font-style: normal;
+  font-size: 38px;
+}
+@keyframes confetti-arrive {
+  from {
+    opacity: 0;
+    translate: 0 -14px;
+  }
+  to {
+    opacity: 0.72;
+    translate: 0 0;
+  }
+}
+@media (max-width: 1100px) {
+  .module-icon .season-art {
+    width: 120px;
+    height: 120px;
+  }
+  .seasons .season-picture {
+    height: 220px;
+  }
+  .doll-studio .wardrobe-categories button {
+    flex-direction: column;
+    font-size: 0.74rem;
+  }
+  .doll-studio .garment-grid {
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .module-icon .season-art {
+    width: 116px;
+    height: 116px;
+  }
+  .seasons .season-picture {
+    height: 155px;
+  }
+  .seasons .choice {
+    min-height: 230px;
+    padding: 10px;
+  }
+  .doll-studio .character-stage {
+    height: 390px;
+    border-radius: 26px;
+  }
+  .doll-studio .character-stage > .dress-character {
+    height: 310px;
+    width: 240px;
+    margin-top: 72px;
+  }
+  .doll-studio .character-picker {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    display: flex;
+    gap: 10px;
+  }
+  .doll-studio .character-picker button {
+    min-height: 60px;
+    padding: 8px;
+    flex: 1;
+  }
+  .doll-studio .character-caption {
+    display: none;
+  }
+  .doll-studio .wardrobe-categories {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .doll-studio .wardrobe-categories button {
+    min-height: 84px;
+    font-size: 0.67rem;
+  }
+  .doll-studio .garment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .doll-studio .garment-grid .clothing-item {
+    min-height: 165px;
+    font-size: 0.87rem;
+  }
+  .celebration {
+    padding: 26px 16px;
+    border-radius: 26px;
+    min-height: 560px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .celebration-confetti i {
+    animation: none;
+  }
+}
+.doll-studio .rich-wardrobe {
+  width: 100%;
+}
+.doll-studio .character-stage {
+  height: 410px;
+}
+.doll-studio .character-stage > .dress-character {
+  height: 408px;
+  width: 320px;
+}
+.doll-studio .character-stage::before {
+  height: 365px;
+}
+.doll-studio .garment-grid .clothing-item {
+  min-height: 150px;
+}
+.doll-studio .garment-grid .garment-art {
+  height: 98px;
+}
+@media (max-width: 760px) {
+  .doll-studio .character-stage {
+    height: 390px;
+  }
+  .doll-studio .character-stage > .dress-character {
+    height: 310px;
+    width: 240px;
+  }
+  .doll-studio .garment-grid .clothing-item {
+    min-height: 165px;
+  }
+}
+.garment-scroll-actions {
+  display: none;
+}
+@media (max-width: 760px) {
+  .doll-studio .garment-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 4px;
+    scrollbar-width: thin;
+  }
+  .doll-studio .garment-grid .clothing-item {
+    flex: 0 0 146px;
+    scroll-snap-align: start;
+  }
+  .garment-scroll-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+  }
+  .garment-scroll-actions button {
+    min-width: 64px;
+    min-height: 64px;
+    font-size: 1.4rem;
+    background: #fffdf6;
+  }
+  .garment-scroll-actions span {
+    font-size: 0.75rem;
+    text-align: center;
+  }
+}
+.attendance-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e4d7;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fffdf6;
+}
+.attendance-child .child-card {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  min-height: 137px;
+  border: 0;
+}
+.child-emotion-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 60px;
+  border: 0;
+  border-top: 1px solid #e5e8da;
+  border-radius: 0;
+  font-size: 0.82rem;
+  background: #f1f5e9;
+}
+.child-emotion-button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.child-emotion-dialog {
+  width: min(760px, calc(100% - 32px));
+  border: 1px solid #dce2d1;
+  border-radius: 28px;
+  padding: 26px;
+  color: #405543;
+  background: #fffaf0;
+  box-shadow: 0 20px 70px #27352633;
+}
+.child-emotion-dialog::backdrop {
+  background: #293c3866;
+}
+.child-emotion-dialog h2 {
+  margin: 0 0 22px;
+}
+.child-emotion-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.child-emotion-options button {
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fffdf7;
+}
+.child-emotion-options button[aria-pressed="true"] {
+  background: #e6efda;
+  box-shadow: inset 0 0 0 2px #6f875d;
+}
+.child-emotion-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 22px;
+}
+.child-emotion-actions button {
+  min-height: 64px;
+  padding: 12px;
+}
+.doll-studio .garment-grid {
+  grid-template-columns: repeat(2, minmax(0, 250px));
+  justify-content: center;
+}
+.doll-studio .garment-scroll-actions {
+  display: none;
+}
+@media (max-width: 1100px) {
+}
+@media (max-width: 760px) {
+  .header {
+    flex-wrap: wrap;
+  }
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .music-toggle {
+    min-height: 60px;
+  }
+  .child-emotion-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .child-emotion-dialog {
+    padding: 18px;
+  }
+  .child-emotion-options button {
+    min-height: 110px;
+  }
+  .doll-studio .garment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.child-emotion-dialog {
+  max-height: calc(100dvh - 32px);
+}
+.child-emotion-button {
+  flex-direction: row;
+}
+.attendance-emotions {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.attendance-child .child-card {
+  min-height: 112px;
+  padding: 7px;
+  gap: 3px;
+}
+.attendance-child .child-card .storybook-art,
+.attendance-child .avatar {
+  width: 56px !important;
+  height: 56px !important;
+}
+@media (max-width: 1100px) {
+  .attendance-emotions {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .header-actions {
+    width: 100%;
+  }
+  .attendance-emotions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1400px) {
+  .attendance-emotions {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+.welcome-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.audio-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: #fffdf8;
+  border: 1px solid #d8ddcf;
+  color: #4c6051;
+  width: fit-content;
+  box-shadow: 0 2px 0 #4b513c08;
+}
+
+.audio-trigger.compact {
+  min-height: 42px;
+  padding: 8px 14px;
+  font-size: 0.92rem;
+}
+
+.section-audio-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.celebration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .section-audio-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .section-audio-row .section-label {
+    margin-bottom: 0;
+  }
+}

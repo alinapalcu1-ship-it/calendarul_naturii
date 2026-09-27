@@ -1,0 +1,28 @@
+{
+  "name": "calendarul-naturii",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "deploy": "npm run build && gh-pages -d dist",
+    "test:smoke": "node qa/smoke.cjs",
+    "test": "node qa/smoke.cjs && node qa/edge-cases.cjs && node qa/premium-updates.cjs && node qa/individual-state.cjs && node qa/board-layout.cjs && node qa/final-assets.cjs && node qa/visual-polish.cjs"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^4.5.0",
+    "vite": "^6.3.0",
+    "typescript": "~5.8.3",
+    "gh-pages": "^6.3.0",
+    "playwright": "^1.51.0"
+  }
+}

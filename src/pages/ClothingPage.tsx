@@ -1,0 +1,104 @@
+import { useState } from "react";
+import type { PageProps } from "../types";
+import { ClothingMannequin } from "../components/ClothingMannequin";
+import {
+  clothingGroups,
+  clothingItems,
+  cleanClothing,
+  selectClothing,
+} from "../utils/clothingCatalog";
+import { Icon } from "../components/Icon";
+export default function ClothingPage({ state, update }: PageProps) {
+  const [category, setCategory] = useState<string>("top");
+  const gender = state.mannequin === "boy" ? "baiat" : "fata";
+  const outfit = cleanClothing(state.clothes);
+  const items = clothingItems.filter(
+    (item) =>
+      item.gender === gender && item.group === category,
+  );
+  return (
+    <div className="final-dressing">
+      <div className="final-doll-stage">
+        <div
+          className="character-picker"
+          role="group"
+          aria-label="Alege personajul"
+        >
+          {(
+            [
+              ["girl", "Fetiță"],
+              ["boy", "Băiat"],
+            ] as const
+          ).map(([variant, label]) => (
+            <button
+              key={variant}
+              aria-pressed={state.mannequin === variant}
+              className={state.mannequin === variant ? "active" : ""}
+              onClick={() => {
+                if (state.mannequin !== variant) update({ mannequin: variant });
+              }}
+            >
+              {label}
+              {state.mannequin === variant && <Icon name="check" size={20} />}
+            </button>
+          ))}
+        </div>
+        <ClothingMannequin gender={gender} clothes={outfit} />
+        <button
+          className="secondary clothing-reset"
+          onClick={() => update({ clothes: [] })}
+        >
+          <Icon name="reset" size={22} />
+          Încep din nou
+        </button>
+      </div>
+      <div className="final-wardrobe">
+        <div
+          className="final-categories"
+          role="group"
+          aria-label="Categorii de haine"
+        >
+          {clothingGroups.map((group) => (
+            <button
+              key={group.id}
+              aria-pressed={category === group.id}
+              className={category === group.id ? "active" : ""}
+              onClick={() => setCategory(group.id)}
+            >
+              {group.label}
+            </button>
+          ))}
+        </div>
+        <p className="clothing-instruction">
+          Atinge o hăinuță. Atinge din nou ca să o scoți.
+        </p>
+        <div
+          className="final-garment-grid"
+          aria-label={
+            clothingGroups.find((group) => group.id === category)?.label
+          }
+        >
+          {items.map((item) => (
+            <button
+              key={item.id}
+              className={`final-garment ${outfit.includes(item.id) ? "selected" : ""}`}
+              data-garment={item.id}
+              aria-pressed={outfit.includes(item.id)}
+              onClick={() =>
+                update({ clothes: selectClothing(outfit, item.id) })
+              }
+            >
+              <img src={item.thumb} alt="" draggable={false} />
+              <span>{item.label}</span>
+              {outfit.includes(item.id) && (
+                <span className="clothes-check" aria-hidden="true">
+                  ✓
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
