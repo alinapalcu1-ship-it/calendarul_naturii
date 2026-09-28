@@ -2635,3 +2635,11 @@ button { min-height: 44px; }
 .recovery-dialog { border: 1px solid var(--line); color: var(--ink); }
 .recovery-dialog::backdrop { background: #263d3299; }
 .child-card:disabled, .board-child-presence:disabled { cursor: default; opacity: .65; }
+
+/* Language controls reuse the current header palette and touch sizes. */
+.language-switch { display: inline-flex; gap: 2px; flex-shrink: 0; }
+.language-switch button { min-width: 44px; padding: 8px; }
+.language-switch button[aria-pressed="true"] { box-shadow: inset 0 -3px currentColor; }
+.header-actions { flex-wrap: wrap; }
+button.routine-item { font: inherit; color: inherit; border: 0; background: transparent; cursor: pointer; }
+@media (max-width: 600px) { .header-actions { gap: 6px; } .header { flex-wrap: wrap; } }

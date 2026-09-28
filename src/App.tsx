@@ -1,3 +1,4 @@
+import { useLanguage } from "./i18n/LanguageContext";
 import { useEffect, useRef, useState } from "react";
 import type { Page } from "./types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
@@ -17,6 +18,7 @@ import SummaryPage from "./pages/SummaryPage";
 import { StorageRecovery } from "./components/StorageRecovery";
 import TeacherSettings from "./pages/TeacherSettings";
 export default function App() {
+  const { t } = useLanguage();
   const {
     state,
     update,
@@ -88,37 +90,27 @@ export default function App() {
       <main ref={main} tabIndex={-1}>
         {(error || screenError) && (
           <p className="error" role="alert">
-            {error || screenError}
+            {t(error || screenError)}
           </p>
         )}
         {ready && (
           <div className="save-status">
             <span role="status" aria-live="polite">
-              {saveStatus === "saving"
-                ? "Se salvează…"
-                : saveStatus === "saved"
-                  ? "Salvat pe acest dispozitiv"
-                  : "Modificările nu sunt salvate"}
+              {t(saveStatus === "saving" ? "Se salvează…" : saveStatus === "saved" ? "Salvat pe acest dispozitiv" : "Modificările nu sunt salvate")}
             </span>
             {saveStatus === "error" && (
-              <button className="secondary" onClick={retrySave}>
-                Reîncearcă salvarea
-              </button>
+              <button className="secondary" onClick={retrySave}>{t("Reîncearcă salvarea")}</button>
             )}
           </div>
         )}
         {page !== "home" && (
           <div className="page-heading">
             <button className="back-button" onClick={() => navigate("home")}>
-              <Icon name="back" />
-              Înapoi
-            </button>
+              <Icon name="back" />{t("Înapoi")}</button>
             <div>
-              <p className="eyebrow">ÎNTÂLNIREA DE DIMINEAȚĂ</p>
+              <p className="eyebrow">{t("ÎNTÂLNIREA DE DIMINEAȚĂ")}</p>
               <h1>
-                {page === "settings"
-                  ? "Setări educatoare"
-                  : modules.find((m) => m.page === page)?.title}
+                {t(page === "settings" ? "Setări educatoare" : modules.find((m) => m.page === page)?.title || "")}
               </h1>
             </div>
           </div>
@@ -128,7 +120,7 @@ export default function App() {
         ) : error ? (
           <StorageRecovery onRestore={restore} />
         ) : (
-          <p role="status">Se încarcă datele grupei…</p>
+          <p role="status">{t("Se încarcă datele grupei…")}</p>
         )}
       </main>
     </>

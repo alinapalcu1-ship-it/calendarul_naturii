@@ -1,3 +1,5 @@
+import { useAudioPlayer } from "../hooks/useAudioPlayer";
+import { useLanguage } from "../i18n/LanguageContext";
 import { useState } from "react";
 import type { PageProps } from "../types";
 import { ClothingMannequin } from "../components/ClothingMannequin";
@@ -9,6 +11,8 @@ import {
 } from "../utils/clothingCatalog";
 import { Icon } from "../components/Icon";
 export default function ClothingPage({ state, update }: PageProps) {
+  const { t, labelFor } = useLanguage();
+  const { playWord } = useAudioPlayer();
   const [category, setCategory] = useState<string>("top");
   const gender = state.mannequin === "boy" ? "baiat" : "fata";
   const outfit = cleanClothing(state.clothes);
@@ -22,7 +26,7 @@ export default function ClothingPage({ state, update }: PageProps) {
         <div
           className="character-picker"
           role="group"
-          aria-label="Alege personajul"
+          aria-label={t("Alege personajul")}
         >
           {(
             [
@@ -36,9 +40,10 @@ export default function ClothingPage({ state, update }: PageProps) {
               className={state.mannequin === variant ? "active" : ""}
               onClick={() => {
                 if (state.mannequin !== variant) update({ mannequin: variant });
+                playWord(label);
               }}
             >
-              {label}
+              {labelFor(label)}
               {state.mannequin === variant && <Icon name="check" size={20} />}
             </button>
           ))}
@@ -48,15 +53,13 @@ export default function ClothingPage({ state, update }: PageProps) {
           className="secondary clothing-reset"
           onClick={() => update({ clothes: [] })}
         >
-          <Icon name="reset" size={22} />
-          Încep din nou
-        </button>
+          <Icon name="reset" size={22} />{t("Încep din nou")}</button>
       </div>
       <div className="final-wardrobe">
         <div
           className="final-categories"
           role="group"
-          aria-label="Categorii de haine"
+          aria-label={t("Categorii de haine")}
         >
           {clothingGroups.map((group) => (
             <button
@@ -65,17 +68,15 @@ export default function ClothingPage({ state, update }: PageProps) {
               className={category === group.id ? "active" : ""}
               onClick={() => setCategory(group.id)}
             >
-              {group.label}
+              {labelFor(group.label)}
             </button>
           ))}
         </div>
-        <p className="clothing-instruction">
-          Atinge o hăinuță. Atinge din nou ca să o scoți.
-        </p>
+        <p className="clothing-instruction">{t("Atinge o hăinuță. Atinge din nou ca să o scoți.")}</p>
         <div
           className="final-garment-grid"
           aria-label={
-            clothingGroups.find((group) => group.id === category)?.label
+            labelFor(clothingGroups.find((group) => group.id === category)?.label || "")
           }
         >
           {items.map((item) => (
@@ -89,7 +90,7 @@ export default function ClothingPage({ state, update }: PageProps) {
               }
             >
               <img src={item.thumb} alt="" draggable={false} />
-              <span>{item.label}</span>
+              <span>{labelFor(item.label)}</span>
               {outfit.includes(item.id) && (
                 <span className="clothes-check" aria-hidden="true">
                   ✓

@@ -1,3 +1,4 @@
+import { useLanguage } from "../i18n/LanguageContext";
 import { clothingFit, clothingItems, type ClothingGender, type ClothingItem } from "../utils/clothingCatalog";
 
 function Layer({ item, front = false }: { item: ClothingItem; front?: boolean }) {
@@ -57,6 +58,7 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
   });
 }
 export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender; clothes: string[] }) {
+  const { t, labelFor } = useLanguage();
   const prefix = gender === "fata" ? "girl" : "boy";
   const selected = clothingItems.filter(item => item.gender === gender && clothes.includes(item.id));
   const collar = selected.find(item => item.slot === "outer") ?? selected.find(item => item.slot === "top");
@@ -76,7 +78,7 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
     : winterHat ? "inset(20% 0 0 0)" : undefined;
   const base = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-base.png`;
   return (
-    <div className="fitted-mannequin" style={{ overflow: umbrella ? "visible" : undefined }} role="img" aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}>
+    <div className="fitted-mannequin" style={{ overflow: umbrella ? "visible" : undefined }} role="img" aria-label={t("{character}, {count} articole alese", { character: labelFor(gender === "fata" ? "Fetiță" : "Băiat"), count: selected.length })}>
       {umbrella && <Layer item={umbrella} />}
       {/* Only the tilted canopy may extend into the stage padding. Keep the
           other garment canvases clipped, with their existing layer order. */}

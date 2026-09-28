@@ -1,11 +1,10 @@
-import { childLabel } from "../utils/data";
+import { useLanguage } from "../i18n/LanguageContext";
 import type { Page, PageProps } from "../types";
 import { Icon } from "../components/Icon";
 import { SectionArt } from "../components/SectionArt";
 import { MorningBoard } from "../components/MorningBoard";
 import { dateText } from "../utils/dateUtils";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
-import { promptAudio } from "../utils/audioPrompts";
 
 export const modules: {
   page: Page;
@@ -68,7 +67,8 @@ export default function Home({
   update,
   navigate,
 }: PageProps & { navigate: (p: Page) => void }) {
-  const { play } = useAudioPlayer();
+  const { t, labelFor, language } = useLanguage();
+  const { playPrompt } = useAudioPlayer();
   const birthday = state.children.filter(
     (c) => c.birthday.slice(5) === state.date.slice(5),
   );
@@ -79,33 +79,28 @@ export default function Home({
           <SectionArt name="weather" size={118} />
         </div>
         <div className="welcome-copy">
-          <h1>Bună dimineața!</h1>
-          <p className="subtitle">
-            Ne întâlnim, ne cunoaștem și descoperim ziua de azi.
-          </p>
+          <h1>{t("Bună dimineața!")}</h1>
+          <p className="subtitle">{t("Ne întâlnim, ne cunoaștem și descoperim ziua de azi.")}</p>
           <button
             className="audio-trigger"
             type="button"
-            onClick={() => play(promptAudio.welcome)}
-            aria-label="Ascultă mesajul de bun venit"
+            onClick={() => playPrompt("welcome")}
+            aria-label={t("Ascultă mesajul de bun venit")}
           >
-            <span aria-hidden="true">🔊</span>
-            Ascultă mesajul
-          </button>
+            <span aria-hidden="true">🔊</span>{t("Ascultă mesajul")}</button>
         </div>
       </section>
       <div className="morning-strip">
         <span className="today-chip">
           <Icon name="calendar" size={22} />
-          {dateText(state.date)}
+          {dateText(state.date, language)}
         </span>
         {state.message && (
           <span className="morning-message">{state.message}</span>
         )}
       </div>
       {birthday.length > 0 && (
-        <div className="birthday">
-          La mulți ani, {birthday.map((c) => childLabel(c)).join(", ")}!
+        <div className="birthday">{t("La mulți ani,")}{" "}{birthday.map((c) => (c.name.trim() || t("Loc disponibil"))).join(", ")}!
         </div>
       )}
       <div className="home-grid">
@@ -122,8 +117,8 @@ export default function Home({
                   <SectionArt name={m.page} />
                 </span>
               </span>
-              <strong>{m.title}</strong>
-              <span className="card-bottom">{m.hint}</span>
+              <strong>{labelFor(m.title)}</strong>
+              <span className="card-bottom">{labelFor(m.hint)}</span>
             </button>
           ))}
       </div>

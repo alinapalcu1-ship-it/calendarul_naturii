@@ -1,3 +1,4 @@
+import { useLanguage } from "../i18n/LanguageContext";
 import { useRef, useState } from "react";
 import type { PageProps, Child, State } from "../types";
 import { Avatar } from "../components/Controls";
@@ -15,6 +16,7 @@ export default function TeacherSettings({
   reset,
   startNewDay,
 }: PageProps & { reset: () => void; startNewDay: () => void }) {
+  const { t, labelFor } = useLanguage();
   const [unlocked, setUnlocked] = useState(false);
   const [confirm, setConfirm] = useState("");
   const [pendingImport, setPendingImport] = useState<State | null>(null);
@@ -43,28 +45,28 @@ export default function TeacherSettings({
     day: "Prezența, emoțiile, vremea, temperatura, anotimpul, hainele și selecțiile zilei se resetează. Numele, fotografiile, aniversările și setările grupei rămân salvate.",
     presence:
       "Toți copiii vor fi marcați absenți și responsabilul va fi șters.",
-    import: `Configurația curentă va fi înlocuită cu grupa „${pendingImport?.group || "Fără nume"}”, cu ${pendingImport?.children.filter((c) => c.name).length ?? 0} copii cu nume. Alegerile zilnice se resetează. Exportă configurația actuală înainte dacă vrei să o păstrezi.`,
+    import: t("Configurația curentă va fi înlocuită cu grupa „{group}”, cu {count} copii cu nume. Alegerile zilnice se resetează. Exportă configurația actuală înainte dacă vrei să o păstrezi.", { group: pendingImport?.group || t("Fără nume"), count: pendingImport?.children.filter(c => c.name).length ?? 0 }),
   };
   return (
     <div className="settings-layout">
       <section className="settings-panel settings-access">
-        <h2>Configurarea grupei</h2>
+        <h2>{t("Configurarea grupei")}</h2>
         <p className="muted">
-          {unlocked
+          {t(unlocked
             ? "Modificările se salvează automat pe acest dispozitiv. Blochează setările înainte să revii la copii."
-            : "Setările sunt blocate pentru a evita modificările accidentale prin atingere."}
+            : "Setările sunt blocate pentru a evita modificările accidentale prin atingere.")}
         </p>
         <button
           className="secondary"
           disabled={busy !== null}
           onClick={() => (unlocked ? setUnlocked(false) : setConfirm("unlock"))}
         >
-          {unlocked ? "Blochează setările" : "Deblochează setările"}
+          {t(unlocked ? "Blochează setările" : "Deblochează setările")}
         </button>
-        {notice && <p role="status">{notice}</p>}
+        {notice && <p role="status">{t(notice)}</p>}
         {error && (
           <p role="alert" className="error">
-            {error}
+            {t(error)}
           </p>
         )}
       </section>
@@ -73,28 +75,22 @@ export default function TeacherSettings({
         disabled={!unlocked || busy !== null}
       >
         <section className="settings-panel">
-          <h2>Grupa noastră</h2>
-          <label>
-            Numele grupei
-            <input
+          <h2>{t("Grupa noastră")}</h2>
+          <label>{t("Numele grupei")}<input
               maxLength={70}
               value={state.group}
               onChange={(e) => update({ group: e.target.value })}
             />
           </label>
-          <label>
-            Mesajul dimineții
-            <textarea
+          <label>{t("Mesajul dimineții")}<textarea
               maxLength={240}
               value={state.message}
-              placeholder="Astăzi descoperim familia."
+              placeholder={t("Astăzi descoperim familia.")}
               onChange={(e) => update({ message: e.target.value })}
             />
           </label>
-          <p className="muted">
-            Lasă mesajul gol pentru a-l ascunde de pe ecranul principal.
-          </p>
-          <h2>Programul zilei</h2>
+          <p className="muted">{t("Lasă mesajul gol pentru a-l ascunde de pe ecranul principal.")}</p>
+          <h2>{t("Programul zilei")}</h2>
           <div className="routine-settings">
             {routines.map((a) => (
               <button
@@ -112,32 +108,18 @@ export default function TeacherSettings({
                 }
               >
                 <Icon name={a} size={32} />
-                {a}
-                <span>{state.activities.includes(a) ? "✓" : "—"}</span>
+                {labelFor(a)}
+                <span>{t(state.activities.includes(a) ? "✓" : "—")}</span>
               </button>
             ))}
           </div>
-          <h2>O nouă zi</h2>
-          <p className="muted">
-            La schimbarea zilei, prezența și alegerile zilnice se resetează
-            automat. Grupa, fotografiile, aniversările, mesajul și programul se
-            păstrează.
-          </p>
-          <button className="primary" onClick={() => setConfirm("day")}>
-            Începe o zi nouă
-          </button>
-          <button className="secondary" onClick={() => setConfirm("presence")}>
-            Resetează prezența
-          </button>
-          <button className="danger" onClick={() => setConfirm("all")}>
-            Resetează complet aplicația
-          </button>
-          <h2>Backup și restaurare</h2>
-          <p className="muted">
-            Backupul include numele, fotografiile, aniversările, mesajul și
-            programul grupei. Păstrează fișierul într-un loc privat. Alegerile
-            zilnice nu sunt incluse.
-          </p>
+          <h2>{t("O nouă zi")}</h2>
+          <p className="muted">{t("La schimbarea zilei, prezența și alegerile zilnice se resetează automat. Grupa, fotografiile, aniversările, mesajul și programul se păstrează.")}</p>
+          <button className="primary" onClick={() => setConfirm("day")}>{t("Începe o zi nouă")}</button>
+          <button className="secondary" onClick={() => setConfirm("presence")}>{t("Resetează prezența")}</button>
+          <button className="danger" onClick={() => setConfirm("all")}>{t("Resetează complet aplicația")}</button>
+          <h2>{t("Backup și restaurare")}</h2>
+          <p className="muted">{t("Backupul include numele, fotografiile, aniversările, mesajul și programul grupei. Păstrează fișierul într-un loc privat. Alegerile zilnice nu sunt incluse.")}</p>
           <button
             className="secondary"
             onClick={() => {
@@ -155,15 +137,11 @@ export default function TeacherSettings({
                 "Configurația a fost exportată, inclusiv fotografiile.",
               );
             }}
-          >
-            Exportă configurația
-          </button>
-          <label className="upload backup-import">
-            Importă configurația
-            <input
+          >{t("Exportă configurația")}</button>
+          <label className="upload backup-import">{t("Importă configurația")}<input
               type="file"
               accept=".json,application/json"
-              aria-label="Importă configurația"
+              aria-label={t("Importă configurația")}
               onChange={async (e) => {
                 const file = e.target.files?.[0];
                 e.target.value = "";
@@ -188,46 +166,31 @@ export default function TeacherSettings({
             />
           </label>
           <p className="privacy">
-            <Icon name="heart" size={25} />
-            Datele sunt păstrate doar pe acest dispozitiv și nu sunt transmise
-            către un server.
-          </p>
-          <p className="muted">
-            Fotografiile sunt micșorate local și salvate în IndexedDB. Setările
-            mici rămân în localStorage. Ștergerea datelor browserului elimină
-            configurația; păstrează un backup.
-          </p>
+            <Icon name="heart" size={25} />{t("Datele sunt păstrate doar pe acest dispozitiv și nu sunt transmise către un server.")}</p>
+          <p className="muted">{t("Fotografiile sunt micșorate local și salvate în IndexedDB. Setările mici rămân în localStorage. Ștergerea datelor browserului elimină configurația; păstrează un backup.")}</p>
         </section>
         <section className="settings-panel">
-          <h2>
-            Copiii grupei <span className="badge">{state.children.length}</span>
+          <h2>{t("Copiii grupei")}<span className="badge">{state.children.length}</span>
           </h2>
-          <p className="muted">
-            Editează numele, fotografia și data aniversării. Modificările se
-            salvează automat.
-          </p>
+          <p className="muted">{t("Editează numele, fotografia și data aniversării. Modificările se salvează automat.")}</p>
           <div className="child-edit-list">
             {state.children.map((c) => (
               <div className="child-editor" key={c.id}>
                 <Avatar child={c} size={64} />
                 <div className="child-fields">
-                  <label>
-                    Nume
-                    <input
-                      aria-label={`Nume copil ${c.id}`}
+                  <label>{t("Nume")}<input
+                      aria-label={t("Nume copil {id}", { id: c.id })}
                       maxLength={45}
-                      placeholder="Loc disponibil"
+                      placeholder={t("Loc disponibil")}
                       value={c.name}
                       onChange={(e) =>
                         editChild(c.id, { name: e.target.value })
                       }
                     />
                   </label>
-                  <label>
-                    Aniversare
-                    <input
+                  <label>{t("Aniversare")}<input
                       type="date"
-                      aria-label={`Aniversare copil ${c.id}`}
+                      aria-label={t("Aniversare copil {id}", { id: c.id })}
                       value={c.birthday}
                       onChange={(e) =>
                         editChild(c.id, { birthday: e.target.value })
@@ -235,9 +198,9 @@ export default function TeacherSettings({
                     />
                   </label>
                   <label className="upload">
-                    {busy === c.id ? "Se pregătește…" : "Alege fotografie"}
+                    {t(busy === c.id ? "Se pregătește…" : "Alege fotografie")}
                     <input
-                      aria-label={`Fotografie copil ${c.id}`}
+                      aria-label={t("Fotografie copil {id}", { id: c.id })}
                       type="file"
                       accept="image/jpeg,image/png,image/webp"
                       onChange={async (e) => {
@@ -264,17 +227,13 @@ export default function TeacherSettings({
                     <button
                       className="remove-photo"
                       onClick={() => setConfirm(`photo:${c.id}`)}
-                    >
-                      Elimină fotografia
-                    </button>
+                    >{t("Elimină fotografia")}</button>
                   )}
                   {(c.name || c.photo || c.birthday) && (
                     <button
                       className="remove-photo"
                       onClick={() => setConfirm(`child:${c.id}`)}
-                    >
-                      Elimină copilul
-                    </button>
+                    >{t("Elimină copilul")}</button>
                   )}
                 </div>
               </div>
@@ -312,16 +271,16 @@ export default function TeacherSettings({
             }}
           >
             <h2 id="confirm-title">
-              {titles[confirm] ||
+              {t(titles[confirm] ||
                 (confirm.startsWith("photo:")
                   ? "Eliminăm fotografia?"
-                  : "Eliminăm datele copilului?")}
+                  : "Eliminăm datele copilului?"))}
             </h2>
             <p id="confirm-description">
-              {descriptions[confirm] ||
+              {t(descriptions[confirm] ||
                 (confirm.startsWith("photo:")
                   ? "Fotografia va fi eliminată. Numele și aniversarea se păstrează."
-                  : "Numele, fotografia și aniversarea vor fi șterse. Locul rămâne disponibil pentru alt copil.")}
+                  : "Numele, fotografia și aniversarea vor fi șterse. Locul rămâne disponibil pentru alt copil."))}
             </p>
             <button
               autoFocus
@@ -330,9 +289,7 @@ export default function TeacherSettings({
                 setConfirm("");
                 setPendingImport(null);
               }}
-            >
-              Anulează
-            </button>
+            >{t("Anulează")}</button>
             <button
               className="danger"
               onClick={() => {
@@ -367,7 +324,7 @@ export default function TeacherSettings({
                 setConfirm("");
               }}
             >
-              {confirm === "unlock"
+              {t(confirm === "unlock"
                 ? "Sunt educatoare, continuă"
                 : confirm === "all"
                   ? "Da, șterge tot"
@@ -375,7 +332,7 @@ export default function TeacherSettings({
                     ? "Da, înlocuiește configurația"
                     : confirm.includes(":")
                       ? "Da, elimină"
-                      : "Da, resetează"}
+                      : "Da, resetează")}
             </button>
           </section>
         </div>

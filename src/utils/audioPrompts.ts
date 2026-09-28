@@ -1,3 +1,4 @@
+import type { Language } from "../i18n/translations";
 const audioUrl = (file: string) => `${import.meta.env.BASE_URL}audio/${file}`;
 
 export const monthAudio: Record<string, string> = {
@@ -59,3 +60,61 @@ export const emotionAudio: Record<string, string> = {
   Liniștit: audioUrl("emotii/emotie_linistit.mp3"),
 };
 export const backgroundAudio = audioUrl("fundal/fundal_calendar.mp3");
+
+const germanWords: Record<string, string> = {
+  "Luni": "de/zile/montag.mp3",
+  "Marți": "de/zile/dienstag.mp3",
+  "Miercuri": "de/zile/mittwoch.mp3",
+  "Joi": "de/zile/donnerstag.mp3",
+  "Vineri": "de/zile/freitag.mp3",
+  "Ianuarie": "de/luni/januar.mp3",
+  "Februarie": "de/luni/februar.mp3",
+  "Martie": "de/luni/maerz.mp3",
+  "Aprilie": "de/luni/april.mp3",
+  "Mai": "de/luni/mai.mp3",
+  "Iunie": "de/luni/juni.mp3",
+  "Iulie": "de/luni/juli.mp3",
+  "August": "de/luni/august.mp3",
+  "Septembrie": "de/luni/september.mp3",
+  "Octombrie": "de/luni/oktober.mp3",
+  "Noiembrie": "de/luni/november.mp3",
+  "Decembrie": "de/luni/dezember.mp3",
+  "Primăvara": "de/anotimpuri/fruehling.mp3",
+  "Vara": "de/anotimpuri/sommer.mp3",
+  "Toamna": "de/anotimpuri/herbst.mp3",
+  "Iarna": "de/anotimpuri/winter.mp3",
+  "Însorit": "de/vreme/sonnig.mp3",
+  "Parțial noros": "de/vreme/teilweise_bewoelkt.mp3",
+  "Înnorat": "de/vreme/bewoelkt.mp3",
+  "Ploaie": "de/vreme/regen.mp3",
+  "Ninsoare": "de/vreme/schnee.mp3",
+  "Vânt": "de/vreme/wind.mp3",
+  "Ceață": "de/vreme/nebel.mp3",
+  "Cald": "de/vreme/warm.mp3",
+  "Răcoare": "de/vreme/kuehl.mp3",
+  "Frig": "de/vreme/kalt.mp3",
+  "Vesel": "de/emotii/froehlich.mp3",
+  "Trist": "de/emotii/traurig.mp3",
+  "Supărat": "de/emotii/wuetend.mp3",
+  "Speriat": "de/emotii/aengstlich.mp3",
+  "Obosit": "de/emotii/muede.mp3",
+  "Liniștit": "de/emotii/ruhig.mp3",
+  "Fetiță": "de/personaje/maedchen.mp3",
+  "Băiat": "de/personaje/junge.mp3",
+  "Bună dimineața": "de/rutina/guten_morgen.mp3",
+  "Mic dejun": "de/rutina/fruehstueck.mp3",
+  "Joacă": "de/rutina/spielzeit.mp3",
+  "Activități": "de/rutina/aktivitaeten.mp3",
+  "Masa de prânz": "de/rutina/mittagessen.mp3",
+  "Odihnă": "de/rutina/ruhezeit.mp3"
+};
+const romanianWords: Record<string, string> = { ...weekdayAudio, ...monthAudio, ...seasonAudio, ...weatherAudio, ...temperatureAudio, ...emotionAudio };
+export type PromptKey = keyof typeof promptAudio;
+const germanPrompts: Partial<Record<PromptKey, string>> = { welcome: "de/mesaje/start.mp3", finalMessage: "de/mesaje/ende.mp3" };
+export function wordAudio(label: string, language: Language): string | undefined {
+  return language === "ro" ? romanianWords[label] : germanWords[label] ? audioUrl(germanWords[label]) : undefined;
+}
+export function promptFor(key: PromptKey, language: Language): string | undefined {
+  return language === "ro" ? promptAudio[key] : germanPrompts[key] ? audioUrl(germanPrompts[key]!) : undefined;
+}
+export const hasAudio = (label: string, language: Language) => !!wordAudio(label, language);

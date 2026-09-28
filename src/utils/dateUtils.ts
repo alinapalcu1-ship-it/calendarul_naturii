@@ -28,8 +28,8 @@ export function today() {
 export function parseDate(value: string) {
   return new Date(`${value}T12:00:00`);
 }
-export function dateText(value: string) {
-  return parseDate(value).toLocaleDateString("ro-RO", {
+export function dateText(value: string, language: "ro" | "de" = "ro") {
+  return parseDate(value).toLocaleDateString(language === "de" ? "de-DE" : "ro-RO", {
     weekday: "long",
     day: "numeric",
     month: "long",

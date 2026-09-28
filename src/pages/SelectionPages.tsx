@@ -1,5 +1,5 @@
+import { useLanguage } from "../i18n/LanguageContext";
 import { isConfiguredChild } from "../utils/data";
-import { childLabel } from "../utils/data";
 import { ChildEmotionPicker } from "../components/ChildEmotionPicker";
 import { useState } from "react";
 import type { PageProps } from "../types";
@@ -15,26 +15,18 @@ import {
   weekdays,
   today,
 } from "../utils/dateUtils";
-import {
-  weekdayAudio,
-  seasonAudio,
-  emotionAudio,
-  monthAudio,
-  promptAudio,
-  temperatureAudio,
-  weatherAudio,
-} from "../utils/audioPrompts";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
 
 export function CalendarPage({ state, update }: PageProps) {
+  const { t, labelFor, language } = useLanguage();
   const d = parseDate(state.date);
   const [part, setPart] = useState("Ziua");
   const weekday = (d.getDay() + 6) % 7;
-  const { play } = useAudioPlayer();
+  const { playWord } = useAudioPlayer();
 
   return (
     <>
-      <div className="date-preview">Astăzi este {dateText(state.date)}.</div>
+      <div className="date-preview">{t("Astăzi este {date}.", { date: dateText(state.date, language) })}</div>
       <div className="tabs">
         {["Ziua", "Data", "Luna", "Anul"].map((p) => (
           <button
@@ -43,14 +35,14 @@ export function CalendarPage({ state, update }: PageProps) {
             className={part === p ? "active" : ""}
             onClick={() => setPart(p)}
           >
-            {p}
+            {labelFor(p)}
             <small>
               {p === "Ziua"
-                ? weekdays[weekday]
+                ? labelFor(weekdays[weekday])
                 : p === "Data"
                   ? d.getDate()
                   : p === "Luna"
-                    ? months[d.getMonth()]
+                    ? labelFor(months[d.getMonth()])
                     : d.getFullYear()}
             </small>
           </button>
@@ -58,9 +50,7 @@ export function CalendarPage({ state, update }: PageProps) {
       </div>
       {part === "Ziua" && (
         <>
-          <p className="instruction">
-            Atinge o zi. Data se schimbă în aceeași săptămână.
-          </p>
+          <p className="instruction">{t("Atinge o zi. Data se schimbă în aceeași săptămână.")}</p>
           <div className="choices weekdays">
             {weekdays.slice(0, 5).map((w, i) => (
               <Choice
@@ -77,7 +67,7 @@ export function CalendarPage({ state, update }: PageProps) {
                       nd.getDate(),
                     ),
                   });
-                  play(weekdayAudio[w]);
+                  playWord(w);
                 }}
               >
                 <StoryArt name={w} size={100} />
@@ -118,11 +108,11 @@ export function CalendarPage({ state, update }: PageProps) {
               className={i === d.getMonth() ? "active" : ""}
               onClick={() => {
                 update({ date: makeDate(d.getFullYear(), i, d.getDate()) });
-                play(monthAudio[m]);
+                playWord(m);
               }}
             >
               <StoryArt name={m} size={82} />
-              <span>{m}</span>
+              <span>{labelFor(m)}</span>
               {i === d.getMonth() && (
                 <span className="month-check" aria-hidden="true">
                   ✓
@@ -135,7 +125,7 @@ export function CalendarPage({ state, update }: PageProps) {
       {part === "Anul" && (
         <div className="year-picker">
           <button
-            aria-label="Anul anterior"
+            aria-label={t("Anul anterior")}
             disabled={d.getFullYear() <= 1900}
             onClick={() =>
               update({
@@ -147,7 +137,7 @@ export function CalendarPage({ state, update }: PageProps) {
           </button>
           <strong>{d.getFullYear()}</strong>
           <button
-            aria-label="Anul următor"
+            aria-label={t("Anul următor")}
             disabled={d.getFullYear() >= 2200}
             onClick={() =>
               update({
@@ -160,19 +150,17 @@ export function CalendarPage({ state, update }: PageProps) {
         </div>
       )}
       <button className="secondary" onClick={() => update({ date: today() })}>
-        <Icon name="reset" size={23} /> Folosește data de azi
-      </button>
+        <Icon name="reset" size={23} />{t("Folosește data de azi")}</button>
     </>
   );
 }
 
 export function SeasonPage({ state, update }: PageProps) {
-  const { play } = useAudioPlayer();
+  const { t, labelFor } = useLanguage();
+  const { playWord } = useAudioPlayer();
   return (
     <>
-      <p className="instruction">
-        În ce anotimp suntem? Atinge imaginea potrivită.
-      </p>
+      <p className="instruction">{t("În ce anotimp suntem? Atinge imaginea potrivită.")}</p>
       <div className="choices seasons">
         {seasons.map((s, i) => (
           <div className={["sage", "yellow", "peach", "blue"][i]} key={s}>
@@ -181,7 +169,7 @@ export function SeasonPage({ state, update }: PageProps) {
               selected={state.season === s}
               onClick={() => {
                 update({ season: s });
-                play(seasonAudio[s]);
+                playWord(s);
               }}
             >
               <div className="season-picture">
@@ -194,21 +182,20 @@ export function SeasonPage({ state, update }: PageProps) {
       </div>
       <Notice>
         {state.season
-          ? `Anotimpul nostru: ${state.season.toLowerCase()}.`
-          : "Privim afară și descoperim împreună."}
+          ? `${t("Anotimpul nostru:")} ${labelFor(state.season)}.`
+          : t("Privim afară și descoperim împreună.")}
       </Notice>
     </>
   );
 }
 
 export function WeatherPage({ state, update }: PageProps) {
-  const { play } = useAudioPlayer();
+  const { t, labelFor } = useLanguage();
+  const { playWord, playPrompt, hasPrompt } = useAudioPlayer();
 
   return (
     <>
-      <p className="instruction">
-        Privește pe fereastră. Alege una sau două imagini.
-      </p>
+      <p className="instruction">{t("Privește pe fereastră. Alege una sau două imagini.")}</p>
       <div className="choices weather">
         {weatherOptions.map((w) => (
           <Choice
@@ -221,22 +208,20 @@ export function WeatherPage({ state, update }: PageProps) {
                   ? state.weather.filter((x) => x !== w)
                   : [...state.weather.slice(-1), w],
               });
-              play(weatherAudio[w]);
+              playWord(w);
             }}
           />
         ))}
       </div>
       <div className="section-audio-row">
-        <h2 className="section-label">Cum este afară?</h2>
-        <button
+        <h2 className="section-label">{t("Cum este afară?")}</h2>
+        {hasPrompt("weatherQuestion") && <button
           className="audio-trigger compact"
           type="button"
-          onClick={() => play(promptAudio.weatherQuestion)}
-          aria-label="Ascultă întrebarea Cum este afară"
+          onClick={() => playPrompt("weatherQuestion")}
+          aria-label={t("Ascultă întrebarea Cum este afară")}
         >
-          <span aria-hidden="true">🔊</span>
-          Ascultă
-        </button>
+          <span aria-hidden="true">🔊</span>{t("Ascultă")}</button>}
       </div>
       <div className="temperature">
         {["Cald", "Răcoare", "Frig"].map((t) => (
@@ -246,40 +231,37 @@ export function WeatherPage({ state, update }: PageProps) {
             key={t}
             onClick={() => {
               update({ temperature: state.temperature === t ? "" : t });
-              play(temperatureAudio[t]);
+              playWord(t);
             }}
           >
             <Icon name={t} />
-            {t}
+            {labelFor(t)}
             {state.temperature === t && <Icon name="check" size={22} />}
           </button>
         ))}
       </div>
       <Notice>
         {state.weather.length
-          ? `Am ales: ${state.weather.join(" și ").toLowerCase()}${state.temperature ? `, ${state.temperature.toLowerCase()}` : ""}.`
-          : "Cum este vremea astăzi?"}
+          ? `${t("Am ales:")} ${state.weather.map(labelFor).join(t(" și "))}${state.temperature ? `, ${labelFor(state.temperature)}` : ""}.`
+          : t("Cum este vremea astăzi?")}
       </Notice>
     </>
   );
 }
 
 export function AttendancePage({ state, update }: PageProps) {
+  const { t } = useLanguage();
   const [confirm, setConfirm] = useState(false);
   const [emotionChild, setEmotionChild] = useState<number | null>(null);
   const selectedChild = state.children.find((c) => c.id === emotionChild);
   return (
     <>
       <div className="attendance-bar">
-        <p className="instruction">
-          Atinge-ți fotografia și spune „Bună dimineața!”.
-        </p>
+        <p className="instruction">{t("Atinge-ți fotografia și spune „Bună dimineața!”.")}</p>
         <div className="counts">
-          <span>
-            Prezenți: <b>{state.present.length}</b>
+          <span>{t("Prezenți:")}{" "}<b>{state.present.length}</b>
           </span>
-          <span>
-            Absenți:{" "}
+          <span>{t("Absenți:")}{" "}
             <b>
               {state.children.filter(isConfiguredChild).length -
                 state.present.length}
@@ -325,35 +307,28 @@ export function AttendancePage({ state, update }: PageProps) {
         />
       )}
       {confirm ? (
-        <div className="confirm-inline">
-          Resetăm prezența și responsabilul?
-          <button
+        <div className="confirm-inline">{t("Resetăm prezența și responsabilul?")}<button
             onClick={() => {
               update({ present: [], helper: null });
               setConfirm(false);
             }}
-          >
-            Da, resetăm
-          </button>
-          <button onClick={() => setConfirm(false)}>Anulează</button>
+          >{t("Da, resetăm")}</button>
+          <button onClick={() => setConfirm(false)}>{t("Anulează")}</button>
         </div>
       ) : (
         <button className="secondary" onClick={() => setConfirm(true)}>
-          <Icon name="reset" size={23} />
-          Resetează prezența
-        </button>
+          <Icon name="reset" size={23} />{t("Resetează prezența")}</button>
       )}
     </>
   );
 }
 
 export function EmotionsPage({ state, update }: PageProps) {
-  const { play } = useAudioPlayer();
+  const { t, labelFor, language } = useLanguage();
+  const { playWord } = useAudioPlayer();
   return (
     <>
-      <p className="instruction">
-        Cum te simți astăzi? Toate emoțiile sunt binevenite.
-      </p>
+      <p className="instruction">{t("Cum te simți astăzi? Toate emoțiile sunt binevenite.")}</p>
       <div className="choices emotions">
         {emotions.map((e) => (
           <Choice
@@ -362,7 +337,7 @@ export function EmotionsPage({ state, update }: PageProps) {
             selected={state.emotion === e}
             onClick={() => {
               update({ emotion: e });
-              play(emotionAudio[e]);
+              playWord(e);
             }}
           >
             <Face emotion={e} size={112} />
@@ -371,14 +346,15 @@ export function EmotionsPage({ state, update }: PageProps) {
       </div>
       <Notice>
         {state.emotion
-          ? `Astăzi mă simt ${state.emotion.toLowerCase()}.`
-          : "Atinge chipul care arată cum te simți."}
+          ? `${t("Astăzi mă simt")} ${labelFor(state.emotion).toLocaleLowerCase(language)}.`
+          : t("Atinge chipul care arată cum te simți.")}
       </Notice>
     </>
   );
 }
 
 export function HelperPage({ state, update }: PageProps) {
+  const { t } = useLanguage();
   const helper = state.children.find(
     (c) => c.id === state.helper && state.present.includes(c.id),
   );
@@ -391,21 +367,16 @@ export function HelperPage({ state, update }: PageProps) {
           </span>
           <Avatar child={helper} size={116} />
           <div>
-            <p>Responsabilul zilei este:</p>
-            <h2>{childLabel(helper)}</h2>
+            <p>{t("Responsabilul zilei este:")}</p>
+            <h2>{(helper.name.trim() || t("Loc disponibil"))}</h2>
           </div>
         </div>
       )}
       {state.present.length === 0 ? (
-        <Notice>
-          Mai întâi alegem cine este la grădiniță, în secțiunea „Cine este la
-          grădiniță?”.
-        </Notice>
+        <Notice>{t("Mai întâi alegem cine este la grădiniță, în secțiunea „Cine este la grădiniță?”.")}</Notice>
       ) : (
         <>
-          <p className="instruction">
-            Cine ne ajută astăzi? Alegem dintre copiii prezenți.
-          </p>
+          <p className="instruction">{t("Cine ne ajută astăzi? Alegem dintre copiii prezenți.")}</p>
           <div className="children-grid">
             {state.children
               .filter(

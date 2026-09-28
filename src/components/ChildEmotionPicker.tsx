@@ -1,6 +1,5 @@
+import { useLanguage } from "../i18n/LanguageContext";
 import { useAudioPlayer } from "../hooks/useAudioPlayer";
-import { emotionAudio } from "../utils/audioPrompts";
-import { childLabel } from "../utils/data";
 import { useEffect, useRef } from "react";
 import { Face } from "./Icon";
 import { emotions } from "../utils/data";
@@ -17,7 +16,8 @@ export function ChildEmotionPicker({
   onSelect: (emotion: string) => void;
   onClose: () => void;
 }) {
-  const { play } = useAudioPlayer();
+  const { t, labelFor } = useLanguage();
+  const { playWord } = useAudioPlayer();
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
@@ -36,7 +36,7 @@ export function ChildEmotionPicker({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <h2 id="child-emotion-title">Cum se simte {childLabel(child)}?</h2>
+      <h2 id="child-emotion-title">{t("Cum se simte {name}?", { name: child.name })}</h2>
       <div className="child-emotion-options">
         {emotions.map((emotion) => (
           <button
@@ -44,20 +44,18 @@ export function ChildEmotionPicker({
             aria-pressed={emotion === value}
             onClick={() => {
               onSelect(emotion);
-              play(emotionAudio[emotion]);
+              playWord(emotion);
             }}
           >
             <Face emotion={emotion} size={76} />
-            <span>{emotion}</span>
+            <span>{labelFor(emotion)}</span>
             {emotion === value && <span aria-hidden="true">✓</span>}
           </button>
         ))}
       </div>
       <div className="child-emotion-actions">
-        <button onClick={() => onSelect("")}>Fără emoție aleasă</button>
-        <button autoFocus onClick={onClose}>
-          Închide
-        </button>
+        <button onClick={() => onSelect("")}>{t("Fără emoție aleasă")}</button>
+        <button autoFocus onClick={onClose}>{t("Închide")}</button>
       </div>
     </dialog>
   );

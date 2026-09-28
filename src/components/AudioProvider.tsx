@@ -1,3 +1,4 @@
+import { useLanguage } from "../i18n/LanguageContext";
 import {
   useCallback,
   useEffect,
@@ -10,6 +11,7 @@ import { AudioManager } from "../utils/AudioManager";
 
 /** Mounted once above App; changing pages never disposes the audio session. */
 export function AudioProvider({ children }: { children: ReactNode }) {
+  const { t } = useLanguage();
   const manager = useRef<AudioManager | null>(null);
   const [snapshot, setSnapshot] = useState({ musicOn: true, error: "" });
   useEffect(() => {
@@ -33,7 +35,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       {children}
       {snapshot.error && (
         <p className="audio-notice" role="status">
-          {snapshot.error}
+          {t(snapshot.error)}
         </p>
       )}
     </AudioContext.Provider>

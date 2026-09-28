@@ -1,4 +1,5 @@
-import { childLabel, isConfiguredChild } from "../utils/data";
+import { useLanguage } from "../i18n/LanguageContext";
+import { isConfiguredChild } from "../utils/data";
 import type { ReactNode } from "react";
 import { Icon, Face } from "./Icon";
 import { StoryArt } from "./StoryArt";
@@ -14,6 +15,7 @@ export function Choice({
   onClick: () => void;
   children?: ReactNode;
 }) {
+  const { labelFor } = useLanguage();
   return (
     <button
       className={`choice ${selected ? "selected" : ""}`}
@@ -26,7 +28,7 @@ export function Choice({
         </span>
       )}
       {children || <Icon name={label} size={64} />}
-      <span>{label}</span>
+      <span>{labelFor(label)}</span>
     </button>
   );
 }
@@ -58,6 +60,7 @@ export function ChildCard({
   emotion?: string;
   onEmotion?: () => void;
 }) {
+  const { t, labelFor } = useLanguage();
   const configured = isConfiguredChild(child);
   const card = (
     <button
@@ -67,14 +70,14 @@ export function ChildCard({
       onClick={onClick}
     >
       <Avatar child={child} />
-      <strong>{childLabel(child)}</strong>
+      <strong>{(child.name.trim() || t("Loc disponibil"))}</strong>
       {status && configured && (
         <span className="child-status">
-          {selected ? "✓ Prezent" : "Absent"}
+          {t(selected ? "✓ Prezent" : "Absent")}
         </span>
       )}
       {!status && selected && (
-        <span className="child-status">✓ Responsabil</span>
+        <span className="child-status">{t("✓ Responsabil")}</span>
       )}
     </button>
   );
@@ -85,7 +88,7 @@ export function ChildCard({
       <button
         className="child-emotion-button"
         disabled={!selected}
-        aria-label={`Emoția pentru ${childLabel(child)}${emotion && selected ? `: ${emotion}` : ""}`}
+        aria-label={t("Emoția pentru {name}", { name: child.name }) + (emotion && selected ? `: ${labelFor(emotion)}` : "")}
         onClick={() => {
           onEmotion();
         }}
@@ -93,10 +96,10 @@ export function ChildCard({
         {selected && emotion ? (
           <>
             <Face emotion={emotion} size={38} />
-            <span>{emotion}</span>
+            <span>{labelFor(emotion)}</span>
           </>
         ) : (
-          <span>{selected ? "Alege emoția" : "Absent"}</span>
+          <span>{t(selected ? "Alege emoția" : "Absent")}</span>
         )}
       </button>
     </div>
