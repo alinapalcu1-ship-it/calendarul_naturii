@@ -8,6 +8,21 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
       style={{ left: `${x / 1086 * 100}%`, top: `${y / 1448 * 100}%`, width: `${width / 1086 * 100}%`, height: `${height / 1448 * 100}%`, objectFit: "fill", zIndex: item.zIndex }} />;
   }
   const fit = clothingFit(item);
+  if (item.slot === "umbrella") {
+    // Crop only the transparent canvas margins, not the source artwork. This
+    // keeps the outward tilt from creating horizontal scrolling on phones.
+    const x = 720, y = 590, width = 340, height = 308;
+    return <div className="fitted-layer" data-item={item.id} data-slot={item.slot}
+      style={{ left: `${x / 1086 * 100}%`, top: `${y / 1448 * 100}%`,
+        width: `${width / 1086 * 100}%`, height: `${height / 1448 * 100}%`,
+        overflow: "hidden", zIndex: item.zIndex,
+        transformOrigin: `${(fit.originX - x) / width * 100}% ${(fit.originY - y) / height * 100}%`,
+        transform: `translate(${fit.translateX / width * 100}%, ${fit.translateY / height * 100}%) rotate(${fit.rotate ?? 0}deg) scale(${fit.scaleX}, ${fit.scaleY})` }}>
+      <img src={item.src} alt="" draggable={false} style={{ position: "absolute",
+        maxWidth: "none", width: `${1086 / width * 100}%`, height: `${1448 / height * 100}%`,
+        left: `${-x / width * 100}%`, top: `${-y / height * 100}%` }} />
+    </div>;
+  }
   return (fit.pair ?? [fit.originX]).map((originX, side) => {
     const adjustment = fit.sides?.[side];
     const x = fit.translateX + (adjustment?.translateX ?? 0) +
@@ -32,7 +47,7 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
         style={{
           zIndex: item.slot === "scarf" && !front ? 44 : item.zIndex,
           transformOrigin: `${originX / 1086 * 100}% ${fit.originY / 1448 * 100}%`,
-          transform: `translate(${x / 1086 * 100}%, ${y / 1448 * 100}%) rotate(${adjustment?.rotate ?? 0}deg) scale(${fit.mirrorX ? -fit.scaleX : fit.scaleX}, ${fit.scaleY})`,
+          transform: `translate(${x / 1086 * 100}%, ${y / 1448 * 100}%) rotate(${adjustment?.rotate ?? fit.rotate ?? 0}deg) scale(${fit.mirrorX ? -fit.scaleX : fit.scaleX}, ${fit.scaleY})`,
           clipPath: item.slot === "gloves" ? gloveClip : fit.pair
             ? (side === 0 ? "inset(0 50% 0 0)" : "inset(0 0 0 50%)")
             : undefined,
@@ -48,6 +63,7 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
   const hooded = collar?.slot === "outer" || collar?.id === "fata_top_04" || collar?.id === "baiat_top_03";
   const tshirt = collar?.id.endsWith("_tshirt");
   const scarf = selected.find(item => item.slot === "scarf");
+  const umbrella = selected.find(item => item.slot === "umbrella");
   const gloves = selected.some(item => item.slot === "gloves");
   const winterHat = selected.some(item => item.id.endsWith("_winter-hat"));
   // The glove sprites have open fingers; the base has a closed hand. Hide only
@@ -60,10 +76,14 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
     : winterHat ? "inset(20% 0 0 0)" : undefined;
   const base = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-base.png`;
   return (
-    <div className="fitted-mannequin" role="img" aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}>
+    <div className="fitted-mannequin" style={{ overflow: umbrella ? "visible" : undefined }} role="img" aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}>
+      {umbrella && <Layer item={umbrella} />}
+      {/* Only the tilted canopy may extend into the stage padding. Keep the
+          other garment canvases clipped, with their existing layer order. */}
+      <div style={{ position: "absolute", inset: 0, overflow: "clip", zIndex: 0 }}>
       <img className="mannequin-base" src={base} alt="" draggable={false}
         style={{ clipPath: baseClip }} />
-      {selected.map(item => <Layer key={item.id} item={item} />)}
+      {selected.filter(item => item.slot !== "umbrella").map(item => <Layer key={item.id} item={item} />)}
       {/* Reuse the unmodified base and garment: collar back, neck, collar front.
           Hands and feet are never painted over fitted clothing. Hats remain above hair. */}
       {(collar || scarf) && [
@@ -86,6 +106,7 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
           <Layer item={scarf} front />
         </div>
       )}
+      </div>
     </div>
   );
 }

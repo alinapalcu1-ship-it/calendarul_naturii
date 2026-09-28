@@ -32,6 +32,7 @@ type Fit = {
   pair?: [number, number];
   inset?: number;
   mirrorX?: boolean;
+  rotate?: number;
   sides?: [
     { translateX: number; translateY: number; rotate: number },
     { translateX: number; translateY: number; rotate: number },
@@ -46,7 +47,7 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
     shoes: { scaleX: .90, scaleY: .98, translateX: 0, translateY: -42, originX: 543, originY: 1436, pair: [399, 687], inset: 6, sides: [{ translateX: 0, translateY: 0, rotate: 7 }, { translateX: -2, translateY: -1, rotate: -7 }] },
     head: { scaleX: 1.55, scaleY: 1.05, translateX: 0, translateY: -20, originX: 543, originY: 295 },
     gloves: { mirrorX: true, scaleX: .98, scaleY: .68, translateX: 0, translateY: 30, originX: 543, originY: 865, pair: [264, 822], inset: 0, sides: [{ translateX: -7, translateY: 0, rotate: 10 }, { translateX: 7, translateY: 0, rotate: -10 }] },
-    umbrella: { scaleX: 1.48, scaleY: 1.58, translateX: -64, translateY: 12, originX: 890, originY: 865 },
+    umbrella: { scaleX: 1.56, scaleY: 1.70, translateX: -64, translateY: 12, originX: 890, originY: 865, rotate: 8 },
   },
   baiat: {
     top: { scaleX: 1.06, scaleY: .84, translateX: 0, translateY: 32, originX: 543, originY: 530 },
@@ -58,7 +59,7 @@ export const clothingFits: Record<ClothingGender, Record<ClothingSlot, Fit>> = {
    
     head: { scaleX: 1.55, scaleY: 1.10, translateX: 0, translateY: -8, originX: 543, originY: 280 },
     gloves: { mirrorX: true, scaleX: .96, scaleY: .78, translateX: 0, translateY: 27, originX: 543, originY: 875, pair: [254, 833], inset: 0, sides: [{ translateX: 2, translateY: 0, rotate: 15 }, { translateX: -4, translateY: 0, rotate: -15 }] },
-    umbrella: { scaleX: 1.50, scaleY: 1.62, translateX: -60, translateY: 30, originX: 890, originY: 865 },
+    umbrella: { scaleX: 1.60, scaleY: 1.74, translateX: -60, translateY: 30, originX: 890, originY: 865, rotate: 9 },
   },
 };
 
@@ -79,13 +80,15 @@ const itemFits: Record<string, Partial<Fit>> = {
   baiat_bottom_02: { scaleX: .99, scaleY: 1.08, translateY: 0 },
   baiat_bottom_03: { scaleX: 1, scaleY: 1.12, translateY: -12 },
   baiat_bottom_04: { scaleX: 1, scaleY: 1, translateY: 30 },
-  // Low shoes and boots have different ankle openings and sole widths.
-  fata_shoes_02: { scaleX: .92, scaleY: .95, translateY: -43 },
-  fata_shoes_03: { scaleX: .92, scaleY: .98, translateY: -42 },
-  fata_shoes_04: { scaleX: .90, scaleY: .97, translateY: -42 },
-  baiat_shoes_02: { scaleX: .96, scaleY: .99, translateY: -14 },
-  baiat_shoes_03: { scaleX: .95, scaleY: .98, translateY: -14 },
-  baiat_shoes_04: { scaleX: .94, scaleY: .97, translateY: -14 },
+  // Each model has its own ankle angle, sole width and grounded sole height.
+  fata_shoes_01: { scaleX: .93, scaleY: .96, translateY: -39, inset: 5, sides: [{ translateX: 0, translateY: 0, rotate: 6 }, { translateX: -1, translateY: -1, rotate: -6 }] },
+  fata_shoes_02: { scaleX: .91, scaleY: .93, translateY: -40, inset: 5, sides: [{ translateX: 0, translateY: 0, rotate: 5 }, { translateX: -1, translateY: -1, rotate: -5 }] },
+  fata_shoes_03: { scaleX: .94, scaleY: .96, translateY: -39, inset: 4, sides: [{ translateX: 0, translateY: 0, rotate: 6 }, { translateX: -1, translateY: -1, rotate: -6 }] },
+  fata_shoes_04: { scaleX: .93, scaleY: 1, translateY: -38, pair: [395, 691], inset: 9, sides: [{ translateX: 0, translateY: 0, rotate: 8 }, { translateX: -1, translateY: -1, rotate: -8 }] },
+  baiat_shoes_01: { scaleX: .99, scaleY: .98, translateY: -10, inset: 7, sides: [{ translateX: 0, translateY: 0, rotate: 4 }, { translateX: 0, translateY: -1, rotate: -4 }] },
+  baiat_shoes_02: { scaleX: .98, scaleY: .97, translateY: -10, inset: 6, sides: [{ translateX: 0, translateY: 0, rotate: 5 }, { translateX: 0, translateY: -1, rotate: -5 }] },
+  baiat_shoes_03: { scaleX: .97, scaleY: 1, translateY: -9, pair: [385, 701], inset: 9, sides: [{ translateX: 0, translateY: 0, rotate: 6 }, { translateX: 0, translateY: -1, rotate: -6 }] },
+  baiat_shoes_04: { scaleX: .96, scaleY: 1, translateY: -8, pair: [386, 700], inset: 8, sides: [{ translateX: 0, translateY: 0, rotate: 7 }, { translateX: 0, translateY: -1, rotate: -7 }] },
 };
 
 export function clothingFit(item: ClothingItem): Fit {
