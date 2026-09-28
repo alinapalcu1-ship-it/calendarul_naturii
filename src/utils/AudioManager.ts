@@ -19,12 +19,19 @@ export class AudioManager {
   private voiceToken = 0;
   private musicRequest = 0;
   private musicPending = false;
-  private musicBlocked = false;
+  private needsAudioUnlock = true;
+  private needsContextResume = true;
+  // iOS can leave a routed media element silent after interruption. Keep its
+  // native output from the outset: Web Audio routing cannot be undone on the
+  // same element. Include iPads that advertise a desktop Mac user agent.
+  private readonly nativeIOS = typeof navigator !== "undefined" &&
+    (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
   private resuming = false;
   private intentionalPauses = new WeakSet<HTMLAudioElement>();
   private musicStallTimer: ReturnType<typeof setTimeout> | undefined;
   private stallTimer: ReturnType<typeof setTimeout> | undefined;
-  private snapshot: Snapshot = { musicOn: false, error: "" };
+  private snapshot: Snapshot = { musicOn: true, error: "" };
   private listeners = new Set<(value: Snapshot) => void>();
   private mounted = false;
 
@@ -77,7 +84,7 @@ export class AudioManager {
     if (position > 0) seek();
     audio.onerror = () => {
       if (audio !== this.music) return;
-      this.musicBlocked = true;
+      this.needsAudioUnlock = true;
       this.pauseMusic();
       this.publish({
         error: "Muzica nu a pornit. Atinge din nou butonul Muzică.",
@@ -91,7 +98,7 @@ export class AudioManager {
       // after a bounded grace period with no playback progress.
       this.musicStallTimer = setTimeout(() => {
         if (audio !== this.music || this.disposed || audio.currentTime > position) return;
-        this.musicBlocked = true;
+        this.needsAudioUnlock = true;
         this.pauseMusic();
       }, 8000);
     };
@@ -107,14 +114,14 @@ export class AudioManager {
       if (this.voice && this.gain && this.context?.state === "running") {
         // Some signage engines cannot mix two HTML media streams reliably.
         this.useFallback();
-      } else if (!this.voice) this.musicBlocked = true;
+      } else if (!this.voice) this.needsAudioUnlock = true;
     };
     audio.onended = () => {
-      if (audio === this.music) this.musicBlocked = true;
+      if (audio === this.music) this.needsAudioUnlock = true;
     };
     audio.oncanplay = () => {
       clearTimeout(this.musicStallTimer);
-      if (audio === this.music && !this.musicBlocked) this.startMusic();
+      if (audio === this.music && !this.needsAudioUnlock) this.startMusic();
     };
     this.music = audio;
   }
@@ -130,20 +137,26 @@ export class AudioManager {
     }
     try {
       this.context = new Constructor();
+      this.context.onstatechange = () => {
+        if (this.disposed) return;
+        this.needsContextResume = this.context?.state !== "running";
+        if (this.fallback) return;
+        if (this.needsContextResume) {
+          this.needsAudioUnlock = true;
+          this.pauseMusic();
+        } else this.setLevel(!!this.voice);
+      };
+      if (this.nativeIOS) {
+        this.fallback = true;
+        return;
+      }
       this.gain = this.context.createGain();
       this.gain.gain.value = this.voice ? DUCKED : NORMAL;
       this.source = this.context.createMediaElementSource(this.music!);
       this.source.connect(this.gain);
       this.gain.connect(this.context.destination);
-      this.music!.volume = 1; // GainNode, not the iOS hardware volume, controls ducking.
-      this.context.onstatechange = () => {
-        if (this.disposed || this.fallback) return;
-        if (this.context?.state !== "running") this.pauseMusic();
-        else {
-          this.setLevel(!!this.voice);
-          this.startMusic();
-        }
-      };
+      this.music!.volume = 1;
+
     } catch {
       this.useFallback();
     }
@@ -152,7 +165,7 @@ export class AudioManager {
     if (this.disposed || document.hidden) return;
     this.unlocked = true;
     this.prepare();
-    this.musicBlocked = false;
+    this.needsAudioUnlock = false;
     if (this.music?.error) {
       const audio = this.music;
       const position = audio.currentTime;
@@ -168,8 +181,8 @@ export class AudioManager {
     if (this.context?.state === "closed" && !this.fallback) this.useFallback();
     if (
       this.context &&
-      !this.fallback &&
-      this.context.state !== "running" &&
+      (!this.fallback || this.nativeIOS) &&
+      (this.needsContextResume || this.context.state !== "running") &&
       !this.resuming
     ) {
       this.resuming = true;
@@ -177,19 +190,23 @@ export class AudioManager {
         Promise.resolve(this.context.resume()).then(
           () => {
             this.resuming = false;
-            if (!this.disposed) this.startMusic();
+            this.needsContextResume = this.context?.state !== "running";
           },
           () => {
             this.resuming = false;
-            this.musicBlocked = true;
+            this.needsContextResume = true;
+            if (!this.fallback) { this.needsAudioUnlock = true; this.pauseMusic(); }
           },
         );
       } catch {
         this.resuming = false;
-        this.musicBlocked = true;
+        this.needsContextResume = true;
+        if (!this.fallback) { this.needsAudioUnlock = true; this.pauseMusic(); }
       }
     }
-    this.startMusic();
+    // Both resume() above and play() below run in the gesture stack. Awaiting
+    // resume before invoking play would hand control back to WebKit first.
+    this.startMusic(true);
   }
   private pauseMusic() {
     clearTimeout(this.musicStallTimer);
@@ -200,7 +217,7 @@ export class AudioManager {
       this.music.pause();
     }
   }
-  private startMusic() {
+  private startMusic(fromGesture = false) {
     const audio = this.music;
     if (
       this.disposed ||
@@ -208,13 +225,13 @@ export class AudioManager {
       !this.unlocked ||
       !this.snapshot.musicOn ||
       document.hidden ||
-      this.musicBlocked ||
+      this.needsAudioUnlock ||
       this.musicPending
     )
       return;
-    if (this.voice && (this.fallback || this.context?.state !== "running"))
+    if (this.voice && (this.fallback || (!fromGesture && this.context?.state !== "running")))
       return;
-    if (!this.fallback && this.context?.state !== "running") return;
+    if (!fromGesture && !this.fallback && this.context?.state !== "running") return;
     if (!audio.paused) return;
     const request = ++this.musicRequest;
     this.musicPending = true;
@@ -226,7 +243,7 @@ export class AudioManager {
       )
         return;
       this.musicPending = false;
-      this.musicBlocked = true;
+      this.needsAudioUnlock = true;
       this.publish({
         error: "Muzica nu a pornit. Atinge din nou butonul Muzică.",
       });
@@ -366,6 +383,11 @@ export class AudioManager {
   private returned = () => {
     // Never resume AudioContext here: wait for a trusted gesture if suspended.
     if (document.hidden || !this.unlocked) return;
+    if (this.context && this.context.state !== "running") {
+      this.needsContextResume = true;
+      this.needsAudioUnlock = true;
+      return;
+    }
     this.setLevel(!!this.voice);
     this.startMusic();
   };

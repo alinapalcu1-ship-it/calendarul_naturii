@@ -11,7 +11,7 @@ import { AudioManager } from "../utils/AudioManager";
 /** Mounted once above App; changing pages never disposes the audio session. */
 export function AudioProvider({ children }: { children: ReactNode }) {
   const manager = useRef<AudioManager | null>(null);
-  const [snapshot, setSnapshot] = useState({ musicOn: false, error: "" });
+  const [snapshot, setSnapshot] = useState({ musicOn: true, error: "" });
   useEffect(() => {
     const session = new AudioManager();
     manager.current = session;

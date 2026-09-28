@@ -10,8 +10,10 @@ const assert = require("node:assert/strict");
     for (const [name, options, fallback] of [
       ["desktop", {}, false],
       ["touch", devices["Pixel 7"], false],
+      ["ios", devices["iPhone 13"], false],
       ["fallback", devices["iPhone 13"], true],
     ]) {
+      const native = fallback || name === "ios";
       const c = await b.newContext({
         ...options,
         viewport: options.viewport || { width: 1600, height: 1100 },
@@ -55,12 +57,12 @@ const assert = require("node:assert/strict");
         process.env.TEST_URL || "http://127.0.0.1:5176/calendarul_naturii/",
       );
       await p
-        .getByRole("button", { name: "Pornește muzica", exact: true })
+        .getByRole("button", { name: "Oprește muzica", exact: true })
         .waitFor();
       assert.equal(await p.evaluate(() => audios.length), 0);
-      await p
-        .getByRole("button", { name: "Pornește muzica", exact: true })
-        .click();
+      const firstTouch = p.getByRole("button", { name: /Anotimpul/ });
+      if (options.hasTouch) await firstTouch.tap();
+      else await firstTouch.click();
       await p.waitForFunction(
         () => audios[0].currentTime > 0.1 && !audios[0].paused,
       );
@@ -69,13 +71,13 @@ const assert = require("node:assert/strict");
         1,
       );
       const before = await p.evaluate(() => audios[0].currentTime);
-      await p.getByRole("button", { name: /Anotimpul/ }).click();
+      
       assert(await p.evaluate(() => !audios[0].paused));
       await p.getByRole("button", { name: "Primăvara", exact: true }).click();
       await p.waitForFunction(
         () => audios.filter((a) => !a.loop).at(-1)?.currentTime > 0.1,
       );
-      if (fallback) assert(await p.evaluate(() => audios[0].paused));
+      if (native) assert(await p.evaluate(() => audios[0].paused));
       else
         await p.waitForFunction(
           () => Math.abs(gains[0].gain.value - 0.03) < 0.002,
@@ -94,7 +96,7 @@ const assert = require("node:assert/strict");
       await p.waitForFunction(
         () => audios.filter((a) => !a.loop).at(-1).paused,
       );
-      if (fallback) await p.waitForFunction(() => !audios[0].paused);
+      if (native) await p.waitForFunction(() => !audios[0].paused);
       else
         await p.waitForFunction(
           () => Math.abs(gains[0].gain.value - 0.15) < 0.002,
@@ -104,7 +106,7 @@ const assert = require("node:assert/strict");
       );
       if (!fallback) {
         await p.evaluate(() => contexts[0].suspend());
-        assert(await p.evaluate(() => audios[0].paused));
+        if (!native) assert(await p.evaluate(() => audios[0].paused));
         await p.evaluate(() => {
           window.dispatchEvent(new Event("focus"));
           window.dispatchEvent(new Event("pageshow"));

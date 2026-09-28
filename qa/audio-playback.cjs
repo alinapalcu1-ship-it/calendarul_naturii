@@ -25,7 +25,7 @@ const base = process.env.TEST_URL || 'http://127.0.0.1:5175/calendarul_naturii/'
    const actual=await page.evaluate(()=>{const a=window.testAudio.at(-1);return {url:a.src,time:a.currentTime,duration:a.duration,muted:a.muted,volume:a.volume};});
    assert.equal(new URL(actual.url).pathname,'/calendarul_naturii/audio/'+file);
    assert(actual.duration>0&&!actual.muted&&actual.volume>0);
-   assert(await page.evaluate(()=>window.testAudio.slice(0,-1).every(a=>a.paused)),'old playback stopped');
+   assert(await page.evaluate(()=>window.testAudio.filter(a=>!a.loop).slice(0,-1).every(a=>a.paused)),'old playback stopped');
    played.push(actual);
   }
   await listen(page.getByRole('button',{name:'Ascultă mesajul de bun venit'}),'buna_dimineata_ne_intalnim.mp3');

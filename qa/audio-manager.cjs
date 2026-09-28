@@ -11,7 +11,9 @@ const code = ts.transpileModule(
     },
   },
 ).outputText;
-function fixture(web = true) {
+function fixture(web = true, ios = false, strictGesture = false) {
+  let inGesture = false;
+  const gesture = fn => { inGesture = true; try { return fn(); } finally { inGesture = false; } };
   const audios = [],
     contexts = [],
     timers = new Map();
@@ -27,8 +29,8 @@ function fixture(web = true) {
       this.listeners.get(n)?.delete(f);
     }
     emit(n, extra = {}) {
-      for (const f of this.listeners.get(n) || [])
-        f({ isTrusted: true, ...extra });
+      gesture(() => { for (const f of this.listeners.get(n) || [])
+        f({ isTrusted: true, ...extra }); });
     }
   }
   class Audio {
@@ -47,7 +49,10 @@ function fixture(web = true) {
     load() {}
     play() {
       this.playCalls++;
+      if (strictGesture && !inGesture && !this.permitted) return Promise.reject(Error("gesture lost"));
+      this.calledInGesture = inGesture;
       if (this.reject) return Promise.reject(Error("blocked"));
+      this.permitted = true;
       this.paused = false;
       return Promise.resolve();
     }
@@ -83,10 +88,15 @@ function fixture(web = true) {
       };
     }
     createMediaElementSource() {
+      this.sourceCount = (this.sourceCount || 0) + 1;
       return { connect() {}, disconnect() {} };
     }
     resume() {
       this.resumeCalls++;
+      if (strictGesture) {
+        assert(inGesture, "resume must run inside gesture");
+        return new Promise(resolve => { this.finishResume = () => { this.state = "running"; this.onstatechange?.(); resolve(); }; });
+      }
       if (this.reject) return Promise.reject(Error("blocked context"));
       this.state = "running";
       this.onstatechange?.();
@@ -108,6 +118,7 @@ function fixture(web = true) {
     }),
     window,
     document,
+    navigator: { userAgent: ios ? "iPhone Safari" : "Desktop", platform: ios ? "iPhone" : "Win32", maxTouchPoints: ios ? 5 : 0 },
     Audio,
     KeyboardEvent: class {},
     setTimeout: (f) => {
@@ -123,6 +134,7 @@ function fixture(web = true) {
   m.mount();
   return {
     m,
+    gesture,
     document,
     window,
     audios,
@@ -144,9 +156,7 @@ const flush = () => new Promise((r) => setImmediate(r));
   await flush();
   assert.equal(f.audios.length, 1);
   assert.equal(f.contexts.length, 1);
-  assert(f.audios[0].paused);
-  f.m.toggleMusic();
-  await flush();
+  assert(!f.audios[0].paused);
   const bg = f.audios[0],
     ctx = f.contexts[0];
   assert(bg.loop && !bg.paused);
@@ -249,7 +259,7 @@ const flush = () => new Promise((r) => setImmediate(r));
     assert.equal(listeners.size, 0);
   assert.equal(ctx.state, "closed");
   const n = fixture(false);
-  n.m.toggleMusic();
+  n.document.emit("click");
   await flush();
   const nb = n.audios[0];
   nb.currentTime = 71;
@@ -268,6 +278,45 @@ const flush = () => new Promise((r) => setImmediate(r));
   await flush();
   assert(nb.paused);
   n.m.dispose();
+  // Realistic WebKit ordering: resume resolves later, and first play is only
+  // authorized while the initiating event is on the stack.
+  for (const ios of [false, true]) {
+    const mobile = fixture(true, ios, true);
+    assert.equal(mobile.audios.length, 0);
+    mobile.document.emit("touchstart");
+    const music = mobile.audios[0], context = mobile.contexts[0];
+    assert(music.calledInGesture && !music.paused, "play must not await resume callback");
+    assert.equal(context.state, "suspended");
+    context.finishResume(); await flush();
+    assert.equal(context.sourceCount || 0, ios ? 0 : 1);
+    music.currentTime = 23;
+    mobile.gesture(() => mobile.m.play("word"));
+    if (ios) assert(music.paused); else assert.equal(context.ramps.at(-1)[0], .03);
+    mobile.audios.at(-1).onended(); await flush();
+    assert(!music.paused); assert.equal(music.currentTime, 23);
+    if (!ios) assert.equal(context.ramps.at(-1)[0], .15);
+    mobile.document.hidden = true; mobile.document.emit("visibilitychange");
+    context.state = "suspended"; context.onstatechange();
+    mobile.document.hidden = false;
+    const resumes = context.resumeCalls, plays = music.playCalls;
+    mobile.window.emit("pageshow"); mobile.window.emit("focus"); mobile.document.emit("visibilitychange");
+    assert.equal(context.resumeCalls, resumes); assert.equal(music.playCalls, plays);
+    music.reject = true;
+    mobile.document.emit("click"); context.finishResume(); await flush();
+    assert.equal(mobile.m.needsAudioUnlock, true);
+    const failedCalls = music.playCalls;
+    music.oncanplay(); mobile.window.emit("focus"); await flush();
+    assert.equal(music.playCalls, failedCalls);
+    music.reject = false; mobile.document.emit("click"); await flush();
+    assert(!music.paused); assert.equal(mobile.m.needsAudioUnlock, false);
+    assert.equal(mobile.audios.filter(a => a.loop).length, 1);
+    assert.equal(mobile.contexts.length, 1);
+    assert.equal(context.sourceCount || 0, ios ? 0 : 1);
+    // An explicit stop survives subsequent interactions.
+    mobile.m.toggleMusic(); mobile.document.emit("click"); await flush(); assert(music.paused);
+    mobile.m.dispose();
+  }
+  console.log("PASS iOS/gesture regression: deferred resume, synchronous first play, same native element, voice pause/resume, graph ducking, rejected play waits for next touch, no source/context duplication.");
   console.log(
     "PASS manager: lazy unlock, one music/context, ramps and voice tokens, toggles preserve position, hidden/visible, suspended resume only on gesture, rejected play no retry loop, stalled/canplay, voice error/pause/stall, broken GainNode native fallback, no WebAudio fallback, listener and timer cleanup.",
   );
