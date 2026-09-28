@@ -12,7 +12,7 @@ const base = process.env.TEST_URL || 'http://127.0.0.1:5175/calendarul_naturii/'
   await page.addInitScript(()=>{
    window.testAudio=[];
    const Original=window.Audio;
-   window.Audio=function(src){const a=new Original(src);window.testAudio.push(a);return a;};
+   window.Audio=function(src){const a=new Original(src);a.addEventListener('ended',()=>{a.testEnded=true});window.testAudio.push(a);return a;};
   });
   await page.goto(base);
   assert.equal(await page.evaluate(()=>window.testAudio.length),0,'no welcome autoplay');
@@ -44,7 +44,7 @@ const base = process.env.TEST_URL || 'http://127.0.0.1:5175/calendarul_naturii/'
   await page.getByRole('button',{name:/Ziua noastră/}).click();
   await listen(page.getByRole('button',{name:'Gata! Începem ziua!'}),'impreuna_ziua_e_mai.mp3');
   await listen(page.getByRole('button',{name:'Ascultă mesajul final'}),'impreuna_ziua_e_mai.mp3');
-  await page.waitForFunction(()=>window.testAudio.at(-1).ended);
+  await page.waitForFunction(()=>window.testAudio.at(-1).testEnded);
   console.log('PASS final message, including playback through ended');
   // Decode the actual files and confirm non-silent sample data, not just HTTP success.
   const files=fs.readdirSync('public/audio',{recursive:true}).filter(f=>f.endsWith('.mp3')).map(f=>'audio/'+f.replaceAll(path.sep,'/'));
@@ -67,6 +67,6 @@ const base = process.env.TEST_URL || 'http://127.0.0.1:5175/calendarul_naturii/'
   await listen(page.getByRole('button',{name:'Ascultă mesajul final'}),'impreuna_ziua_e_mai.mp3');
   assert.equal(await page.locator('.audio-notice').count(),0);
   console.log(`PASS ${decoded.length} MP3s decoded with non-silent samples; failure/retry; no JS errors`);
-  fs.writeFileSync('qa/audio-playback-report.json',JSON.stringify({base,played,decoded},null,2));
+  if (!process.env.NO_AUDIO_REPORT) fs.writeFileSync('qa/audio-playback-report.json',JSON.stringify({base,played,decoded},null,2));
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});
