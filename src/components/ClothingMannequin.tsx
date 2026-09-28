@@ -13,12 +13,13 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
     const x = fit.translateX + (adjustment?.translateX ?? 0) +
       (fit.pair ? (side === 0 ? 1 : -1) * (fit.inset ?? 0) : 0);
     const y = fit.translateY + (adjustment?.translateY ?? 0);
-    // Clip only detached pixels beside the glove pair, not the doll's hands.
-    const gloveClip = item.gender === "baiat"
-      ? (side === 0 ? "inset(53% 70.5% 33% 17.8%)" : "inset(53% 17.8% 33% 70.5%)")
-      : (side === 0 ? "inset(53% 69.5% 33% 18%)" : "inset(53% 18% 33% 69.5%)");
-    
-    
+    // Source-pixel bounds retain the whole glove but exclude detached specks.
+    // Mirror each glove locally: the source thumbs point away from the doll.
+    const bounds = item.gender === "baiat"
+      ? (side === 0 ? [196, 783, 318, 962] : [767, 783, 888, 962])
+      : (side === 0 ? [203, 788, 317, 952] : [771, 788, 884, 952]);
+    const gloveClip = `inset(${bounds[1] / 1448 * 100}% ${(1086 - bounds[2]) / 1086 * 100}% ${(1448 - bounds[3]) / 1448 * 100}% ${bounds[0] / 1086 * 100}%)`;
+
     return (
       <img
         key={side}
@@ -31,7 +32,7 @@ function Layer({ item, front = false }: { item: ClothingItem; front?: boolean })
         style={{
           zIndex: item.slot === "scarf" && !front ? 44 : item.zIndex,
           transformOrigin: `${originX / 1086 * 100}% ${fit.originY / 1448 * 100}%`,
-          transform: `translate(${x / 1086 * 100}%, ${y / 1448 * 100}%) rotate(${adjustment?.rotate ?? 0}deg) scale(${fit.scaleX}, ${fit.scaleY})`,
+          transform: `translate(${x / 1086 * 100}%, ${y / 1448 * 100}%) rotate(${adjustment?.rotate ?? 0}deg) scale(${fit.mirrorX ? -fit.scaleX : fit.scaleX}, ${fit.scaleY})`,
           clipPath: item.slot === "gloves" ? gloveClip : fit.pair
             ? (side === 0 ? "inset(0 50% 0 0)" : "inset(0 0 0 50%)")
             : undefined,
@@ -47,12 +48,21 @@ export function ClothingMannequin({ gender, clothes }: { gender: ClothingGender;
   const hooded = collar?.slot === "outer" || collar?.id === "fata_top_04" || collar?.id === "baiat_top_03";
   const tshirt = collar?.id.endsWith("_tshirt");
   const scarf = selected.find(item => item.slot === "scarf");
+  const gloves = selected.some(item => item.slot === "gloves");
   const winterHat = selected.some(item => item.id.endsWith("_winter-hat"));
+  // The glove sprites have open fingers; the base has a closed hand. Hide only
+  // the covered bare-hand silhouette below the cuffs, retaining both forearms.
+  const wrist = gender === "fata" ? [239, 843, 320, 865] : [235, 830, 321, 858];
+  const px = (x: number) => `${x / 1086 * 100}%`;
+  const py = (y: number) => `${y / 1448 * 100}%`;
+  const baseClip = gloves
+    ? `polygon(0 ${winterHat ? 20 : 0}%, 100% ${winterHat ? 20 : 0}%, 100% ${py(wrist[1])}, ${px(1086 - wrist[0])} ${py(wrist[1])}, ${px(1086 - wrist[2])} ${py(wrist[3])}, ${px(1086 - wrist[2])} ${py(990)}, 100% ${py(990)}, 100% 100%, 0 100%, 0 ${py(990)}, ${px(wrist[2])} ${py(990)}, ${px(wrist[2])} ${py(wrist[3])}, ${px(wrist[0])} ${py(wrist[1])}, 0 ${py(wrist[1])})`
+    : winterHat ? "inset(20% 0 0 0)" : undefined;
   const base = `${import.meta.env.BASE_URL}assets/dress-ready/${prefix}/${prefix}-base.png`;
   return (
     <div className="fitted-mannequin" role="img" aria-label={`${gender === "fata" ? "Fetiță" : "Băiat"}, ${selected.length} articole alese`}>
       <img className="mannequin-base" src={base} alt="" draggable={false}
-        style={{ clipPath: winterHat ? "inset(20% 0 0 0)" : undefined }} />
+        style={{ clipPath: baseClip }} />
       {selected.map(item => <Layer key={item.id} item={item} />)}
       {/* Reuse the unmodified base and garment: collar back, neck, collar front.
           Hands and feet are never painted over fitted clothing. Hats remain above hair. */}
